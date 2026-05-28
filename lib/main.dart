@@ -21,7 +21,12 @@ class MyApp extends StatelessWidget {
       ),
       home: Scaffold(
         appBar: AppBar(title: const Text("E-Shop-App")),
-        body: const Center(child: Text('Flutter Demo Home Page')),
+        body: Column(
+          children: [
+            const Center(child: Text('Flutter Demo Home Page')),
+            ElevatedButton(onPressed: () {}, child: Text("Click")),
+          ],
+        ),
       ),
     );
   }
