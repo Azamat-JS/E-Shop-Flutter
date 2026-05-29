@@ -58,26 +58,31 @@ class _AuthScreenState extends State<AuthScreen> {
                 ),
               ),
               if (_auth == Auth.signup)
-                Form(
-                  key: _signUpFormKey,
-                  child: Column(
-                    children: [
-                      CustomTextfield(
-                        controller: _emailController,
-                        hintText: "Email",
-                        obscure: false,
-                      ),
-                      CustomTextfield(
-                        controller: _passwordController,
-                        hintText: "Password",
-                        obscure: true,
-                      ),
-                      CustomTextfield(
-                        controller: _nameController,
-                        hintText: "Name",
-                        obscure: false,
-                      ),
-                    ],
+                Container(
+                  padding: const EdgeInsets.all(8),
+                  color: GlobalVariables.backgroundColor,
+                  child: Form(
+                    key: _signUpFormKey,
+                    child: Column(
+                      children: [
+                        CustomTextfield(
+                          controller: _emailController,
+                          hintText: "Email",
+                        ),
+                        const SizedBox(height: 10),
+                        CustomTextfield(
+                          controller: _passwordController,
+                          hintText: "Password",
+                          obscure: true,
+                        ),
+                        const SizedBox(height: 10),
+
+                        CustomTextfield(
+                          controller: _nameController,
+                          hintText: "Name",
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ListTile(

@@ -8,7 +8,7 @@ class CustomTextfield extends StatelessWidget {
     super.key,
     required this.controller,
     required this.hintText,
-    required this.obscure,
+    this.obscure = false,
   });
 
   @override
