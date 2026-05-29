@@ -1,3 +1,4 @@
+import 'package:e_shop_flutter/common/widgets/custom_textfield.dart';
 import 'package:e_shop_flutter/constants/global_variables.dart';
 import 'package:flutter/material.dart';
 
@@ -15,6 +16,18 @@ class _AuthScreenState extends State<AuthScreen> {
   Auth _auth = Auth.signup;
   final _signUpFormKey = GlobalKey<FormState>();
   final _signInFormKey = GlobalKey<FormState>();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
+
+  @override
+  void dispose() {
+    super.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
+    _nameController.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,7 +58,28 @@ class _AuthScreenState extends State<AuthScreen> {
                 ),
               ),
               if (_auth == Auth.signup)
-                Form(key: _signUpFormKey, child: Column()),
+                Form(
+                  key: _signUpFormKey,
+                  child: Column(
+                    children: [
+                      CustomTextfield(
+                        controller: _emailController,
+                        hintText: "Email",
+                        obscure: false,
+                      ),
+                      CustomTextfield(
+                        controller: _passwordController,
+                        hintText: "Password",
+                        obscure: true,
+                      ),
+                      CustomTextfield(
+                        controller: _nameController,
+                        hintText: "Name",
+                        obscure: false,
+                      ),
+                    ],
+                  ),
+                ),
               ListTile(
                 title: const Text(
                   "Sign-In.",
