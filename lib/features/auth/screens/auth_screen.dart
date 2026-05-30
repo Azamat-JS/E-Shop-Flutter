@@ -66,6 +66,11 @@ class _AuthScreenState extends State<AuthScreen> {
                     child: Column(
                       children: [
                         CustomTextfield(
+                          controller: _nameController,
+                          hintText: "Name",
+                        ),
+                        const SizedBox(height: 10),
+                        CustomTextfield(
                           controller: _emailController,
                           hintText: "Email",
                         ),
@@ -76,11 +81,6 @@ class _AuthScreenState extends State<AuthScreen> {
                           obscure: true,
                         ),
                         const SizedBox(height: 10),
-
-                        CustomTextfield(
-                          controller: _nameController,
-                          hintText: "Name",
-                        ),
                       ],
                     ),
                   ),
