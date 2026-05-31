@@ -11,7 +11,13 @@ export class AuthEntity {
     email!: string;
 
     @Column()
-    password!: string
+    password!: string;
+
+    @Column({ nullable: true })
+    address?: string;
+
+    @Column({ nullable: true })
+    role?: string;
 
     @CreateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
     created_at!: Date;
