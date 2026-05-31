@@ -10,6 +10,8 @@ exports.AppModule = void 0;
 const common_1 = require("@nestjs/common");
 const config_1 = require("@nestjs/config");
 const typeorm_1 = require("@nestjs/typeorm");
+const auth_module_1 = require("./auth/auth.module");
+const auth_entity_1 = require("./auth/entities/auth.entity");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -17,7 +19,15 @@ exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
         imports: [
             config_1.ConfigModule.forRoot({ envFilePath: ".env", isGlobal: true }),
-            typeorm_1.TypeOrmModule
+            typeorm_1.TypeOrmModule.forRoot({
+                type: 'postgres',
+                url: process.env.DBURL,
+                entities: [auth_entity_1.AuthEntity],
+                synchronize: true,
+                autoLoadEntities: true,
+                retryAttempts: 3
+            }),
+            auth_module_1.AuthModule
         ],
         controllers: [],
         providers: [],

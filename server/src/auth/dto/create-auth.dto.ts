@@ -22,3 +22,25 @@ export class CreateAuthDto {
     @IsString()
     address?: string;
 }
+
+export class UpdateAuthDto {
+    @IsOptional()
+    @IsString()
+    name?: string;
+
+    @IsOptional()
+    @IsEmail()
+    email?: string;
+
+    @IsOptional()
+    @IsString()
+    password?: string;
+
+    @IsOptional()
+    @IsString()
+    role?: string;
+
+    @IsOptional()
+    @IsString()
+    address?: string;
+}

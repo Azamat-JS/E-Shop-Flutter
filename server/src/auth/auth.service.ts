@@ -1,26 +1,47 @@
-import { Injectable } from '@nestjs/common';
-import { CreateAuthDto } from './dto/create-auth.dto';
-import { UpdateAuthDto } from './dto/update-auth.dto';
+import { BadRequestException, Injectable } from '@nestjs/common';
+import { CreateAuthDto, UpdateAuthDto } from './dto/create-auth.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { AuthEntity } from './entities/auth.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class AuthService {
-  create(createAuthDto: CreateAuthDto) {
-    return 'This action adds a new auth';
+  constructor(@InjectRepository(AuthEntity) private authRepo: Repository<AuthEntity>) { }
+  async register(createAuthDto: CreateAuthDto) {
+    const { email, password } = createAuthDto;
+
+    const existingUser = await this.authRepo.findOneBy({ email });
+
+    if (existingUser) {
+      throw new BadRequestException("User already exists");
+    }
+
+    if (password.length < 6) {
+      throw new BadRequestException(
+        "Password must be at least 6 characters",
+      );
+    }
+
+    const user = this.authRepo.create(createAuthDto);
+
+    await this.authRepo.save(user);
+
+    return user;
   }
 
   findAll() {
     return `This action returns all auth`;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} auth`;
+  findOne(id: string) {
+
   }
 
-  update(id: number, updateAuthDto: UpdateAuthDto) {
+  update(id: string, updateAuthDto: UpdateAuthDto) {
     return `This action updates a #${id} auth`;
   }
 
-  remove(id: number) {
+  remove(id: string) {
     return `This action removes a #${id} auth`;
   }
 }
