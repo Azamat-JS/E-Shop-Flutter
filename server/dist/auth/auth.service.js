@@ -51,19 +51,19 @@ const typeorm_1 = require("@nestjs/typeorm");
 const auth_entity_1 = require("./entities/auth.entity");
 const typeorm_2 = require("typeorm");
 const bcrypt = __importStar(require("bcrypt"));
+const jwt_1 = require("@nestjs/jwt");
 let AuthService = class AuthService {
     authRepo;
-    constructor(authRepo) {
+    jwtService;
+    constructor(authRepo, jwtService) {
         this.authRepo = authRepo;
+        this.jwtService = jwtService;
     }
     async register(createAuthDto) {
         const { email, password } = createAuthDto;
         const existingUser = await this.authRepo.findOneBy({ email });
         if (existingUser) {
             throw new common_1.BadRequestException("User already exists");
-        }
-        if (password.length < 6) {
-            throw new common_1.BadRequestException("Password must be at least 6 characters");
         }
         const hashedPassword = await bcrypt.hash(password, 12);
         const user = this.authRepo.create({
@@ -73,22 +73,32 @@ let AuthService = class AuthService {
         await this.authRepo.save(user);
         return user;
     }
-    findAll() {
-        return `This action returns all auth`;
-    }
-    findOne(id) {
-    }
-    update(id, updateAuthDto) {
-        return `This action updates a #${id} auth`;
-    }
-    remove(id) {
-        return `This action removes a #${id} auth`;
+    async login(loginDto) {
+        const { email, password } = loginDto;
+        const foundUser = await this.authRepo.findOneBy({ email });
+        if (!foundUser) {
+            throw new common_1.BadRequestException("User with this email does not exist");
+        }
+        const passwordMatch = await bcrypt.compare(password, foundUser.password);
+        if (!passwordMatch) {
+            throw new common_1.BadRequestException("Invalid credentials");
+        }
+        const payload = {
+            userId: foundUser.id,
+            email: foundUser.email
+        };
+        const accessToken = this.jwtService.sign(payload);
+        return {
+            token: accessToken,
+            ...foundUser
+        };
     }
 };
 exports.AuthService = AuthService;
 exports.AuthService = AuthService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, typeorm_1.InjectRepository)(auth_entity_1.AuthEntity)),
-    __metadata("design:paramtypes", [typeorm_2.Repository])
+    __metadata("design:paramtypes", [typeorm_2.Repository,
+        jwt_1.JwtService])
 ], AuthService);
 //# sourceMappingURL=auth.service.js.map

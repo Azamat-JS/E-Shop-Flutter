@@ -19,13 +19,17 @@ exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
         imports: [
             config_1.ConfigModule.forRoot({ envFilePath: ".env", isGlobal: true }),
-            typeorm_1.TypeOrmModule.forRoot({
-                type: 'postgres',
-                url: process.env.DBURL,
-                entities: [auth_entity_1.AuthEntity],
-                synchronize: true,
-                autoLoadEntities: true,
-                retryAttempts: 3
+            typeorm_1.TypeOrmModule.forRootAsync({
+                imports: [config_1.ConfigModule],
+                inject: [config_1.ConfigService],
+                useFactory: (config) => ({
+                    type: 'postgres',
+                    url: config.get('DBURL'),
+                    entities: [auth_entity_1.AuthEntity],
+                    synchronize: true,
+                    autoLoadEntities: true,
+                    retryAttempts: 3
+                }),
             }),
             auth_module_1.AuthModule
         ],

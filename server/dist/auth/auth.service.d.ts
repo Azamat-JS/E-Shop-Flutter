@@ -1,12 +1,20 @@
-import { CreateAuthDto, UpdateAuthDto } from './dto/create-auth.dto';
+import { CreateAuthDto, LoginDto } from './dto/create-auth.dto';
 import { AuthEntity } from './entities/auth.entity';
 import { Repository } from 'typeorm';
+import { JwtService } from '@nestjs/jwt';
 export declare class AuthService {
     private authRepo;
-    constructor(authRepo: Repository<AuthEntity>);
+    private readonly jwtService;
+    constructor(authRepo: Repository<AuthEntity>, jwtService: JwtService);
     register(createAuthDto: CreateAuthDto): Promise<AuthEntity>;
-    findAll(): string;
-    findOne(id: string): void;
-    update(id: string, updateAuthDto: UpdateAuthDto): string;
-    remove(id: string): string;
+    login(loginDto: LoginDto): Promise<{
+        id: string;
+        name: string;
+        email: string;
+        password: string;
+        address?: string;
+        role?: string;
+        created_at: Date;
+        token: string;
+    }>;
 }
