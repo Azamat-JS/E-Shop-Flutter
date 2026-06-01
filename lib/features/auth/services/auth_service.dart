@@ -6,6 +6,7 @@ import 'package:e_shop_flutter/constants/utils.dart';
 import 'package:e_shop_flutter/models/user.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthService {
   void signUpUser({
@@ -61,11 +62,13 @@ class AuthService {
           'Content-Type': 'application/json; charset=UTF-8',
         },
       );
-      print(res.body);
+
       httpErrorHandle(
         response: res,
         context: context,
-        onSuccess: () {
+        onSuccess: () async {
+          SharedPreferences prefs = await SharedPreferences.getInstance();
+          await prefs.setString('x-auth-token', jsonDecode(res.body)['token']);
           showSnackbar(context, "Login successful!");
         },
       );
