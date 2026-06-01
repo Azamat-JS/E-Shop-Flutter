@@ -17,12 +17,6 @@ export class AuthService {
       throw new BadRequestException("User already exists");
     }
 
-    if (password.length < 6) {
-      throw new BadRequestException(
-        "Password must be at least 6 characters",
-      );
-    }
-
     const hashedPassword = await bcrypt.hash(password, 12);
 
     const user = this.authRepo.create({
@@ -35,5 +29,12 @@ export class AuthService {
     return user;
   }
 
-  async login(loginDto: LoginDto) { }
+  async login(loginDto: LoginDto) {
+    const { email, password } = loginDto;
+    const foundUser = await this.authRepo.findOneBy({ email });
+
+    if (!foundUser) {
+      throw new BadRequestException("User with this email does not exist")
+    }
+  }
 }
