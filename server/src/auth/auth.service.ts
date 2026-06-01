@@ -1,5 +1,5 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { CreateAuthDto, UpdateAuthDto } from './dto/create-auth.dto';
+import { CreateAuthDto, LoginDto, UpdateAuthDto } from './dto/create-auth.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { AuthEntity } from './entities/auth.entity';
 import { Repository } from 'typeorm';
@@ -35,19 +35,5 @@ export class AuthService {
     return user;
   }
 
-  findAll() {
-    return `This action returns all auth`;
-  }
-
-  findOne(id: string) {
-
-  }
-
-  update(id: string, updateAuthDto: UpdateAuthDto) {
-    return `This action updates a #${id} auth`;
-  }
-
-  remove(id: string) {
-    return `This action removes a #${id} auth`;
-  }
+  async login(loginDto: LoginDto) { }
 }

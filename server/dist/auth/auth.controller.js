@@ -24,6 +24,9 @@ let AuthController = class AuthController {
     register(createAuthDto) {
         return this.authService.register(createAuthDto);
     }
+    login(loginDto) {
+        return this.authService.login(loginDto);
+    }
     findAll() {
         return this.authService.findAll();
     }
@@ -45,6 +48,13 @@ __decorate([
     __metadata("design:paramtypes", [create_auth_dto_1.CreateAuthDto]),
     __metadata("design:returntype", void 0)
 ], AuthController.prototype, "register", null);
+__decorate([
+    (0, common_1.Post)('login'),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [create_auth_dto_1.LoginDto]),
+    __metadata("design:returntype", void 0)
+], AuthController.prototype, "login", null);
 __decorate([
     (0, common_1.Get)(),
     __metadata("design:type", Function),
