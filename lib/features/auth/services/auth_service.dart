@@ -19,7 +19,14 @@ class AuthService {
         type: "",
       );
 
-      http.post(Uri.parse('${ApiConfig.baseUrl}/auth/register'));
+      http.Response res = await http.post(
+        Uri.parse('${ApiConfig.baseUrl}/auth/register'),
+        body: user.toJson(),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+      );
+      print(res.body);
     } catch (e) {}
   }
 }
