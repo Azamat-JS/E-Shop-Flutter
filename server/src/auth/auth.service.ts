@@ -4,10 +4,13 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { AuthEntity } from './entities/auth.entity';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AuthService {
-  constructor(@InjectRepository(AuthEntity) private authRepo: Repository<AuthEntity>) { }
+  constructor(@InjectRepository(AuthEntity) private authRepo: Repository<AuthEntity>,
+    private readonly jwtService: JwtService
+  ) { }
   async register(createAuthDto: CreateAuthDto) {
     const { email, password } = createAuthDto;
 
@@ -36,5 +39,19 @@ export class AuthService {
     if (!foundUser) {
       throw new BadRequestException("User with this email does not exist")
     }
+
+    const passwordMatch = await bcrypt.compare(password, foundUser.password);
+
+    if (!passwordMatch) {
+      throw new BadRequestException("Invalid credentials")
+    }
+
+    const payload = {
+      userId: foundUser.id,
+      email: foundUser.email
+    }
+
+    const accessToken = this.jwtService.sign(payload);
+    return accessToken;
   }
 }
