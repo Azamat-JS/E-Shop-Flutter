@@ -1,6 +1,7 @@
 import 'package:e_shop_flutter/constants/global_variables.dart';
 import 'package:e_shop_flutter/features/auth/screens/auth_screen.dart';
 import 'package:e_shop_flutter/features/auth/services/auth_service.dart';
+import 'package:e_shop_flutter/features/home/screens/home_screen.dart';
 import 'package:e_shop_flutter/providers/user_provider.dart';
 import 'package:e_shop_flutter/route.dart';
 import 'package:flutter/material.dart';
@@ -29,6 +30,7 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
+    authService.getUserData(context);
   }
 
   @override
@@ -46,7 +48,7 @@ class _MyAppState extends State<MyApp> {
         ),
       ),
       onGenerateRoute: (settings) => generateRoute(settings),
-      home: const AuthScreen(),
+      home: Provider.of<UserProvider>(context).user.token.isNotEmpty ? const HomeScreen() : const AuthScreen(),
     );
   }
 }

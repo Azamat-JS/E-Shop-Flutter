@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common';
 import { CreateAuthDto, LoginDto, UpdateAuthDto } from './dto/create-auth.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { AuthEntity } from './entities/auth.entity';
@@ -58,11 +58,26 @@ export class AuthService {
     };
   }
 
-  async getUserData(token: string) {
+  async tokenIsValid(token: string) {
     const payload = this.jwtService.verify(token);
+    if (!payload) {
+      return false;
+    }
     const user = await this.authRepo.findOneBy({ id: payload.userId });
     if (!user) {
-      throw new BadRequestException("User not found");
+      return false;
+    }
+    return true;
+  }
+
+  async getUserData(token: string) {
+    const payload = this.jwtService.verify(token);
+    if (!payload) {
+      throw new UnauthorizedException("Token is not valid");
+    }
+    const user = await this.authRepo.findOneBy({ id: payload.userId });
+    if (!user) {
+      throw new UnauthorizedException("User not found");
     }
     return user;
   }

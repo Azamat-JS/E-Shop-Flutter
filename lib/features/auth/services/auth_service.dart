@@ -95,6 +95,27 @@ class AuthService {
       if (token == null) {
         prefs.setString('x-auth-token', '');
       }
+      var tokenRes = await http.post(
+        Uri.parse('${ApiConfig.baseUrl}/auth/tokenIsValid'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'x-auth-token': token!,
+        },
+      );
+
+      var response = jsonDecode(tokenRes.body);
+
+      if (response == true) {
+        await http.get(
+          Uri.parse('${ApiConfig.baseUrl}/auth/me'),
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+            'x-auth-token': token,
+          },
+        );
+        var userProvider = Provider.of<UserProvider>(context, listen: false);
+        userProvider.setUser(tokenRes.body);
+      }
       // http.Response res = await http.post(
       //   Uri.parse('${ApiConfig.baseUrl}/auth/login'),
       //   body: jsonEncode({"email": email, "password": password}),

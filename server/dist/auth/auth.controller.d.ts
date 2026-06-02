@@ -1,5 +1,6 @@
 import { AuthService } from './auth.service';
 import { CreateAuthDto, LoginDto } from './dto/create-auth.dto';
+import type { AuthenticatedRequest } from "../utils/types/types";
 export declare class AuthController {
     private readonly authService;
     constructor(authService: AuthService);
@@ -14,4 +15,6 @@ export declare class AuthController {
         created_at: Date;
         token: string;
     }>;
+    tokenIsValid(req: AuthenticatedRequest): false | Promise<boolean>;
+    getUserData(req: AuthenticatedRequest): Promise<import("./entities/auth.entity").AuthEntity>;
 }

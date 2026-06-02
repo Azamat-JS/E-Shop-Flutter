@@ -27,6 +27,19 @@ let AuthController = class AuthController {
     login(loginDto) {
         return this.authService.login(loginDto);
     }
+    tokenIsValid(req) {
+        const token = req.header('x-auth-token');
+        if (!token)
+            return false;
+        return this.authService.tokenIsValid(token);
+    }
+    getUserData(req) {
+        const token = req.header('x-auth-token');
+        if (!token) {
+            throw new common_1.UnauthorizedException("No token provided");
+        }
+        return this.authService.getUserData(token);
+    }
 };
 exports.AuthController = AuthController;
 __decorate([
@@ -43,6 +56,20 @@ __decorate([
     __metadata("design:paramtypes", [create_auth_dto_1.LoginDto]),
     __metadata("design:returntype", void 0)
 ], AuthController.prototype, "login", null);
+__decorate([
+    (0, common_1.Post)('tokenIsValid'),
+    __param(0, (0, common_1.Req)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", void 0)
+], AuthController.prototype, "tokenIsValid", null);
+__decorate([
+    (0, common_1.Get)('me'),
+    __param(0, (0, common_1.Req)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", void 0)
+], AuthController.prototype, "getUserData", null);
 exports.AuthController = AuthController = __decorate([
     (0, common_1.Controller)('auth'),
     __metadata("design:paramtypes", [auth_service_1.AuthService])

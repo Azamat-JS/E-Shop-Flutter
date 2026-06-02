@@ -93,6 +93,28 @@ let AuthService = class AuthService {
             ...foundUser
         };
     }
+    async tokenIsValid(token) {
+        const payload = this.jwtService.verify(token);
+        if (!payload) {
+            return false;
+        }
+        const user = await this.authRepo.findOneBy({ id: payload.userId });
+        if (!user) {
+            return false;
+        }
+        return true;
+    }
+    async getUserData(token) {
+        const payload = this.jwtService.verify(token);
+        if (!payload) {
+            throw new common_1.UnauthorizedException("Token is not valid");
+        }
+        const user = await this.authRepo.findOneBy({ id: payload.userId });
+        if (!user) {
+            throw new common_1.UnauthorizedException("User not found");
+        }
+        return user;
+    }
 };
 exports.AuthService = AuthService;
 exports.AuthService = AuthService = __decorate([

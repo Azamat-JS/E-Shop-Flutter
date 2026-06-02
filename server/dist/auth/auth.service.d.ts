@@ -17,4 +17,6 @@ export declare class AuthService {
         created_at: Date;
         token: string;
     }>;
+    tokenIsValid(token: string): Promise<boolean>;
+    getUserData(token: string): Promise<AuthEntity>;
 }
