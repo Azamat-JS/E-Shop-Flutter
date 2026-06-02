@@ -1,6 +1,8 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Post, Body, Req } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { CreateAuthDto, LoginDto, UpdateAuthDto } from './dto/create-auth.dto';
+import { CreateAuthDto, LoginDto } from './dto/create-auth.dto';
+import type { AuthenticatedRequest } from 'src/utils/types/types';
+
 
 @Controller('auth')
 export class AuthController {
@@ -16,4 +18,10 @@ export class AuthController {
     return this.authService.login(loginDto);
   }
 
+  @Post('tokenIsValid')
+  tokenIsValid(@Req() req: AuthenticatedRequest) {
+    const token = req.header('x-auth-token');
+    if (!token) return false;
+    return this.authService.getUserData(token);
+  }
 }

@@ -57,4 +57,13 @@ export class AuthService {
       ...foundUser
     };
   }
+
+  async getUserData(token: string) {
+    const payload = this.jwtService.verify(token);
+    const user = await this.authRepo.findOneBy({ id: payload.userId });
+    if (!user) {
+      throw new BadRequestException("User not found");
+    }
+    return user;
+  }
 }
