@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:e_shop_flutter/common/widgets/bottom_bar.dart';
 import 'package:e_shop_flutter/constants/error_handling.dart';
 import 'package:e_shop_flutter/constants/global_variables.dart';
 import 'package:e_shop_flutter/constants/utils.dart';
@@ -76,7 +77,7 @@ class AuthService {
           showSnackbar(context, "Login successful!");
           Navigator.pushNamedAndRemoveUntil(
             context,
-            HomeScreen.routeName,
+            BottomBar.routeName,
             (route) => false,
           );
         },
@@ -106,39 +107,19 @@ class AuthService {
       var response = jsonDecode(tokenRes.body);
 
       if (response == true) {
-        await http.get(
+        http.Response userRes = await http.get(
           Uri.parse('${ApiConfig.baseUrl}/auth/me'),
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
             'x-auth-token': token,
           },
         );
+        // Backend entity has no token column, so inject the stored token
+        var userData = jsonDecode(userRes.body) as Map<String, dynamic>;
+        userData['token'] = token;
         var userProvider = Provider.of<UserProvider>(context, listen: false);
-        userProvider.setUser(tokenRes.body);
+        userProvider.setUser(jsonEncode(userData));
       }
-      // http.Response res = await http.post(
-      //   Uri.parse('${ApiConfig.baseUrl}/auth/login'),
-      //   body: jsonEncode({"email": email, "password": password}),
-      //   headers: <String, String>{
-      //     'Content-Type': 'application/json; charset=UTF-8',
-      //   },
-      // );
-
-      // httpErrorHandle(
-      //   response: res,
-      //   context: context,
-      //   onSuccess: () async {
-      //     SharedPreferences prefs = await SharedPreferences.getInstance();
-      //     Provider.of<UserProvider>(context, listen: false).setUser(res.body);
-      //     await prefs.setString('x-auth-token', jsonDecode(res.body)['token']);
-      //     showSnackbar(context, "Login successful!");
-      //     Navigator.pushNamedAndRemoveUntil(
-      //       context,
-      //       HomeScreen.routeName,
-      //       (route) => false,
-      //     );
-      //   },
-      // );
     } catch (e) {
       showSnackbar(context, e.toString());
     }
