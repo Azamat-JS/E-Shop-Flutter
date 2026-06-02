@@ -1,4 +1,5 @@
 import 'package:e_shop_flutter/constants/global_variables.dart';
+import 'package:e_shop_flutter/features/home/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:badges/badges.dart' as badges;
 
@@ -16,19 +17,28 @@ class _BottomBarState extends State<BottomBar> {
   double bottomBarBorderWidth = 5;
 
   List<Widget> pages = [
-    // const HomeScreen(),
-    // const AccountScreen(),
-    // const CartScreen(),
+    const HomeScreen(),
+    const Center(child: Text("Account Page")),
+    const Center(child: Text("Cart Page")),
   ];
+
+  void updatePage(int page) {
+    setState(() {
+      _page = page;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      body: pages[_page],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _page,
         selectedItemColor: GlobalVariables.selectedNavBarColor,
         unselectedItemColor: GlobalVariables.unselectedNavBarColor,
         backgroundColor: GlobalVariables.backgroundColor,
         iconSize: 28,
+        onTap: updatePage,
         items: [
           // Home
           BottomNavigationBarItem(
