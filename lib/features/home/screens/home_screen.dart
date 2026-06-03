@@ -1,4 +1,5 @@
 import 'package:e_shop_flutter/constants/global_variables.dart';
+import 'package:e_shop_flutter/features/home/widgets/address_box.dart';
 import 'package:e_shop_flutter/providers/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -83,7 +84,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
 
-      body: Center(child: Text(user.name)),
+      body: Column(children: [const AddressBox()]),
     );
   }
 }
