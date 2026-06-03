@@ -15,7 +15,7 @@ class CreateAuthDto {
     name;
     email;
     password;
-    role;
+    type;
     address;
 }
 exports.CreateAuthDto = CreateAuthDto;
@@ -39,7 +39,7 @@ __decorate([
     (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
-], CreateAuthDto.prototype, "role", void 0);
+], CreateAuthDto.prototype, "type", void 0);
 __decorate([
     (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsString)(),
@@ -64,7 +64,7 @@ class UpdateAuthDto {
     name;
     email;
     password;
-    role;
+    type;
     address;
 }
 exports.UpdateAuthDto = UpdateAuthDto;
@@ -87,7 +87,7 @@ __decorate([
     (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
-], UpdateAuthDto.prototype, "role", void 0);
+], UpdateAuthDto.prototype, "type", void 0);
 __decorate([
     (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsString)(),

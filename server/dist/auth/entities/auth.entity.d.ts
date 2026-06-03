@@ -4,6 +4,6 @@ export declare class AuthEntity {
     email: string;
     password: string;
     address?: string;
-    role?: string;
+    type?: string;
     created_at: Date;
 }

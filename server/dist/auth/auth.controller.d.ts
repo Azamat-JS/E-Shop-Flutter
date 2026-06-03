@@ -11,7 +11,7 @@ export declare class AuthController {
         email: string;
         password: string;
         address?: string;
-        role?: string;
+        type?: string;
         created_at: Date;
         token: string;
     }>;

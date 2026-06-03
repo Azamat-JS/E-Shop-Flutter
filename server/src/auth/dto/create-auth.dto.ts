@@ -16,7 +16,7 @@ export class CreateAuthDto {
 
     @IsOptional()
     @IsString()
-    role?: string;
+    type?: string;
 
     @IsOptional()
     @IsString()
@@ -48,7 +48,7 @@ export class UpdateAuthDto {
 
     @IsOptional()
     @IsString()
-    role?: string;
+    type?: string;
 
     @IsOptional()
     @IsString()

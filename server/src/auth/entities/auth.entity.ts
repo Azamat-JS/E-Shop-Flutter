@@ -17,7 +17,7 @@ export class AuthEntity {
     address?: string;
 
     @Column({ nullable: true })
-    role?: string;
+    type?: string;
 
     @CreateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
     created_at!: Date;

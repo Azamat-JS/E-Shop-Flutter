@@ -17,7 +17,7 @@ let AuthEntity = class AuthEntity {
     email;
     password;
     address;
-    role;
+    type;
     created_at;
 };
 exports.AuthEntity = AuthEntity;
@@ -44,7 +44,7 @@ __decorate([
 __decorate([
     (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)
-], AuthEntity.prototype, "role", void 0);
+], AuthEntity.prototype, "type", void 0);
 __decorate([
     (0, typeorm_1.CreateDateColumn)({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' }),
     __metadata("design:type", Date)
