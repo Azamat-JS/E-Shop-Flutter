@@ -22,6 +22,58 @@ class _DealOfDayState extends State<DealOfDay> {
           height: 240,
           fit: BoxFit.fitHeight,
         ),
+        Container(
+          alignment: Alignment.topLeft,
+          padding: const EdgeInsets.only(left: 15),
+          child: const Text('\$100', style: TextStyle(fontSize: 18)),
+        ),
+        Container(
+          alignment: Alignment.topLeft,
+          padding: const EdgeInsets.only(left: 15, top: 5, right: 40),
+          child: Text("Azamat", maxLines: 2, overflow: TextOverflow.ellipsis),
+        ),
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Image.network(
+                "https://images.unsplash.com/photo-1536782376847-5c9d14d97cc0?fm=jpg&q=60&w=3000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8ZnJlZXxlbnwwfHwwfHx8MA%3D%3D",
+                height: 100,
+                width: 100,
+                fit: BoxFit.fitWidth,
+              ),
+              Image.network(
+                "https://images.unsplash.com/photo-1536782376847-5c9d14d97cc0?fm=jpg&q=60&w=3000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8ZnJlZXxlbnwwfHwwfHx8MA%3D%3D",
+                height: 100,
+                width: 100,
+                fit: BoxFit.fitWidth,
+              ),
+              Image.network(
+                "https://images.unsplash.com/photo-1536782376847-5c9d14d97cc0?fm=jpg&q=60&w=3000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8ZnJlZXxlbnwwfHwwfHx8MA%3D%3D",
+                height: 100,
+                width: 100,
+                fit: BoxFit.fitWidth,
+              ),
+              Image.network(
+                "https://images.unsplash.com/photo-1536782376847-5c9d14d97cc0?fm=jpg&q=60&w=3000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8ZnJlZXxlbnwwfHwwfHx8MA%3D%3D",
+                height: 100,
+                width: 100,
+                fit: BoxFit.fitWidth,
+              ),
+            ],
+          ),
+        ),
+        Container(
+          padding: const EdgeInsets.symmetric(
+            vertical: 15,
+          ).copyWith(left: 15).copyWith(left: 15),
+          alignment: Alignment.topLeft,
+          child: Text(
+            'See all deals',
+            style: TextStyle(color: Colors.cyan[800]),
+          ),
+        ),
       ],
     );
   }
