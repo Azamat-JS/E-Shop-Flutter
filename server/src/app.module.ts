@@ -3,6 +3,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from './auth/auth.module';
 import { AuthEntity } from './auth/entities/auth.entity';
+import { ProductModule } from './product/product.module';
 
 @Module({
   imports: [
@@ -19,7 +20,8 @@ import { AuthEntity } from './auth/entities/auth.entity';
         retryAttempts: 3
       }),
     }),
-    AuthModule
+    AuthModule,
+    ProductModule
   ],
   controllers: [],
   providers: [],
