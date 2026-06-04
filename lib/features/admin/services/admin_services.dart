@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:e_shop_flutter/common/network/dio_client.dart';
 import 'package:e_shop_flutter/constants/global_variables.dart';
 import 'package:e_shop_flutter/constants/utils.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +22,7 @@ class AdminServices {
     required List<File> images,
   }) async {
     try {
-      final dio = Dio();
+      final dio = DioClient.dio;
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String token = prefs.getString('x-auth-token') ?? '';
 
