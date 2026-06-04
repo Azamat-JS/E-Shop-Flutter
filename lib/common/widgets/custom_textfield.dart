@@ -4,11 +4,13 @@ class CustomTextfield extends StatelessWidget {
   final TextEditingController controller;
   final String hintText;
   final bool obscure;
+  final int maxLines;
   const CustomTextfield({
     super.key,
     required this.controller,
     required this.hintText,
     this.obscure = false,
+    this.maxLines = 1,
   });
 
   @override
@@ -18,6 +20,7 @@ class CustomTextfield extends StatelessWidget {
       obscureText: obscure,
       autocorrect: false,
       enableSuggestions: false,
+      maxLines: maxLines,
       decoration: InputDecoration(
         hintText: hintText,
         border: const OutlineInputBorder(
