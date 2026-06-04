@@ -35,4 +35,10 @@ export class AuthController {
     return this.authService.getUserData(token);
 
   }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('imagekit')
+  getAuthParams() {
+    return this.authService.getAuthParams()
+  }
 }

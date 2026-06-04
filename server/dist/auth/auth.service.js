@@ -52,12 +52,15 @@ const auth_entity_1 = require("./entities/auth.entity");
 const typeorm_2 = require("typeorm");
 const bcrypt = __importStar(require("bcrypt"));
 const jwt_1 = require("@nestjs/jwt");
+const imagekit_service_1 = require("../utils/imagekit.service");
 let AuthService = class AuthService {
     authRepo;
     jwtService;
-    constructor(authRepo, jwtService) {
+    imageKitService;
+    constructor(authRepo, jwtService, imageKitService) {
         this.authRepo = authRepo;
         this.jwtService = jwtService;
+        this.imageKitService = imageKitService;
     }
     async register(createAuthDto) {
         const { email, password } = createAuthDto;
@@ -115,12 +118,23 @@ let AuthService = class AuthService {
         }
         return user;
     }
+    async getAuthParams() {
+        try {
+            return this.imageKitService.getAuthenticationParameters();
+        }
+        catch (err) {
+            throw new common_1.InternalServerErrorException({
+                message: err.message || 'Failed to generate auth params',
+            });
+        }
+    }
 };
 exports.AuthService = AuthService;
 exports.AuthService = AuthService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, typeorm_1.InjectRepository)(auth_entity_1.AuthEntity)),
     __metadata("design:paramtypes", [typeorm_2.Repository,
-        jwt_1.JwtService])
+        jwt_1.JwtService,
+        imagekit_service_1.ImageKitService])
 ], AuthService);
 //# sourceMappingURL=auth.service.js.map

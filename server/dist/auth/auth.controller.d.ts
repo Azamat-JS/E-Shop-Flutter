@@ -17,4 +17,9 @@ export declare class AuthController {
     }>;
     tokenIsValid(req: AuthenticatedRequest): false | Promise<boolean>;
     getUserData(req: AuthenticatedRequest): Promise<import("./entities/auth.entity").AuthEntity>;
+    getAuthParams(): Promise<{
+        token: string;
+        expire: number;
+        signature: string;
+    }>;
 }

@@ -16,6 +16,7 @@ exports.AuthController = void 0;
 const common_1 = require("@nestjs/common");
 const auth_service_1 = require("./auth.service");
 const create_auth_dto_1 = require("./dto/create-auth.dto");
+const jwt_guard_1 = require("../utils/jwt.guard");
 let AuthController = class AuthController {
     authService;
     constructor(authService) {
@@ -39,6 +40,9 @@ let AuthController = class AuthController {
             throw new common_1.UnauthorizedException("No token provided");
         }
         return this.authService.getUserData(token);
+    }
+    getAuthParams() {
+        return this.authService.getAuthParams();
     }
 };
 exports.AuthController = AuthController;
@@ -70,6 +74,13 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
 ], AuthController.prototype, "getUserData", null);
+__decorate([
+    (0, common_1.UseGuards)(jwt_guard_1.JwtAuthGuard),
+    (0, common_1.Get)('imagekit'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", void 0)
+], AuthController.prototype, "getAuthParams", null);
 exports.AuthController = AuthController = __decorate([
     (0, common_1.Controller)('auth'),
     __metadata("design:paramtypes", [auth_service_1.AuthService])
