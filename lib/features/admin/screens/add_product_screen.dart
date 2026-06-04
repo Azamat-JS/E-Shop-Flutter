@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:e_shop_flutter/common/widgets/custom_button.dart';
 import 'package:e_shop_flutter/common/widgets/custom_textfield.dart';
@@ -73,39 +74,61 @@ class _AddProductScreenState extends State<AddProductScreen> {
             child: Column(
               children: [
                 const SizedBox(height: 20),
-                GestureDetector(
-                  onTap: selectImages,
-                  child: DottedBorder(
-                    options: RoundedRectDottedBorderOptions(
-                      dashPattern: [10, 5],
-                      strokeWidth: 2,
-                      radius: Radius.circular(16),
-                      color: Colors.indigo,
-                      padding: EdgeInsets.all(16),
-                    ),
-                    child: Container(
-                      width: double.infinity,
-                      height: 150,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Icon(Icons.folder_open, size: 40),
-                          const SizedBox(height: 10),
-                          Text(
-                            'Select Product Images',
-                            style: TextStyle(
-                              fontSize: 15,
-                              color: Colors.grey.shade400,
+                images.isNotEmpty
+                    ? CarouselSlider(
+                        items: images.map((i) {
+                          return Builder(
+                            builder: (BuildContext context) {
+                              return SizedBox(
+                                width: double.infinity,
+                                child: Image.file(
+                                  i,
+                                  fit: BoxFit.cover,
+                                  height: 200,
+                                ),
+                              );
+                            },
+                          );
+                        }).toList(),
+                        options: CarouselOptions(
+                          viewportFraction: 1,
+                          height: 200,
+                          autoPlay: true,
+                        ),
+                      )
+                    : GestureDetector(
+                        onTap: selectImages,
+                        child: DottedBorder(
+                          options: RoundedRectDottedBorderOptions(
+                            dashPattern: [10, 5],
+                            strokeWidth: 2,
+                            radius: Radius.circular(16),
+                            color: Colors.indigo,
+                            padding: EdgeInsets.all(16),
+                          ),
+                          child: Container(
+                            width: double.infinity,
+                            height: 150,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Icon(Icons.folder_open, size: 40),
+                                const SizedBox(height: 10),
+                                Text(
+                                  'Select Product Images',
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    color: Colors.grey.shade400,
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
-                        ],
+                        ),
                       ),
-                    ),
-                  ),
-                ),
                 SizedBox(height: 30),
                 CustomTextfield(
                   hintText: 'Product Name',
