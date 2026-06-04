@@ -1,15 +1,18 @@
-import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common';
+import { BadRequestException, Injectable, InternalServerErrorException, UnauthorizedException } from '@nestjs/common';
 import { CreateAuthDto, LoginDto, UpdateAuthDto } from './dto/create-auth.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { AuthEntity } from './entities/auth.entity';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
+import { ImageKitService } from 'src/utils/imagekit.service';
 
 @Injectable()
 export class AuthService {
   constructor(@InjectRepository(AuthEntity) private authRepo: Repository<AuthEntity>,
-    private readonly jwtService: JwtService
+    private readonly jwtService: JwtService,
+    private readonly imageKitService: ImageKitService,
+
   ) { }
   async register(createAuthDto: CreateAuthDto) {
     const { email, password } = createAuthDto;
@@ -80,5 +83,15 @@ export class AuthService {
       throw new UnauthorizedException("User not found");
     }
     return user;
+  }
+
+  async getAuthParams() {
+    try {
+      return this.imageKitService.getAuthenticationParameters();
+    } catch (err: any) {
+      throw new InternalServerErrorException({
+        message: err.message || 'Failed to generate auth params',
+      });
+    }
   }
 }
