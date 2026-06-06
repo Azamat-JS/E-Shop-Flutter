@@ -1,5 +1,5 @@
 import { BadRequestException, Injectable, InternalServerErrorException, UnauthorizedException } from '@nestjs/common';
-import { CreateAuthDto, LoginDto, UpdateAuthDto } from './dto/create-auth.dto';
+import { CreateAuthDto, LoginDto } from './dto/create-auth.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { AuthEntity } from './entities/auth.entity';
 import { Repository } from 'typeorm';

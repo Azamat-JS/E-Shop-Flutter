@@ -26,7 +26,7 @@ export class CreateProductDto {
     price!: number;
 }
 
-export class UpdateProduct {
+export class UpdateProductDto {
     @IsOptional()
     @IsString()
     name?: string;
