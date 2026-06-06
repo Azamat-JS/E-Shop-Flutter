@@ -6,7 +6,7 @@ import { CreateProductDto } from './dto/create-product.dto';
 export class ProductController {
   constructor(private readonly productService: ProductService) { }
 
-  @Post()
+  @Post('add-product')
   create(@Body() createProductDto: CreateProductDto) {
     return this.productService.create(createProductDto);
   }
