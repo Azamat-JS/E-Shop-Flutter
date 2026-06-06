@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:e_shop_flutter/common/widgets/bottom_bar.dart';
 import 'package:e_shop_flutter/constants/error_handling.dart';
+import 'package:e_shop_flutter/features/admin/screens/admin_screen.dart';
+import 'package:e_shop_flutter/features/auth/screens/auth_screen.dart';
 import 'package:e_shop_flutter/constants/global_variables.dart';
 import 'package:e_shop_flutter/constants/utils.dart';
 import 'package:e_shop_flutter/models/user.dart';
@@ -73,15 +75,43 @@ class AuthService {
           SharedPreferences prefs = await SharedPreferences.getInstance();
           Provider.of<UserProvider>(context, listen: false).setUser(res.body);
           await prefs.setString('x-auth-token', jsonDecode(res.body)['token']);
+          if (!context.mounted) return;
           showSnackbar(context, "Login successful!");
-          Navigator.pushNamedAndRemoveUntil(
-            context,
-            BottomBar.routeName,
-            (route) => false,
-          );
+          final userType =
+              Provider.of<UserProvider>(context, listen: false).user.type;
+          if (userType == 'admin') {
+            Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (_) => const AdminScreen()),
+              (route) => false,
+            );
+          } else {
+            Navigator.pushNamedAndRemoveUntil(
+              context,
+              BottomBar.routeName,
+              (route) => false,
+            );
+          }
         },
       );
     } catch (e) {
+      showSnackbar(context, e.toString());
+    }
+  }
+
+  void logOut(BuildContext context) async {
+    try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setString('x-auth-token', '');
+      if (!context.mounted) return;
+      Provider.of<UserProvider>(context, listen: false).clearUser();
+      Navigator.pushNamedAndRemoveUntil(
+        context,
+        AuthScreen.routeName,
+        (route) => false,
+      );
+    } catch (e) {
+      if (!context.mounted) return;
       showSnackbar(context, e.toString());
     }
   }

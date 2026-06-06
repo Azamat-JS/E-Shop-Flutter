@@ -1,4 +1,5 @@
 import 'package:e_shop_flutter/features/account/widgets/account_button.dart';
+import 'package:e_shop_flutter/features/auth/services/auth_service.dart';
 import 'package:flutter/material.dart';
 
 class TopButtons extends StatefulWidget {
@@ -9,6 +10,8 @@ class TopButtons extends StatefulWidget {
 }
 
 class _TopButtonsState extends State<TopButtons> {
+  final AuthService _authService = AuthService();
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -22,7 +25,10 @@ class _TopButtonsState extends State<TopButtons> {
         const SizedBox(height: 10),
         Row(
           children: [
-            AccountButton(text: "Log Out", onTap: () {}),
+            AccountButton(
+              text: "Log Out",
+              onTap: () => _authService.logOut(context),
+            ),
             AccountButton(text: "Your Wish List", onTap: () {}),
           ],
         ),
