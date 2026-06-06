@@ -12,16 +12,31 @@ const product_service_1 = require("./product.service");
 const product_controller_1 = require("./product.controller");
 const typeorm_1 = require("@nestjs/typeorm");
 const product_entity_1 = require("./entities/product.entity");
+const jwt_1 = require("@nestjs/jwt");
+const config_1 = require("@nestjs/config");
+const passport_1 = require("@nestjs/passport");
+const jwt_strategy_1 = require("../utils/jwt.strategy");
 let ProductModule = class ProductModule {
 };
 exports.ProductModule = ProductModule;
 exports.ProductModule = ProductModule = __decorate([
     (0, common_1.Module)({
         imports: [
-            typeorm_1.TypeOrmModule.forFeature([product_entity_1.ProductEntity])
+            passport_1.PassportModule,
+            typeorm_1.TypeOrmModule.forFeature([product_entity_1.ProductEntity]),
+            jwt_1.JwtModule.registerAsync({
+                imports: [config_1.ConfigModule],
+                inject: [config_1.ConfigService],
+                useFactory: (configService) => ({
+                    secret: configService.get('JWT_SECRET'),
+                    signOptions: {
+                        expiresIn: '1d',
+                    },
+                }),
+            }),
         ],
         controllers: [product_controller_1.ProductController],
-        providers: [product_service_1.ProductService],
+        providers: [product_service_1.ProductService, jwt_strategy_1.JwtStrategy],
     })
 ], ProductModule);
 //# sourceMappingURL=product.module.js.map

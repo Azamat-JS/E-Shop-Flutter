@@ -14,13 +14,16 @@ const typeorm_1 = require("@nestjs/typeorm");
 const auth_entity_1 = require("./entities/auth.entity");
 const jwt_1 = require("@nestjs/jwt");
 const config_1 = require("@nestjs/config");
+const passport_1 = require("@nestjs/passport");
 const imagekit_service_1 = require("../utils/imagekit.service");
+const jwt_strategy_1 = require("../utils/jwt.strategy");
 let AuthModule = class AuthModule {
 };
 exports.AuthModule = AuthModule;
 exports.AuthModule = AuthModule = __decorate([
     (0, common_1.Module)({
         imports: [
+            passport_1.PassportModule,
             typeorm_1.TypeOrmModule.forFeature([auth_entity_1.AuthEntity]),
             jwt_1.JwtModule.registerAsync({
                 imports: [config_1.ConfigModule],
@@ -34,7 +37,7 @@ exports.AuthModule = AuthModule = __decorate([
             }),
         ],
         controllers: [auth_controller_1.AuthController],
-        providers: [auth_service_1.AuthService, imagekit_service_1.ImageKitService],
+        providers: [auth_service_1.AuthService, imagekit_service_1.ImageKitService, jwt_strategy_1.JwtStrategy],
     })
 ], AuthModule);
 //# sourceMappingURL=auth.module.js.map

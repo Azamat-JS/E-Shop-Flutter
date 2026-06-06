@@ -5,10 +5,13 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthEntity } from './entities/auth.entity';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { PassportModule } from '@nestjs/passport';
 import { ImageKitService } from 'src/utils/imagekit.service';
+import { JwtStrategy } from 'src/utils/jwt.strategy';
 
 @Module({
   imports: [
+    PassportModule,
     TypeOrmModule.forFeature([AuthEntity]),
     JwtModule.registerAsync({
       imports: [ConfigModule],
@@ -22,6 +25,6 @@ import { ImageKitService } from 'src/utils/imagekit.service';
     }),
   ],
   controllers: [AuthController],
-  providers: [AuthService, ImageKitService],
+  providers: [AuthService, ImageKitService, JwtStrategy],
 })
 export class AuthModule { }

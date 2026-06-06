@@ -16,6 +16,7 @@ exports.ProductController = void 0;
 const common_1 = require("@nestjs/common");
 const product_service_1 = require("./product.service");
 const create_product_dto_1 = require("./dto/create-product.dto");
+const jwt_guard_1 = require("../utils/jwt.guard");
 let ProductController = class ProductController {
     productService;
     constructor(productService) {
@@ -39,6 +40,7 @@ let ProductController = class ProductController {
 };
 exports.ProductController = ProductController;
 __decorate([
+    (0, common_1.UseGuards)(jwt_guard_1.JwtAuthGuard),
     (0, common_1.Post)('add-product'),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
