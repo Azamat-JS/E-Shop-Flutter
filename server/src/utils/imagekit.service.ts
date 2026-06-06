@@ -1,4 +1,5 @@
 import { Injectable, InternalServerErrorException } from "@nestjs/common";
+import { randomUUID } from "crypto";
 import ImageKit = require("imagekit");
 
 @Injectable()
@@ -15,7 +16,7 @@ export class ImageKitService {
 
   getAuthenticationParameters() {
     try {
-      return this.imagekit.getAuthenticationParameters();
+      return this.imagekit.getAuthenticationParameters(randomUUID());
     } catch (err) {
       throw new InternalServerErrorException("Failed to generate upload authentication parameters");
     }

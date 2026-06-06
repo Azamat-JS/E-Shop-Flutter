@@ -15,7 +15,7 @@ let ProductEntity = class ProductEntity {
     id;
     name;
     description;
-    image_urls;
+    images;
     quantity;
     price;
     category;
@@ -36,7 +36,7 @@ __decorate([
 __decorate([
     (0, typeorm_1.Column)({ type: 'simple-array' }),
     __metadata("design:type", Array)
-], ProductEntity.prototype, "image_urls", void 0);
+], ProductEntity.prototype, "images", void 0);
 __decorate([
     (0, typeorm_1.Column)({ type: 'int' }),
     __metadata("design:type", Number)

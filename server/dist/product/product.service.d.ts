@@ -4,7 +4,7 @@ import { Repository } from 'typeorm';
 export declare class ProductService {
     private readonly productRepo;
     constructor(productRepo: Repository<ProductEntity>);
-    create(createProductDto: CreateProductDto): ProductEntity;
+    create(createProductDto: CreateProductDto): Promise<ProductEntity>;
     findAll(): string;
     findOne(id: string): string;
     update(id: string, updateProductDto: UpdateProductDto): string;

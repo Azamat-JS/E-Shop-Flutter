@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ImageKitService = void 0;
 const common_1 = require("@nestjs/common");
+const crypto_1 = require("crypto");
 const ImageKit = require("imagekit");
 let ImageKitService = class ImageKitService {
     imagekit;
@@ -23,7 +24,7 @@ let ImageKitService = class ImageKitService {
     }
     getAuthenticationParameters() {
         try {
-            return this.imagekit.getAuthenticationParameters();
+            return this.imagekit.getAuthenticationParameters((0, crypto_1.randomUUID)());
         }
         catch (err) {
             throw new common_1.InternalServerErrorException("Failed to generate upload authentication parameters");

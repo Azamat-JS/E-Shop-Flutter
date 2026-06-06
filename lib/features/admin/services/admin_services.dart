@@ -27,16 +27,15 @@ class AdminServices {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String token = prefs.getString('x-auth-token') ?? '';
 
-      final authResponse = await dio.get(
-        '${ApiConfig.baseUrl}/auth/imagekit',
-        options: Options(headers: {'x-auth-token': token}),
-      );
-
-      final authData = authResponse.data;
-
       List<String> imageUrls = [];
 
       for (File image in images) {
+        final authResponse = await dio.get(
+          '${ApiConfig.baseUrl}/auth/imagekit',
+          options: Options(headers: {'x-auth-token': token}),
+        );
+        final authData = authResponse.data;
+
         String fileName = basename(image.path);
         final mimeType = lookupMimeType(image.path)?.split('/');
 

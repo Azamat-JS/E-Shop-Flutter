@@ -7,9 +7,9 @@ import { Repository } from 'typeorm';
 @Injectable()
 export class ProductService {
   constructor(@InjectRepository(ProductEntity) private readonly productRepo: Repository<ProductEntity>) { }
-  create(createProductDto: CreateProductDto) {
-    return this.productRepo.create(createProductDto);
-
+  async create(createProductDto: CreateProductDto) {
+    const product = this.productRepo.create(createProductDto);
+    return this.productRepo.save(product);
   }
 
   findAll() {

@@ -22,8 +22,9 @@ let ProductService = class ProductService {
     constructor(productRepo) {
         this.productRepo = productRepo;
     }
-    create(createProductDto) {
-        return this.productRepo.create(createProductDto);
+    async create(createProductDto) {
+        const product = this.productRepo.create(createProductDto);
+        return this.productRepo.save(product);
     }
     findAll() {
         return `This action returns all product`;
