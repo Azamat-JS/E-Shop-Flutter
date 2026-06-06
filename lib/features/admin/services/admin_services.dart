@@ -65,21 +65,6 @@ class AdminServices {
         imageUrls.add(uploadResponse.data["url"]);
       }
 
-      final productData = {
-        "name": name,
-        "description": description,
-        "price": price,
-        "quantity": quantity,
-        "category": category,
-        "images": imageUrls,
-      };
-
-      await dio.post(
-        '${ApiConfig.baseUrl}/product/add-product',
-        data: jsonEncode(productData),
-        options: Options(headers: {'x-auth-token': token}),
-      );
-
       Product product = Product(
         name: name,
         description: description,
@@ -88,6 +73,13 @@ class AdminServices {
         category: category,
         price: price,
       );
+
+      await dio.post(
+        '${ApiConfig.baseUrl}/product/add-product',
+        data: product.toMap(),
+        options: Options(headers: {'x-auth-token': token}),
+      );
+
       showSnackbar(context, "Product added successfully");
     } on DioException catch (e) {
       showSnackbar(
