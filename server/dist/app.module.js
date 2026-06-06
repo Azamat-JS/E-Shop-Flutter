@@ -12,6 +12,7 @@ const config_1 = require("@nestjs/config");
 const typeorm_1 = require("@nestjs/typeorm");
 const auth_module_1 = require("./auth/auth.module");
 const auth_entity_1 = require("./auth/entities/auth.entity");
+const product_module_1 = require("./product/product.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -31,7 +32,8 @@ exports.AppModule = AppModule = __decorate([
                     retryAttempts: 3
                 }),
             }),
-            auth_module_1.AuthModule
+            auth_module_1.AuthModule,
+            product_module_1.ProductModule,
         ],
         controllers: [],
         providers: [],
