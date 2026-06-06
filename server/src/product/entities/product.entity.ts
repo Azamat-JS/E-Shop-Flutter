@@ -1,8 +1,9 @@
 import { AuthEntity } from "src/auth/entities/auth.entity";
-import { Column, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
+@Entity({ name: "products" })
 export class ProductEntity {
-    @PrimaryGeneratedColumn()
+    @PrimaryGeneratedColumn("uuid")
     id!: string;
 
     @Column()
@@ -11,7 +12,7 @@ export class ProductEntity {
     @Column()
     description!: string;
 
-    @Column()
+    @Column({ type: 'simple-array' })
     image_urls!: string[];
 
     @Column({ type: 'int' })

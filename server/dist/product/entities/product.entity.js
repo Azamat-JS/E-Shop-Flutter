@@ -11,7 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ProductEntity = void 0;
 const typeorm_1 = require("typeorm");
-class ProductEntity {
+let ProductEntity = class ProductEntity {
     id;
     name;
     description;
@@ -19,10 +19,10 @@ class ProductEntity {
     quantity;
     price;
     category;
-}
+};
 exports.ProductEntity = ProductEntity;
 __decorate([
-    (0, typeorm_1.PrimaryGeneratedColumn)(),
+    (0, typeorm_1.PrimaryGeneratedColumn)("uuid"),
     __metadata("design:type", String)
 ], ProductEntity.prototype, "id", void 0);
 __decorate([
@@ -34,7 +34,7 @@ __decorate([
     __metadata("design:type", String)
 ], ProductEntity.prototype, "description", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
+    (0, typeorm_1.Column)({ type: 'simple-array' }),
     __metadata("design:type", Array)
 ], ProductEntity.prototype, "image_urls", void 0);
 __decorate([
@@ -49,4 +49,7 @@ __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
 ], ProductEntity.prototype, "category", void 0);
+exports.ProductEntity = ProductEntity = __decorate([
+    (0, typeorm_1.Entity)({ name: "products" })
+], ProductEntity);
 //# sourceMappingURL=product.entity.js.map
