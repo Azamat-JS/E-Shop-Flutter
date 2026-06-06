@@ -9,7 +9,6 @@ class Product {
   final String category;
   final double price;
   final String? id;
-  final String? userId;
 
   Product({
     required this.name,
@@ -19,7 +18,6 @@ class Product {
     required this.category,
     required this.price,
     this.id,
-    this.userId,
   });
   // rating
 
@@ -32,7 +30,6 @@ class Product {
       'category': category,
       'price': price,
       'id': id,
-      'userId': userId,
     };
   }
 
@@ -44,7 +41,6 @@ class Product {
       category: map['category'] ?? "",
       price: map['price'] ?? 0.0,
       id: map['id'] != null ? map['id'] as String : null,
-      userId: map['userId'] != null ? map['userId'] as String : null,
       images: List<String>.from((map['images'] as List<String>)),
     );
   }

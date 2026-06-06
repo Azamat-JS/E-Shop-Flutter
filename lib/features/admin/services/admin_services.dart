@@ -75,7 +75,7 @@ class AdminServices {
       };
 
       await dio.post(
-        '${ApiConfig.baseUrl}/admin/add-product',
+        '${ApiConfig.baseUrl}/product/add-product',
         data: jsonEncode(productData),
         options: Options(headers: {'x-auth-token': token}),
       );
