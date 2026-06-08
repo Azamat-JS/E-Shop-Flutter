@@ -1,4 +1,7 @@
+import 'package:e_shop_flutter/common/widgets/loader.dart';
 import 'package:e_shop_flutter/features/admin/screens/add_product_screen.dart';
+import 'package:e_shop_flutter/features/admin/services/admin_services.dart';
+import 'package:e_shop_flutter/models/product.dart';
 import 'package:flutter/material.dart';
 
 class PostsScreen extends StatefulWidget {
@@ -9,20 +12,39 @@ class PostsScreen extends StatefulWidget {
 }
 
 class _PostsScreenState extends State<PostsScreen> {
+  List<Product>? products;
+
+  @override
+  void initState() {
+    super.initState();
+    loadProducts();
+  }
+
+  void loadProducts() async {
+    final data = await AdminServices().fetchAllProducts(context);
+
+    setState(() {
+      products = data;
+    });
+  }
+
   void navigateToAddProduct() {
     Navigator.pushNamed(context, AddProductScreen.routeName);
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: const Center(child: Text("Products")),
-      floatingActionButton: FloatingActionButton(
-        onPressed: navigateToAddProduct,
-        tooltip: 'Add Product',
-        child: const Icon(Icons.add),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-    );
+    return products == null
+        ? const Loader()
+        : Scaffold(
+            body: const Center(child: Text("Products")),
+            floatingActionButton: FloatingActionButton(
+              onPressed: navigateToAddProduct,
+              tooltip: 'Add Product',
+              child: const Icon(Icons.add),
+            ),
+            floatingActionButtonLocation:
+                FloatingActionButtonLocation.centerFloat,
+          );
   }
 }

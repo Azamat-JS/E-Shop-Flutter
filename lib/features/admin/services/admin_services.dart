@@ -94,20 +94,21 @@ class AdminServices {
 
   Future<List<Product>> fetchAllProducts(BuildContext context) async {
     final dio = DioClient.dio;
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String token = prefs.getString('x-auth-token') ?? '';
-    List<Product> productList = [];
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('x-auth-token') ?? '';
+
     try {
       final res = await dio.get(
         '${ApiConfig.baseUrl}/product/get-all',
         options: Options(headers: {'x-auth-token': token}),
       );
-      for (int i = 0; i < jsonDecode(res.data).length; i++) {
-        productList.add(Product.fromJson(jsonEncode(jsonDecode(res.data)[i])));
-      }
+
+      final data = res.data as List;
+
+      return data.map((e) => Product.fromMap(e)).toList();
     } catch (e) {
       showSnackbar(context, e.toString());
+      return [];
     }
-    return productList;
   }
 }
