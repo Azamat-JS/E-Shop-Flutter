@@ -13,7 +13,7 @@ export class ProductService {
   }
 
   findAll() {
-    return `This action returns all product`;
+    return this.productRepo.find();
   }
 
   findOne(id: string) {

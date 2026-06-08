@@ -27,7 +27,7 @@ let ProductService = class ProductService {
         return this.productRepo.save(product);
     }
     findAll() {
-        return `This action returns all product`;
+        return this.productRepo.find();
     }
     findOne(id) {
         return `This action returns a #${id} product`;

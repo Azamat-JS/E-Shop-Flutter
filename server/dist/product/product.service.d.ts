@@ -5,7 +5,7 @@ export declare class ProductService {
     private readonly productRepo;
     constructor(productRepo: Repository<ProductEntity>);
     create(createProductDto: CreateProductDto): Promise<ProductEntity>;
-    findAll(): string;
+    findAll(): Promise<ProductEntity[]>;
     findOne(id: string): string;
     update(id: string, updateProductDto: UpdateProductDto): string;
     remove(id: string): string;

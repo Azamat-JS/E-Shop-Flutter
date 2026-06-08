@@ -6,9 +6,11 @@ import 'package:e_shop_flutter/common/network/dio_client.dart';
 import 'package:e_shop_flutter/constants/global_variables.dart';
 import 'package:e_shop_flutter/constants/utils.dart';
 import 'package:e_shop_flutter/models/product.dart';
+import 'package:e_shop_flutter/providers/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:path/path.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:mime/mime.dart';
 
@@ -88,5 +90,24 @@ class AdminServices {
     } catch (e) {
       showSnackbar(context, e.toString());
     }
+  }
+
+  Future<List<Product>> fetchAllProducts(BuildContext context) async {
+    final dio = DioClient.dio;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String token = prefs.getString('x-auth-token') ?? '';
+    List<Product> productList = [];
+    try {
+      final res = await dio.get(
+        '${ApiConfig.baseUrl}/product/get-all',
+        options: Options(headers: {'x-auth-token': token}),
+      );
+      for (int i = 0; i < jsonDecode(res.data).length; i++) {
+        productList.add(Product.fromJson(jsonEncode(jsonDecode(res.data)[i])));
+      }
+    } catch (e) {
+      showSnackbar(context, e.toString());
+    }
+    return productList;
   }
 }
