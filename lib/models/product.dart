@@ -37,11 +37,14 @@ class Product {
     return Product(
       name: map['name'] ?? "",
       description: map['description'] ?? "",
-      quantity: map['quantity'] ?? 0.0,
+
+      quantity: (map['quantity'] ?? 0).toDouble(),
+      price: (map['price'] ?? 0).toDouble(),
+
       category: map['category'] ?? "",
-      price: map['price'] ?? 0.0,
-      id: map['id'] != null ? map['id'] as String : null,
-      images: List<String>.from((map['images'] as List<String>)),
+      id: map['id']?.toString(),
+
+      images: List<String>.from(map['images'] ?? []),
     );
   }
 
