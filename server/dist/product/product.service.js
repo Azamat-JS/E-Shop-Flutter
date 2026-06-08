@@ -35,8 +35,12 @@ let ProductService = class ProductService {
     update(id, updateProductDto) {
         return `This action updates a #${id} product`;
     }
-    remove(id) {
-        return `This action removes a #${id} product`;
+    async remove(id) {
+        const deletedProduct = await this.productRepo.delete(id);
+        if (deletedProduct.affected === 0) {
+            throw new common_1.NotFoundException('Product not found');
+        }
+        return { message: "Product deleted successfully!" };
     }
 };
 exports.ProductService = ProductService;

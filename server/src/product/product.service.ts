@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateProductDto, UpdateProductDto } from './dto/create-product.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ProductEntity } from './entities/product.entity';
@@ -24,7 +24,11 @@ export class ProductService {
     return `This action updates a #${id} product`;
   }
 
-  remove(id: string) {
-    return `This action removes a #${id} product`;
+  async remove(id: string) {
+    const deletedProduct = await this.productRepo.delete(id)
+    if (deletedProduct.affected === 0) {
+      throw new NotFoundException('Product not found')
+    }
+    return { message: "Product deleted successfully!" }
   }
 }
