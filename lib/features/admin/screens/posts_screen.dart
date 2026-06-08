@@ -14,6 +14,7 @@ class PostsScreen extends StatefulWidget {
 
 class _PostsScreenState extends State<PostsScreen> {
   List<Product>? products;
+  final AdminServices adminServices = AdminServices();
 
   @override
   void initState() {
@@ -22,11 +23,23 @@ class _PostsScreenState extends State<PostsScreen> {
   }
 
   void loadProducts() async {
-    final data = await AdminServices().fetchAllProducts(context);
+    final data = await adminServices.fetchAllProducts(context);
 
     setState(() {
       products = data;
     });
+  }
+
+  void deleteProduct(Product product, int index) {
+    adminServices.deleteProduct(
+      context: context,
+      product: product,
+      onSuccess: () {
+        setState(() {
+          products!.removeAt(index);
+        });
+      },
+    );
   }
 
   void navigateToAddProduct() {
@@ -62,7 +75,7 @@ class _PostsScreenState extends State<PostsScreen> {
                           ),
                         ),
                         IconButton(
-                          onPressed: () {},
+                          onPressed: () => deleteProduct(productData, index),
                           icon: const Icon(Icons.delete_outline),
                         ),
                       ],

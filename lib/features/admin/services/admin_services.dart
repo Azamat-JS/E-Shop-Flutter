@@ -111,4 +111,29 @@ class AdminServices {
       return [];
     }
   }
+
+  void deleteProduct({
+    required BuildContext context,
+    required Product product,
+    required VoidCallback onSuccess,
+  }) async {
+    try {
+      final dio = DioClient.dio;
+
+      final prefs = await SharedPreferences.getInstance();
+
+      final token = prefs.getString('x-auth-token') ?? '';
+
+      final res = await dio.delete(
+        '${ApiConfig.baseUrl}/product/delete/${product.id}',
+        options: Options(headers: {'x-auth-token': token}),
+      );
+
+      showSnackbar(context, res.data['message']);
+
+      onSuccess();
+    } catch (e) {
+      showSnackbar(context, e.toString());
+    }
+  }
 }
