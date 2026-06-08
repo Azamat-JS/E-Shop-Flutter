@@ -1,4 +1,5 @@
 import 'package:e_shop_flutter/common/widgets/loader.dart';
+import 'package:e_shop_flutter/features/account/widgets/single_product.dart';
 import 'package:e_shop_flutter/features/admin/screens/add_product_screen.dart';
 import 'package:e_shop_flutter/features/admin/services/admin_services.dart';
 import 'package:e_shop_flutter/models/product.dart';
@@ -37,7 +38,39 @@ class _PostsScreenState extends State<PostsScreen> {
     return products == null
         ? const Loader()
         : Scaffold(
-            body: const Center(child: Text("Products")),
+            body: GridView.builder(
+              itemCount: products!.length,
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+              ),
+              itemBuilder: (context, index) {
+                final productData = products![index];
+                return Column(
+                  children: [
+                    SizedBox(
+                      height: 140,
+                      child: SingleProduct(image: productData.images[0]),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Expanded(
+                          child: Text(
+                            productData.name,
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 2,
+                          ),
+                        ),
+                        IconButton(
+                          onPressed: () {},
+                          icon: const Icon(Icons.delete_outline),
+                        ),
+                      ],
+                    ),
+                  ],
+                );
+              },
+            ),
             floatingActionButton: FloatingActionButton(
               onPressed: navigateToAddProduct,
               tooltip: 'Add Product',
