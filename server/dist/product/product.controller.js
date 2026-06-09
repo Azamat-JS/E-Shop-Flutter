@@ -17,6 +17,9 @@ const common_1 = require("@nestjs/common");
 const product_service_1 = require("./product.service");
 const create_product_dto_1 = require("./dto/create-product.dto");
 const jwt_guard_1 = require("../utils/jwt.guard");
+const roles_1 = require("../utils/roles");
+const roles_guard_1 = require("../utils/roles.guard");
+const ProductQuery_1 = require("../utils/queries/ProductQuery");
 let ProductController = class ProductController {
     productService;
     constructor(productService) {
@@ -28,8 +31,8 @@ let ProductController = class ProductController {
     findAll() {
         return this.productService.findAll();
     }
-    findOne(id) {
-        return this.productService.findOne(id);
+    findByCategory(query) {
+        return this.productService.findByCategory(query.category);
     }
     update(id, updateProductDto) {
         return this.productService.update(id, updateProductDto);
@@ -40,7 +43,8 @@ let ProductController = class ProductController {
 };
 exports.ProductController = ProductController;
 __decorate([
-    (0, common_1.UseGuards)(jwt_guard_1.JwtAuthGuard),
+    (0, common_1.UseGuards)(roles_guard_1.RolesGuard),
+    (0, roles_1.Roles)('admin'),
     (0, common_1.Post)('add-product'),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
@@ -54,12 +58,12 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], ProductController.prototype, "findAll", null);
 __decorate([
-    (0, common_1.Get)(':id'),
-    __param(0, (0, common_1.Param)('id')),
+    (0, common_1.Get)('get-by-category'),
+    __param(0, (0, common_1.Query)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
+    __metadata("design:paramtypes", [ProductQuery_1.ProductQuery]),
     __metadata("design:returntype", void 0)
-], ProductController.prototype, "findOne", null);
+], ProductController.prototype, "findByCategory", null);
 __decorate([
     (0, common_1.Patch)(':id'),
     __param(0, (0, common_1.Param)('id')),
@@ -76,6 +80,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], ProductController.prototype, "remove", null);
 exports.ProductController = ProductController = __decorate([
+    (0, common_1.UseGuards)(jwt_guard_1.JwtAuthGuard),
     (0, common_1.Controller)('product'),
     __metadata("design:paramtypes", [product_service_1.ProductService])
 ], ProductController);

@@ -29,8 +29,12 @@ let ProductService = class ProductService {
     findAll() {
         return this.productRepo.find();
     }
-    findOne(id) {
-        return `This action returns a #${id} product`;
+    async findByCategory(category) {
+        const products = await this.productRepo.find({ where: { category: category } });
+        if (products.length < 1) {
+            throw new common_1.NotFoundException("Products not found");
+        }
+        return products;
     }
     update(id, updateProductDto) {
         return `This action updates a #${id} product`;
