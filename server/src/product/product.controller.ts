@@ -4,12 +4,21 @@ import { CreateProductDto } from './dto/create-product.dto';
 import { JwtAuthGuard } from 'src/utils/jwt.guard';
 import { Roles } from 'src/utils/roles';
 import { RolesGuard } from 'src/utils/roles.guard';
-import { ProductQuery } from 'src/utils/queries/ProductQuery';
 
 @UseGuards(JwtAuthGuard)
 @Controller('product')
 export class ProductController {
   constructor(private readonly productService: ProductService) { }
+
+  @Get('get-all')
+  findAll() {
+    return this.productService.findAll();
+  }
+
+  @Get('get-by-category')
+  findByCategory(@Query('category') category: string) {
+    return this.productService.findByCategory(category);
+  }
 
   @UseGuards(RolesGuard)
   @Roles('admin')
@@ -18,15 +27,6 @@ export class ProductController {
     return this.productService.create(createProductDto);
   }
 
-  @Get('get-all')
-  findAll() {
-    return this.productService.findAll();
-  }
-
-  @Get('get-by-category')
-  findByCategory(@Query() query: ProductQuery) {
-    return this.productService.findByCategory(query.category);
-  }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateProductDto: CreateProductDto) {

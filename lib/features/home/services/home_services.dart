@@ -17,7 +17,7 @@ class HomeServices {
 
     try {
       final res = await dio.get(
-        '${ApiConfig.baseUrl}/category/get-all',
+        '${ApiConfig.baseUrl}/product/get-by-category?category=${Uri.encodeComponent(category)}',
         options: Options(headers: {'x-auth-token': token}),
       );
 

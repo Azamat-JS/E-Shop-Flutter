@@ -19,20 +19,19 @@ const create_product_dto_1 = require("./dto/create-product.dto");
 const jwt_guard_1 = require("../utils/jwt.guard");
 const roles_1 = require("../utils/roles");
 const roles_guard_1 = require("../utils/roles.guard");
-const ProductQuery_1 = require("../utils/queries/ProductQuery");
 let ProductController = class ProductController {
     productService;
     constructor(productService) {
         this.productService = productService;
     }
-    create(createProductDto) {
-        return this.productService.create(createProductDto);
-    }
     findAll() {
         return this.productService.findAll();
     }
-    findByCategory(query) {
-        return this.productService.findByCategory(query.category);
+    findByCategory(category) {
+        return this.productService.findByCategory(category);
+    }
+    create(createProductDto) {
+        return this.productService.create(createProductDto);
     }
     update(id, updateProductDto) {
         return this.productService.update(id, updateProductDto);
@@ -43,6 +42,19 @@ let ProductController = class ProductController {
 };
 exports.ProductController = ProductController;
 __decorate([
+    (0, common_1.Get)('get-all'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", void 0)
+], ProductController.prototype, "findAll", null);
+__decorate([
+    (0, common_1.Get)('get-by-category'),
+    __param(0, (0, common_1.Query)('category')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", void 0)
+], ProductController.prototype, "findByCategory", null);
+__decorate([
     (0, common_1.UseGuards)(roles_guard_1.RolesGuard),
     (0, roles_1.Roles)('admin'),
     (0, common_1.Post)('add-product'),
@@ -51,19 +63,6 @@ __decorate([
     __metadata("design:paramtypes", [create_product_dto_1.CreateProductDto]),
     __metadata("design:returntype", void 0)
 ], ProductController.prototype, "create", null);
-__decorate([
-    (0, common_1.Get)('get-all'),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", void 0)
-], ProductController.prototype, "findAll", null);
-__decorate([
-    (0, common_1.Get)('get-by-category'),
-    __param(0, (0, common_1.Query)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [ProductQuery_1.ProductQuery]),
-    __metadata("design:returntype", void 0)
-], ProductController.prototype, "findByCategory", null);
 __decorate([
     (0, common_1.Patch)(':id'),
     __param(0, (0, common_1.Param)('id')),
