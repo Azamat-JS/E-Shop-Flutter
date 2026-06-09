@@ -7,6 +7,7 @@ export declare class ProductService {
     create(createProductDto: CreateProductDto): Promise<ProductEntity>;
     findAll(): Promise<ProductEntity[]>;
     findByCategory(category: string): Promise<ProductEntity[]>;
+    searchProduct(productName: string): Promise<ProductEntity[]>;
     update(id: string, updateProductDto: UpdateProductDto): string;
     remove(id: string): Promise<{
         message: string;

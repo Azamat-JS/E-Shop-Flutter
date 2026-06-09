@@ -37,6 +37,12 @@ let ProductService = class ProductService {
             where: { category },
         });
     }
+    async searchProduct(productName) {
+        const products = await this.productRepo.createQueryBuilder('product').where('product.name ILIKE :name', {
+            name: `${productName}`
+        }).getMany();
+        return products;
+    }
     update(id, updateProductDto) {
         return `This action updates a #${id} product`;
     }

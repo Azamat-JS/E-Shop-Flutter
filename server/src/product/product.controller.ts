@@ -27,6 +27,11 @@ export class ProductController {
     return this.productService.create(createProductDto);
   }
 
+  @Get('search/:productName')
+  searchProduct(@Param('productName') productName: string) {
+    return this.productService.searchProduct(productName);
+  }
+
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateProductDto: CreateProductDto) {
