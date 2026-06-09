@@ -2,6 +2,7 @@ import 'package:e_shop_flutter/constants/global_variables.dart';
 import 'package:flutter/material.dart';
 
 class CategoryDealsScreen extends StatefulWidget {
+  static const String routeName = '/category-deals';
   final String category;
   const CategoryDealsScreen({super.key, required this.category});
 
