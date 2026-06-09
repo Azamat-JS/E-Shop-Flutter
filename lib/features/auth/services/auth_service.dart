@@ -76,9 +76,10 @@ class AuthService {
           Provider.of<UserProvider>(context, listen: false).setUser(res.body);
           await prefs.setString('x-auth-token', jsonDecode(res.body)['token']);
           if (!context.mounted) return;
-          showSnackbar(context, "Login successful!");
-          final userType =
-              Provider.of<UserProvider>(context, listen: false).user.type;
+          final userType = Provider.of<UserProvider>(
+            context,
+            listen: false,
+          ).user.type;
           if (userType == 'admin') {
             Navigator.pushAndRemoveUntil(
               context,
