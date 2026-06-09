@@ -1,5 +1,6 @@
 import 'package:e_shop_flutter/constants/global_variables.dart';
 import 'package:e_shop_flutter/features/admin/screens/posts_screen.dart';
+import 'package:e_shop_flutter/features/auth/services/auth_service.dart';
 import 'package:flutter/material.dart';
 
 class AdminScreen extends StatefulWidget {
@@ -13,6 +14,7 @@ class _AdminScreenState extends State<AdminScreen> {
   int _page = 0;
   double bottomBarWidth = 42;
   double bottomBarBorderWidth = 5;
+  final AuthService _authService = AuthService();
 
   List<Widget> pages = [
     const PostsScreen(),
@@ -29,6 +31,17 @@ class _AdminScreenState extends State<AdminScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: Drawer(
+        child: Column(
+          children: [
+            DrawerHeader(child: Icon(Icons.settings)),
+            IconButton(
+              icon: Icon(Icons.logout),
+              onPressed: () => _authService.logOut(context),
+            ),
+          ],
+        ),
+      ),
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(50),
         child: AppBar(
