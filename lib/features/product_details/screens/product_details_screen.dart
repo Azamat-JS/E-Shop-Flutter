@@ -1,9 +1,12 @@
 import 'package:e_shop_flutter/constants/global_variables.dart';
 import 'package:e_shop_flutter/features/search/screen/search_screen.dart';
+import 'package:e_shop_flutter/models/product.dart';
 import 'package:flutter/material.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
-  const ProductDetailsScreen({super.key});
+  static const String routeName = '/product-details-screen';
+  final Product product;
+  const ProductDetailsScreen({super.key, required this.product});
 
   @override
   State<ProductDetailsScreen> createState() => _ProductDetailsScreenState();

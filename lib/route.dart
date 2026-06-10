@@ -2,7 +2,9 @@ import 'package:e_shop_flutter/common/widgets/bottom_bar.dart';
 import 'package:e_shop_flutter/features/auth/screens/auth_screen.dart';
 import 'package:e_shop_flutter/features/admin/screens/add_product_screen.dart';
 import 'package:e_shop_flutter/features/home/screens/category_deals_screen.dart';
+import 'package:e_shop_flutter/features/product_details/screens/product_details_screen.dart';
 import 'package:e_shop_flutter/features/search/screen/search_screen.dart';
+import 'package:e_shop_flutter/models/product.dart';
 import 'package:flutter/material.dart';
 
 Route<dynamic> generateRoute(RouteSettings routeSettings) {
@@ -33,6 +35,12 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
       return MaterialPageRoute(
         settings: routeSettings,
         builder: (_) => SearchScreen(searchQuery: searchQuery),
+      );
+    case ProductDetailsScreen.routeName:
+      var product = routeSettings.arguments as Product;
+      return MaterialPageRoute(
+        settings: routeSettings,
+        builder: (_) => ProductDetailsScreen(product: product),
       );
     default:
       return MaterialPageRoute(
