@@ -1,3 +1,4 @@
+import 'package:e_shop_flutter/common/widgets/stars.dart';
 import 'package:e_shop_flutter/constants/global_variables.dart';
 import 'package:e_shop_flutter/features/search/screen/search_screen.dart';
 import 'package:e_shop_flutter/models/product.dart';
@@ -85,6 +86,16 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
               ),
             ],
           ),
+        ),
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [Text(widget.product.id!), Stars(rating: 4)],
+            ),
+          ],
         ),
       ),
     );
