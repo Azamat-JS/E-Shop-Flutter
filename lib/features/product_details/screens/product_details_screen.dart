@@ -1,4 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:e_shop_flutter/common/widgets/custom_button.dart';
 import 'package:e_shop_flutter/common/widgets/stars.dart';
 import 'package:e_shop_flutter/constants/global_variables.dart';
 import 'package:e_shop_flutter/features/search/screen/search_screen.dart';
@@ -117,8 +118,50 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
               }).toList(),
               options: CarouselOptions(
                 viewportFraction: 1,
-                height: 200,
+                height: 300,
                 autoPlay: true,
+              ),
+            ),
+            Container(color: Colors.black12, height: 5),
+            Padding(
+              padding: const EdgeInsetsGeometry.all(8),
+              child: RichText(
+                text: TextSpan(
+                  text: 'Deal Price: ',
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  children: [
+                    TextSpan(
+                      text: '\$${widget.product.price}',
+                      style: TextStyle(
+                        fontSize: 22,
+                        color: Colors.red,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(widget.product.description),
+            ),
+            Container(color: Colors.black12, height: 5),
+            Padding(
+              padding: const EdgeInsets.all(10),
+              child: CustomButton(text: "Buy Now", onTap: () {}),
+            ),
+            const SizedBox(height: 10),
+            Padding(
+              padding: const EdgeInsets.all(10),
+              child: CustomButton(
+                text: "Add to Cart",
+                onTap: () {},
+                color: const Color.fromRGBO(254, 216, 19, 1),
               ),
             ),
           ],
