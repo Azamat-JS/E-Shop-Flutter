@@ -1,3 +1,4 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:e_shop_flutter/common/widgets/stars.dart';
 import 'package:e_shop_flutter/constants/global_variables.dart';
 import 'package:e_shop_flutter/features/search/screen/search_screen.dart';
@@ -90,10 +91,35 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
       ),
       body: SingleChildScrollView(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [Text(widget.product.id!), Stars(rating: 4)],
+            Padding(
+              padding: const EdgeInsetsGeometry.all(8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [Text(widget.product.id!), Stars(rating: 4)],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+              child: Text(widget.product.name, style: TextStyle(fontSize: 15)),
+            ),
+            CarouselSlider(
+              items: widget.product.images.map((i) {
+                return Builder(
+                  builder: (BuildContext context) {
+                    return SizedBox(
+                      width: double.infinity,
+                      child: Image.network(i, fit: BoxFit.cover, height: 200),
+                    );
+                  },
+                );
+              }).toList(),
+              options: CarouselOptions(
+                viewportFraction: 1,
+                height: 200,
+                autoPlay: true,
+              ),
             ),
           ],
         ),
