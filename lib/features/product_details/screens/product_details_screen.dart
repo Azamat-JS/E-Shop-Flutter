@@ -5,6 +5,7 @@ import 'package:e_shop_flutter/constants/global_variables.dart';
 import 'package:e_shop_flutter/features/search/screen/search_screen.dart';
 import 'package:e_shop_flutter/models/product.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
   static const String routeName = '/product-details-screen';
@@ -163,6 +164,26 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                 onTap: () {},
                 color: const Color.fromRGBO(254, 216, 19, 1),
               ),
+            ),
+            const SizedBox(height: 10),
+            Container(color: Colors.black12, height: 5),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 10),
+              child: Text(
+                "Rate the Product",
+                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+              ),
+            ),
+            RatingBar.builder(
+              initialRating: 0,
+              minRating: 1,
+              direction: Axis.horizontal,
+              allowHalfRating: true,
+              itemCount: 5,
+              itemPadding: const EdgeInsetsGeometry.symmetric(horizontal: 4),
+              itemBuilder: (context, _) =>
+                  const Icon(Icons.star, color: GlobalVariables.secondaryColor),
+              onRatingUpdate: (rating) {},
             ),
           ],
         ),
