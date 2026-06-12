@@ -23,6 +23,6 @@ export class ProductEntity {
     @Column()
     category!: string;
 
-    @Column({ type: 'float' })
-    rating!: number;
+    @Column({ type: 'float', nullable: true })
+    rating?: number;
 }

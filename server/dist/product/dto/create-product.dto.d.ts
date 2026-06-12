@@ -13,5 +13,5 @@ export declare class UpdateProductDto {
     images?: string[];
     quantity?: number;
     price?: number;
-    rating: number;
+    rating?: number;
 }

@@ -53,5 +53,5 @@ export class UpdateProductDto {
 
     @IsOptional()
     @IsNumber()
-    rating!: number;
+    rating?: number;
 }

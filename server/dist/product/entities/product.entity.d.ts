@@ -6,5 +6,5 @@ export declare class ProductEntity {
     quantity: number;
     price: number;
     category: string;
-    rating: number;
+    rating?: number;
 }

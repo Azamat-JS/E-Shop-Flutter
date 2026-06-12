@@ -51,7 +51,7 @@ __decorate([
     __metadata("design:type", String)
 ], ProductEntity.prototype, "category", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: 'float' }),
+    (0, typeorm_1.Column)({ type: 'float', nullable: true }),
     __metadata("design:type", Number)
 ], ProductEntity.prototype, "rating", void 0);
 exports.ProductEntity = ProductEntity = __decorate([
