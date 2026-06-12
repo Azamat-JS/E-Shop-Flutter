@@ -19,6 +19,7 @@ let ProductEntity = class ProductEntity {
     quantity;
     price;
     category;
+    rating;
 };
 exports.ProductEntity = ProductEntity;
 __decorate([
@@ -49,6 +50,10 @@ __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
 ], ProductEntity.prototype, "category", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: 'float' }),
+    __metadata("design:type", Number)
+], ProductEntity.prototype, "rating", void 0);
 exports.ProductEntity = ProductEntity = __decorate([
     (0, typeorm_1.Entity)({ name: "products" })
 ], ProductEntity);

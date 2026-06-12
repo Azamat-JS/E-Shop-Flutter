@@ -57,6 +57,7 @@ class UpdateProductDto {
     images;
     quantity;
     price;
+    rating;
 }
 exports.UpdateProductDto = UpdateProductDto;
 __decorate([
@@ -89,4 +90,9 @@ __decorate([
     (0, class_validator_1.IsNumber)(),
     __metadata("design:type", Number)
 ], UpdateProductDto.prototype, "price", void 0);
+__decorate([
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsNumber)(),
+    __metadata("design:type", Number)
+], UpdateProductDto.prototype, "rating", void 0);
 //# sourceMappingURL=create-product.dto.js.map

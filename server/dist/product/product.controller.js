@@ -36,8 +36,8 @@ let ProductController = class ProductController {
     searchProduct(productName) {
         return this.productService.searchProduct(productName);
     }
-    update(id, updateProductDto) {
-        return this.productService.update(id, updateProductDto);
+    rateProduct(productId, dto) {
+        return this.productService.rateProduct(productId, dto);
     }
     remove(id) {
         return this.productService.remove(id);
@@ -74,13 +74,13 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], ProductController.prototype, "searchProduct", null);
 __decorate([
-    (0, common_1.Patch)(':id'),
-    __param(0, (0, common_1.Param)('id')),
+    (0, common_1.Post)('rate-product/:productId'),
+    __param(0, (0, common_1.Param)('productId')),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, create_product_dto_1.CreateProductDto]),
+    __metadata("design:paramtypes", [String, create_product_dto_1.UpdateProductDto]),
     __metadata("design:returntype", void 0)
-], ProductController.prototype, "update", null);
+], ProductController.prototype, "rateProduct", null);
 __decorate([
     (0, common_1.Delete)('delete/:id'),
     __param(0, (0, common_1.Param)('id')),

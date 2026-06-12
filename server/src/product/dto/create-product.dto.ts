@@ -50,4 +50,8 @@ export class UpdateProductDto {
     @IsOptional()
     @IsNumber()
     price?: number;
+
+    @IsOptional()
+    @IsNumber()
+    rating!: number;
 }

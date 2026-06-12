@@ -37,6 +37,22 @@ export class ProductService {
     return products;
   }
 
+  async rateProduct(productId: string, dto: UpdateProductDto) {
+
+    const updatedProduct = await this.productRepo.update(productId, dto);
+
+    if (updatedProduct.affected === 0) {
+      throw new BadRequestException("Product not updated")
+    }
+
+    const product = await this.productRepo.findOneBy({ id: productId })
+
+    if (!product) {
+      throw new NotFoundException('Product not found after updating!')
+    }
+    return product;
+  }
+
   update(id: string, updateProductDto: UpdateProductDto) {
     return `This action updates a #${id} product`;
   }
