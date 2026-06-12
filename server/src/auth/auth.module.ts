@@ -8,11 +8,12 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { PassportModule } from '@nestjs/passport';
 import { ImageKitService } from 'src/utils/imagekit.service';
 import { JwtStrategy } from 'src/utils/jwt.strategy';
+import { RatingEntity } from 'src/product/entities/ratings.entity';
 
 @Module({
   imports: [
     PassportModule,
-    TypeOrmModule.forFeature([AuthEntity]),
+    TypeOrmModule.forFeature([AuthEntity, RatingEntity]),
     JwtModule.registerAsync({
       imports: [ConfigModule],
       inject: [ConfigService],

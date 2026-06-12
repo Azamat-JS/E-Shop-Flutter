@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ProductEntity = void 0;
 const typeorm_1 = require("typeorm");
+const ratings_entity_1 = require("./ratings.entity");
 let ProductEntity = class ProductEntity {
     id;
     name;
@@ -19,7 +20,7 @@ let ProductEntity = class ProductEntity {
     quantity;
     price;
     category;
-    rating;
+    ratings;
 };
 exports.ProductEntity = ProductEntity;
 __decorate([
@@ -51,9 +52,9 @@ __decorate([
     __metadata("design:type", String)
 ], ProductEntity.prototype, "category", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: 'float', nullable: true }),
-    __metadata("design:type", Number)
-], ProductEntity.prototype, "rating", void 0);
+    (0, typeorm_1.OneToMany)(() => ratings_entity_1.RatingEntity, (rating) => rating.product),
+    __metadata("design:type", Array)
+], ProductEntity.prototype, "ratings", void 0);
 exports.ProductEntity = ProductEntity = __decorate([
     (0, typeorm_1.Entity)({ name: "products" })
 ], ProductEntity);

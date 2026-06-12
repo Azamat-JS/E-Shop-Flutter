@@ -1,3 +1,4 @@
+import { RatingEntity } from "../../product/entities/ratings.entity";
 export declare class AuthEntity {
     id: string;
     name: string;
@@ -5,5 +6,6 @@ export declare class AuthEntity {
     password: string;
     address?: string;
     type?: string;
+    ratings: RatingEntity[];
     created_at: Date;
 }

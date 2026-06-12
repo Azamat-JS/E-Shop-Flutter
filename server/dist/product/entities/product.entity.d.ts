@@ -1,3 +1,4 @@
+import { RatingEntity } from "./ratings.entity";
 export declare class ProductEntity {
     id: string;
     name: string;
@@ -6,5 +7,5 @@ export declare class ProductEntity {
     quantity: number;
     price: number;
     category: string;
-    rating?: number;
+    ratings: RatingEntity[];
 }

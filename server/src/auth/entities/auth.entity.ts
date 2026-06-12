@@ -1,4 +1,5 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { RatingEntity } from "src/product/entities/ratings.entity";
+import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity({ name: "auth" })
 export class AuthEntity {
@@ -18,6 +19,9 @@ export class AuthEntity {
 
     @Column({ nullable: true })
     type?: string;
+
+    @OneToMany(() => RatingEntity, (rating) => rating.user)
+    ratings!: RatingEntity[];
 
     @CreateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
     created_at!: Date;

@@ -12,6 +12,7 @@ export declare class AuthController {
         password: string;
         address?: string;
         type?: string;
+        ratings: import("../product/entities/ratings.entity").RatingEntity[];
         created_at: Date;
         token: string;
     }>;

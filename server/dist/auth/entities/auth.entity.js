@@ -10,6 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AuthEntity = void 0;
+const ratings_entity_1 = require("../../product/entities/ratings.entity");
 const typeorm_1 = require("typeorm");
 let AuthEntity = class AuthEntity {
     id;
@@ -18,6 +19,7 @@ let AuthEntity = class AuthEntity {
     password;
     address;
     type;
+    ratings;
     created_at;
 };
 exports.AuthEntity = AuthEntity;
@@ -45,6 +47,10 @@ __decorate([
     (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)
 ], AuthEntity.prototype, "type", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => ratings_entity_1.RatingEntity, (rating) => rating.user),
+    __metadata("design:type", Array)
+], AuthEntity.prototype, "ratings", void 0);
 __decorate([
     (0, typeorm_1.CreateDateColumn)({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' }),
     __metadata("design:type", Date)
