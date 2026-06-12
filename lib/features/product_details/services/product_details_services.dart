@@ -19,7 +19,7 @@ class ProductDetailsServices {
 
       await dio.post(
         '${ApiConfig.baseUrl}/product/rate-product/${product.id}',
-        data: rating,
+        data: {'rating': rating},
         options: Options(headers: {'x-auth-token': token}),
       );
     } catch (e) {

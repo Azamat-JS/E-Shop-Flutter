@@ -19,6 +19,7 @@ const create_product_dto_1 = require("./dto/create-product.dto");
 const jwt_guard_1 = require("../utils/jwt.guard");
 const roles_1 = require("../utils/roles");
 const roles_guard_1 = require("../utils/roles.guard");
+const rate_product_dto_1 = require("./dto/rate-product.dto");
 let ProductController = class ProductController {
     productService;
     constructor(productService) {
@@ -83,7 +84,7 @@ __decorate([
     __param(1, (0, common_1.Body)()),
     __param(2, (0, common_1.Req)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, create_product_dto_1.UpdateProductDto, Object]),
+    __metadata("design:paramtypes", [String, rate_product_dto_1.RateProductDto, Object]),
     __metadata("design:returntype", void 0)
 ], ProductController.prototype, "rateProduct", null);
 __decorate([

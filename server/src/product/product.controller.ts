@@ -5,6 +5,7 @@ import { JwtAuthGuard } from 'src/utils/jwt.guard';
 import { Roles } from 'src/utils/roles';
 import { RolesGuard } from 'src/utils/roles.guard';
 import type { AuthenticatedRequest } from 'src/utils/types/types';
+import { RateProductDto } from './dto/rate-product.dto';
 
 @UseGuards(JwtAuthGuard)
 @Controller('product')
@@ -34,7 +35,7 @@ export class ProductController {
   }
 
   @Post('rate-product/:productId')
-  rateProduct(@Param('productId') productId: string, @Body() dto: UpdateProductDto, @Req() req: AuthenticatedRequest) {
+  rateProduct(@Param('productId') productId: string, @Body() dto: RateProductDto, @Req() req: AuthenticatedRequest) {
     const userId = req.user?.id
     if (!userId) {
       throw new UnauthorizedException("Please login for rating!")

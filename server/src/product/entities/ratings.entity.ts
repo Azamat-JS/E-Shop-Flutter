@@ -16,7 +16,7 @@ export class RatingEntity {
     id!: string;
 
     @Column({
-        type: "int",
+        type: "float",
     })
     value!: number;
 

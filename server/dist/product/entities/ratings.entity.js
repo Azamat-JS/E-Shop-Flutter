@@ -26,7 +26,7 @@ __decorate([
 ], RatingEntity.prototype, "id", void 0);
 __decorate([
     (0, typeorm_1.Column)({
-        type: "int",
+        type: "float",
     }),
     __metadata("design:type", Number)
 ], RatingEntity.prototype, "value", void 0);
