@@ -36,8 +36,12 @@ let ProductController = class ProductController {
     searchProduct(productName) {
         return this.productService.searchProduct(productName);
     }
-    rateProduct(productId, dto) {
-        return this.productService.rateProduct(productId, dto);
+    rateProduct(productId, dto, req) {
+        const userId = req.user?.id;
+        if (!userId) {
+            throw new common_1.UnauthorizedException("Please login for rating!");
+        }
+        return this.productService.rateProduct(productId, userId, dto);
     }
     remove(id) {
         return this.productService.remove(id);
@@ -77,8 +81,9 @@ __decorate([
     (0, common_1.Post)('rate-product/:productId'),
     __param(0, (0, common_1.Param)('productId')),
     __param(1, (0, common_1.Body)()),
+    __param(2, (0, common_1.Req)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, create_product_dto_1.UpdateProductDto]),
+    __metadata("design:paramtypes", [String, create_product_dto_1.UpdateProductDto, Object]),
     __metadata("design:returntype", void 0)
 ], ProductController.prototype, "rateProduct", null);
 __decorate([

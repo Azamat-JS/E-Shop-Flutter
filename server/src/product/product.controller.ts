@@ -1,9 +1,10 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Query } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Query, Req, UnauthorizedException } from '@nestjs/common';
 import { ProductService } from './product.service';
 import { CreateProductDto, UpdateProductDto } from './dto/create-product.dto';
 import { JwtAuthGuard } from 'src/utils/jwt.guard';
 import { Roles } from 'src/utils/roles';
 import { RolesGuard } from 'src/utils/roles.guard';
+import type { AuthenticatedRequest } from 'src/utils/types/types';
 
 @UseGuards(JwtAuthGuard)
 @Controller('product')
@@ -33,8 +34,12 @@ export class ProductController {
   }
 
   @Post('rate-product/:productId')
-  rateProduct(@Param('productId') productId: string, @Body() dto: UpdateProductDto) {
-    return this.productService.rateProduct(productId, dto)
+  rateProduct(@Param('productId') productId: string, @Body() dto: UpdateProductDto, @Req() req: AuthenticatedRequest) {
+    const userId = req.user?.id
+    if (!userId) {
+      throw new UnauthorizedException("Please login for rating!")
+    }
+    return this.productService.rateProduct(productId, userId, dto)
   }
 
 

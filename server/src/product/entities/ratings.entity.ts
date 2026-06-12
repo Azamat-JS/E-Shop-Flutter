@@ -10,7 +10,7 @@ import { ProductEntity } from "./product.entity";
 import { AuthEntity } from "src/auth/entities/auth.entity";
 
 @Entity({ name: "ratings" })
-@Unique(["user", "product"]) // one rating per user per product
+@Unique(["user", "product"])
 export class RatingEntity {
     @PrimaryGeneratedColumn("uuid")
     id!: string;
@@ -18,7 +18,7 @@ export class RatingEntity {
     @Column({
         type: "int",
     })
-    value!: number; // 1-5 stars
+    value!: number;
 
     @ManyToOne(() => AuthEntity, (user) => user.ratings, {
         onDelete: "CASCADE",

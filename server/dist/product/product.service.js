@@ -17,10 +17,16 @@ const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
 const product_entity_1 = require("./entities/product.entity");
 const typeorm_2 = require("typeorm");
+const ratings_entity_1 = require("./entities/ratings.entity");
+const auth_entity_1 = require("../auth/entities/auth.entity");
 let ProductService = class ProductService {
     productRepo;
-    constructor(productRepo) {
+    rateRepo;
+    userRepo;
+    constructor(productRepo, rateRepo, userRepo) {
         this.productRepo = productRepo;
+        this.rateRepo = rateRepo;
+        this.userRepo = userRepo;
     }
     async create(createProductDto) {
         const product = this.productRepo.create(createProductDto);
@@ -46,16 +52,27 @@ let ProductService = class ProductService {
             .getMany();
         return products;
     }
-    async rateProduct(productId, dto) {
-        const updatedProduct = await this.productRepo.update(productId, dto);
-        if (updatedProduct.affected === 0) {
-            throw new common_1.BadRequestException("Product not updated");
+    async rateProduct(productId, userId, dto) {
+        const user = await this.userRepo.findOneBy({
+            id: userId,
+        });
+        if (!user) {
+            throw new common_1.NotFoundException("User not found");
         }
-        const product = await this.productRepo.findOneBy({ id: productId });
+        const product = await this.productRepo.findOneBy({
+            id: productId,
+        });
         if (!product) {
-            throw new common_1.NotFoundException('Product not found after updating!');
+            throw new common_1.NotFoundException("Product not found");
         }
-        return product;
+        await this.rateRepo.upsert({
+            user,
+            product,
+            value: dto.rating,
+        }, ["user", "product"]);
+        return {
+            message: "Rating saved successfully",
+        };
     }
     update(id, updateProductDto) {
         return `This action updates a #${id} product`;
@@ -72,6 +89,10 @@ exports.ProductService = ProductService;
 exports.ProductService = ProductService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, typeorm_1.InjectRepository)(product_entity_1.ProductEntity)),
-    __metadata("design:paramtypes", [typeorm_2.Repository])
+    __param(1, (0, typeorm_1.InjectRepository)(ratings_entity_1.RatingEntity)),
+    __param(2, (0, typeorm_1.InjectRepository)(auth_entity_1.AuthEntity)),
+    __metadata("design:paramtypes", [typeorm_2.Repository,
+        typeorm_2.Repository,
+        typeorm_2.Repository])
 ], ProductService);
 //# sourceMappingURL=product.service.js.map

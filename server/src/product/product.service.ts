@@ -3,10 +3,16 @@ import { CreateProductDto, UpdateProductDto } from './dto/create-product.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ProductEntity } from './entities/product.entity';
 import { Repository } from 'typeorm';
+import { RatingEntity } from './entities/ratings.entity';
+import { AuthEntity } from 'src/auth/entities/auth.entity';
 
 @Injectable()
 export class ProductService {
-  constructor(@InjectRepository(ProductEntity) private readonly productRepo: Repository<ProductEntity>) { }
+  constructor(
+    @InjectRepository(ProductEntity) private readonly productRepo: Repository<ProductEntity>,
+    @InjectRepository(RatingEntity) private readonly rateRepo: Repository<RatingEntity>,
+    @InjectRepository(AuthEntity) private readonly userRepo: Repository<AuthEntity>,
+  ) { }
   async create(createProductDto: CreateProductDto) {
     const product = this.productRepo.create(createProductDto);
     return this.productRepo.save(product);
@@ -37,20 +43,39 @@ export class ProductService {
     return products;
   }
 
-  async rateProduct(productId: string, dto: UpdateProductDto) {
+  async rateProduct(
+    productId: string,
+    userId: string,
+    dto: UpdateProductDto,
+  ) {
+    const user = await this.userRepo.findOneBy({
+      id: userId,
+    });
 
-    const updatedProduct = await this.productRepo.update(productId, dto);
-
-    if (updatedProduct.affected === 0) {
-      throw new BadRequestException("Product not updated")
+    if (!user) {
+      throw new NotFoundException("User not found");
     }
 
-    const product = await this.productRepo.findOneBy({ id: productId })
+    const product = await this.productRepo.findOneBy({
+      id: productId,
+    });
 
     if (!product) {
-      throw new NotFoundException('Product not found after updating!')
+      throw new NotFoundException("Product not found");
     }
-    return product;
+
+    await this.rateRepo.upsert(
+      {
+        user,
+        product,
+        value: dto.rating,
+      },
+      ["user", "product"],
+    );
+
+    return {
+      message: "Rating saved successfully",
+    };
   }
 
   update(id: string, updateProductDto: UpdateProductDto) {
