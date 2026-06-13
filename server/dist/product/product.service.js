@@ -59,8 +59,11 @@ let ProductService = class ProductService {
         if (!user) {
             throw new common_1.NotFoundException("User not found");
         }
-        const product = await this.productRepo.findOneBy({
-            id: productId,
+        const product = await this.productRepo.findOne({
+            where: { id: productId },
+            relations: {
+                ratings: true,
+            },
         });
         if (!product) {
             throw new common_1.NotFoundException("Product not found");
@@ -68,11 +71,17 @@ let ProductService = class ProductService {
         await this.rateRepo.upsert({
             user,
             product,
-            value: dto.rating,
+            rating: dto.rating,
         }, ["user", "product"]);
-        return {
-            message: "Rating saved successfully",
-        };
+        const updatedProduct = await this.productRepo.findOne({
+            where: { id: productId },
+            relations: {
+                ratings: {
+                    user: true,
+                },
+            },
+        });
+        return updatedProduct;
     }
     update(id, updateProductDto) {
         return `This action updates a #${id} product`;

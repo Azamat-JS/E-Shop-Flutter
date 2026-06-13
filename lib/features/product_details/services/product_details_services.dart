@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ProductDetailsServices {
-  void rateProduct({
+  Future<Product> rateProduct({
     required BuildContext context,
     required Product product,
     required double rating,
@@ -17,13 +17,16 @@ class ProductDetailsServices {
       final prefs = await SharedPreferences.getInstance();
       final token = prefs.getString('x-auth-token') ?? '';
 
-      await dio.post(
+      final response = await dio.post(
         '${ApiConfig.baseUrl}/product/rate-product/${product.id}',
         data: {'rating': rating},
         options: Options(headers: {'x-auth-token': token}),
       );
+
+      return Product.fromMap(response.data);
     } catch (e) {
       showSnackbar(context, e.toString());
+      rethrow;
     }
   }
 }

@@ -15,7 +15,7 @@ const product_entity_1 = require("./product.entity");
 const auth_entity_1 = require("../../auth/entities/auth.entity");
 let RatingEntity = class RatingEntity {
     id;
-    value;
+    rating;
     user;
     product;
 };
@@ -29,7 +29,7 @@ __decorate([
         type: "float",
     }),
     __metadata("design:type", Number)
-], RatingEntity.prototype, "value", void 0);
+], RatingEntity.prototype, "rating", void 0);
 __decorate([
     (0, typeorm_1.ManyToOne)(() => auth_entity_1.AuthEntity, (user) => user.ratings, {
         onDelete: "CASCADE",

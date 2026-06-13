@@ -18,7 +18,7 @@ export class RatingEntity {
     @Column({
         type: "float",
     })
-    value!: number;
+    rating!: number;
 
     @ManyToOne(() => AuthEntity, (user) => user.ratings, {
         onDelete: "CASCADE",

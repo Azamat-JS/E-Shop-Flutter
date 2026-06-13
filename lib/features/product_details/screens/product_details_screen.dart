@@ -214,12 +214,24 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
               itemPadding: const EdgeInsetsGeometry.symmetric(horizontal: 4),
               itemBuilder: (context, _) =>
                   const Icon(Icons.star, color: GlobalVariables.secondaryColor),
-              onRatingUpdate: (rating) {
-                productDetailsServices.rateProduct(
-                  context: context,
-                  product: widget.product,
-                  rating: rating,
-                );
+              onRatingUpdate: (rating) async {
+                Product updatedProduct = await productDetailsServices
+                    .rateProduct(
+                      context: context,
+                      product: widget.product,
+                      rating: rating,
+                    );
+
+                double totalRating = 0;
+
+                for (int i = 0; i < updatedProduct.rating!.length; i++) {
+                  totalRating += updatedProduct.rating![i].rating;
+                }
+
+                setState(() {
+                  myRating = rating;
+                  avgRating = totalRating / updatedProduct.rating!.length;
+                });
               },
             ),
           ],

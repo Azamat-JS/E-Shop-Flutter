@@ -56,8 +56,11 @@ export class ProductService {
       throw new NotFoundException("User not found");
     }
 
-    const product = await this.productRepo.findOneBy({
-      id: productId,
+    const product = await this.productRepo.findOne({
+      where: { id: productId },
+      relations: {
+        ratings: true,
+      },
     });
 
     if (!product) {
@@ -68,14 +71,21 @@ export class ProductService {
       {
         user,
         product,
-        value: dto.rating,
+        rating: dto.rating,
       },
       ["user", "product"],
     );
 
-    return {
-      message: "Rating saved successfully",
-    };
+    const updatedProduct = await this.productRepo.findOne({
+      where: { id: productId },
+      relations: {
+        ratings: {
+          user: true,
+        },
+      },
+    });
+
+    return updatedProduct;
   }
 
   update(id: string, updateProductDto: UpdateProductDto) {
