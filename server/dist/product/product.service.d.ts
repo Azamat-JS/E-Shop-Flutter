@@ -10,6 +10,7 @@ export declare class ProductService {
     constructor(productRepo: Repository<ProductEntity>, rateRepo: Repository<RatingEntity>, userRepo: Repository<AuthEntity>);
     create(createProductDto: CreateProductDto): Promise<ProductEntity>;
     findAll(): Promise<ProductEntity[]>;
+    findOne(id: string): Promise<ProductEntity>;
     findByCategory(category: string): Promise<ProductEntity[]>;
     searchProduct(productName: string): Promise<ProductEntity[]>;
     rateProduct(productId: string, userId: string, dto: UpdateProductDto): Promise<ProductEntity | null>;

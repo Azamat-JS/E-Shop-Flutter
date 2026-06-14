@@ -22,6 +22,17 @@ export class ProductService {
     return this.productRepo.find();
   }
 
+  async findOne(id: string) {
+    const product = await this.productRepo.findOne({
+      where: { id },
+      relations: { ratings: { user: true } },
+    });
+    if (!product) {
+      throw new NotFoundException('Product not found');
+    }
+    return product;
+  }
+
   async findByCategory(category: string) {
     if (!category) {
       throw new BadRequestException('Category is required');

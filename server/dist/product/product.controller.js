@@ -37,6 +37,9 @@ let ProductController = class ProductController {
     searchProduct(productName) {
         return this.productService.searchProduct(productName);
     }
+    findOne(id) {
+        return this.productService.findOne(id);
+    }
     rateProduct(productId, dto, req) {
         const userId = req.user?.id;
         if (!userId) {
@@ -78,6 +81,13 @@ __decorate([
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
 ], ProductController.prototype, "searchProduct", null);
+__decorate([
+    (0, common_1.Get)(':id'),
+    __param(0, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", void 0)
+], ProductController.prototype, "findOne", null);
 __decorate([
     (0, common_1.Post)('rate-product/:productId'),
     __param(0, (0, common_1.Param)('productId')),

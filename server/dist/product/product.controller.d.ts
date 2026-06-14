@@ -9,6 +9,7 @@ export declare class ProductController {
     findByCategory(category: string): Promise<import("./entities/product.entity").ProductEntity[]>;
     create(createProductDto: CreateProductDto): Promise<import("./entities/product.entity").ProductEntity>;
     searchProduct(productName: string): Promise<import("./entities/product.entity").ProductEntity[]>;
+    findOne(id: string): Promise<import("./entities/product.entity").ProductEntity>;
     rateProduct(productId: string, dto: RateProductDto, req: AuthenticatedRequest): Promise<import("./entities/product.entity").ProductEntity | null>;
     remove(id: string): Promise<{
         message: string;

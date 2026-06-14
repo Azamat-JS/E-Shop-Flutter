@@ -34,6 +34,11 @@ export class ProductController {
     return this.productService.searchProduct(productName);
   }
 
+  @Get(':id')
+  findOne(@Param('id') id: string) {
+    return this.productService.findOne(id);
+  }
+
   @Post('rate-product/:productId')
   rateProduct(@Param('productId') productId: string, @Body() dto: RateProductDto, @Req() req: AuthenticatedRequest) {
     const userId = req.user?.id

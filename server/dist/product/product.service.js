@@ -35,6 +35,16 @@ let ProductService = class ProductService {
     findAll() {
         return this.productRepo.find();
     }
+    async findOne(id) {
+        const product = await this.productRepo.findOne({
+            where: { id },
+            relations: { ratings: { user: true } },
+        });
+        if (!product) {
+            throw new common_1.NotFoundException('Product not found');
+        }
+        return product;
+    }
     async findByCategory(category) {
         if (!category) {
             throw new common_1.BadRequestException('Category is required');
