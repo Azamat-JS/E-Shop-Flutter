@@ -46,9 +46,9 @@ export class ProductService {
   async searchProduct(productName: string) {
     const products = await this.productRepo
       .createQueryBuilder('product')
-      .where('product.name ILIKE :name', {
-        name: `%${productName}%`,
-      })
+      .leftJoinAndSelect('product.ratings', 'rating')
+      .leftJoinAndSelect('rating.user', 'user')
+      .where('product.name ILIKE :name', { name: `%${productName}%` })
       .getMany();
 
     return products;
