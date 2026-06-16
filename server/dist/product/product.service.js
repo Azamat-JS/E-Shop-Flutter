@@ -103,6 +103,8 @@ let ProductService = class ProductService {
         }
         return { message: "Product deleted successfully!" };
     }
+    async dealOfDay() {
+    }
 };
 exports.ProductService = ProductService;
 exports.ProductService = ProductService = __decorate([

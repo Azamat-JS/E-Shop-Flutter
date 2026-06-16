@@ -31,6 +31,9 @@ let ProductController = class ProductController {
     findByCategory(category) {
         return this.productService.findByCategory(category);
     }
+    dealOfDay() {
+        return this.productService.dealOfDay();
+    }
     create(createProductDto) {
         return this.productService.create(createProductDto);
     }
@@ -65,6 +68,12 @@ __decorate([
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
 ], ProductController.prototype, "findByCategory", null);
+__decorate([
+    (0, common_1.Get)('deal-of-day'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", void 0)
+], ProductController.prototype, "dealOfDay", null);
 __decorate([
     (0, common_1.UseGuards)(roles_guard_1.RolesGuard),
     (0, roles_1.Roles)('admin'),

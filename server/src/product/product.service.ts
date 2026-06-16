@@ -110,4 +110,9 @@ export class ProductService {
     }
     return { message: "Product deleted successfully!" }
   }
+
+
+  async dealOfDay() {
+
+  }
 }

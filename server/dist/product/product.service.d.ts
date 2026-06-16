@@ -18,4 +18,5 @@ export declare class ProductService {
     remove(id: string): Promise<{
         message: string;
     }>;
+    dealOfDay(): Promise<void>;
 }

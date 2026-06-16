@@ -22,6 +22,11 @@ export class ProductController {
     return this.productService.findByCategory(category);
   }
 
+  @Get('deal-of-day')
+  dealOfDay() {
+    return this.productService.dealOfDay();
+  }
+
   @UseGuards(RolesGuard)
   @Roles('admin')
   @Post('add-product')
