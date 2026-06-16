@@ -113,6 +113,21 @@ export class ProductService {
 
 
   async dealOfDay() {
+    let products = await this.productRepo.find();
 
+    products = products.sort((a, b) => {
+      let aSum = 0;
+      let bSum = 0;
+
+      for (let i = 0; i < a.ratings.length; i++) {
+        aSum += a.ratings[i].rating
+      }
+
+      for (let i = 0; i < b.ratings.length; i++) {
+        aSum += b.ratings[i].rating
+      }
+      return aSum < bSum ? 1 : -1;
+    });
+    return products[0];
   }
 }
