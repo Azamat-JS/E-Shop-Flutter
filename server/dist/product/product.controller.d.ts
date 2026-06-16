@@ -7,7 +7,7 @@ export declare class ProductController {
     constructor(productService: ProductService);
     findAll(): Promise<import("./entities/product.entity").ProductEntity[]>;
     findByCategory(category: string): Promise<import("./entities/product.entity").ProductEntity[]>;
-    dealOfDay(): Promise<void>;
+    dealOfDay(): Promise<import("./entities/product.entity").ProductEntity>;
     create(createProductDto: CreateProductDto): Promise<import("./entities/product.entity").ProductEntity>;
     searchProduct(productName: string): Promise<import("./entities/product.entity").ProductEntity[]>;
     findOne(id: string): Promise<import("./entities/product.entity").ProductEntity>;
