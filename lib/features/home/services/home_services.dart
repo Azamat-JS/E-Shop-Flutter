@@ -29,4 +29,24 @@ class HomeServices {
       return [];
     }
   }
+
+  Future<Product> fetchDealOfDay({required BuildContext context}) async {
+    final dio = DioClient.dio;
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('x-auth-token') ?? '';
+
+    try {
+      final res = await dio.get(
+        '${ApiConfig.baseUrl}/product/deal-of-day',
+        options: Options(headers: {'x-auth-token': token}),
+      );
+
+      final data = res.data;
+
+      return Product.fromMap(data);
+    } catch (e) {
+      showSnackbar(context, e.toString());
+      rethrow;
+    }
+  }
 }
