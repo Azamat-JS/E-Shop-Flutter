@@ -4,8 +4,8 @@ import { UpdateCartDto } from './dto/update-cart.dto';
 
 @Injectable()
 export class CartService {
-  create(createCartDto: CreateCartDto) {
-    return 'This action adds a new cart';
+  addToCart(createCartDto: CreateCartDto) {
+
   }
 
   findAll() {
