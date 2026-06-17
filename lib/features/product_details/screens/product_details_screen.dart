@@ -55,8 +55,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   }
 
   void _applyRatings(Product product) {
-    final userId =
-        Provider.of<UserProvider>(context, listen: false).user.id;
+    final userId = Provider.of<UserProvider>(context, listen: false).user.id;
     final ratings = product.rating ?? [];
     double total = 0;
     double mine = 0;
@@ -71,8 +70,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   }
 
   Future<void> _addToCart() async {
-    final userId =
-        Provider.of<UserProvider>(context, listen: false).user.id;
+    final userId = Provider.of<UserProvider>(context, listen: false).user.id;
     setState(() => _addingToCart = true);
     try {
       await productDetailsServices.addToCart(
@@ -178,9 +176,13 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(
-                        vertical: 20, horizontal: 10),
-                    child: Text(_product.name,
-                        style: const TextStyle(fontSize: 15)),
+                      vertical: 20,
+                      horizontal: 10,
+                    ),
+                    child: Text(
+                      _product.name,
+                      style: const TextStyle(fontSize: 15),
+                    ),
                   ),
                   CarouselSlider(
                     items: _product.images.map((i) {
@@ -188,8 +190,11 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                         builder: (BuildContext context) {
                           return SizedBox(
                             width: double.infinity,
-                            child:
-                                Image.network(i, fit: BoxFit.cover, height: 200),
+                            child: Image.network(
+                              i,
+                              fit: BoxFit.cover,
+                              height: 200,
+                            ),
                           );
                         },
                       );
@@ -248,8 +253,10 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                     padding: EdgeInsets.symmetric(horizontal: 10),
                     child: Text(
                       "Rate the Product",
-                      style:
-                          TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                   RatingBar.builder(
@@ -258,10 +265,13 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                     direction: Axis.horizontal,
                     allowHalfRating: true,
                     itemCount: 5,
-                    itemPadding:
-                        const EdgeInsetsGeometry.symmetric(horizontal: 4),
-                    itemBuilder: (context, _) => const Icon(Icons.star,
-                        color: GlobalVariables.secondaryColor),
+                    itemPadding: const EdgeInsetsGeometry.symmetric(
+                      horizontal: 4,
+                    ),
+                    itemBuilder: (context, _) => const Icon(
+                      Icons.star,
+                      color: GlobalVariables.secondaryColor,
+                    ),
                     onRatingUpdate: (rating) async {
                       final updated = await productDetailsServices.rateProduct(
                         context: context,
