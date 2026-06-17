@@ -22,6 +22,11 @@ class UserProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  void setUserFromModel(User user) {
+    _user = user;
+    notifyListeners();
+  }
+
   void clearUser() {
     _user = User(
       id: "",
