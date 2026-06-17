@@ -3,6 +3,7 @@ import 'package:e_shop_flutter/common/widgets/custom_button.dart';
 import 'package:e_shop_flutter/common/widgets/loader.dart';
 import 'package:e_shop_flutter/common/widgets/stars.dart';
 import 'package:e_shop_flutter/constants/global_variables.dart';
+import 'package:e_shop_flutter/constants/utils.dart';
 import 'package:e_shop_flutter/features/product_details/services/product_details_services.dart';
 import 'package:e_shop_flutter/features/search/screen/search_screen.dart';
 import 'package:e_shop_flutter/models/product.dart';
@@ -26,6 +27,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   double avgRating = 0;
   double myRating = 0;
   bool _isLoading = true;
+  bool _addingToCart = false;
   late Product _product;
 
   @override
@@ -66,6 +68,22 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
 
     avgRating = ratings.isNotEmpty ? total / ratings.length : 0;
     myRating = mine;
+  }
+
+  Future<void> _addToCart() async {
+    final userId =
+        Provider.of<UserProvider>(context, listen: false).user.id;
+    setState(() => _addingToCart = true);
+    try {
+      await productDetailsServices.addToCart(
+        context: context,
+        productId: _product.id!,
+        userId: userId,
+      );
+      if (mounted) showSnackbar(context, 'Added to cart');
+    } finally {
+      if (mounted) setState(() => _addingToCart = false);
+    }
   }
 
   void navigateToSearchScreen(String query) {
@@ -219,8 +237,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                   Padding(
                     padding: const EdgeInsets.all(10),
                     child: CustomButton(
-                      text: "Add to Cart",
-                      onTap: () {},
+                      text: _addingToCart ? "Adding..." : "Add to Cart",
+                      onTap: _addingToCart ? () {} : _addToCart,
                       color: const Color.fromRGBO(254, 216, 19, 1),
                     ),
                   ),

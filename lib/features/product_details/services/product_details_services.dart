@@ -50,4 +50,26 @@ class ProductDetailsServices {
       rethrow;
     }
   }
+
+  Future<void> addToCart({
+    required BuildContext context,
+    required String productId,
+    required String userId,
+    int quantity = 1,
+  }) async {
+    try {
+      final dio = DioClient.dio;
+      final prefs = await SharedPreferences.getInstance();
+      final token = prefs.getString('x-auth-token') ?? '';
+
+      await dio.post(
+        '${ApiConfig.baseUrl}/cart/add-to-cart',
+        data: {'productId': productId, 'userId': userId, 'quantity': quantity},
+        options: Options(headers: {'x-auth-token': token}),
+      );
+    } catch (e) {
+      showSnackbar(context, e.toString());
+      rethrow;
+    }
+  }
 }
