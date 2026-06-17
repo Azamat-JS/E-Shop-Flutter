@@ -5,7 +5,6 @@ import { AuthModule } from './auth/auth.module';
 import { AuthEntity } from './auth/entities/auth.entity';
 import { ProductModule } from './product/product.module';
 import { CartModule } from './cart/cart.module';
-import { CartModule } from './cart/cart.module';
 
 @Module({
   imports: [
