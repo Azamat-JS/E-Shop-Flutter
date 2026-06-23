@@ -70,7 +70,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   }
 
   Future<void> _addToCart() async {
-    final userId = Provider.of<UserProvider>(context, listen: false).user.id;
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    final userId = userProvider.user.id;
     setState(() => _addingToCart = true);
     try {
       await productDetailsServices.addToCart(
@@ -78,7 +79,14 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
         productId: _product.id!,
         userId: userId,
       );
-      if (mounted) showSnackbar(context, 'Added to cart');
+      if (mounted) {
+        final updatedCart = List<dynamic>.from(userProvider.user.cart)
+          ..add({'productId': _product.id, 'quantity': 1});
+        userProvider.setUserFromModel(
+          userProvider.user.copyWith(cart: updatedCart),
+        );
+        showSnackbar(context, 'Added to cart');
+      }
     } finally {
       if (mounted) setState(() => _addingToCart = false);
     }
