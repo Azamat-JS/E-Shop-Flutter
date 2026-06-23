@@ -104,6 +104,13 @@ class _CartScreenState extends State<CartScreen> {
                 color: Colors.yellow[600],
               ),
             ),
+            const SizedBox(height: 15),
+            Container(color: Colors.black12.withAlpha(8), height: 1),
+            const SizedBox(height: 5),
+            ListView.builder(
+              itemCount: user.cart.length,
+              itemBuilder: (context, index) {},
+            ),
           ],
         ),
       ),
