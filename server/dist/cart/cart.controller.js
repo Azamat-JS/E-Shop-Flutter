@@ -34,8 +34,8 @@ let CartController = class CartController {
     update(id, updateCartDto) {
         return this.cartService.update(+id, updateCartDto);
     }
-    remove(id) {
-        return this.cartService.remove(+id);
+    remove(productId, userId) {
+        return this.cartService.remove(productId, userId);
     }
 };
 exports.CartController = CartController;
@@ -68,10 +68,11 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], CartController.prototype, "update", null);
 __decorate([
-    (0, common_1.Delete)(':id'),
-    __param(0, (0, common_1.Param)('id')),
+    (0, common_1.Delete)('remove-from-cart/:productId/:userId'),
+    __param(0, (0, common_1.Param)('productId')),
+    __param(1, (0, common_1.Param)('userId')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
+    __metadata("design:paramtypes", [String, String]),
     __metadata("design:returntype", void 0)
 ], CartController.prototype, "remove", null);
 exports.CartController = CartController = __decorate([

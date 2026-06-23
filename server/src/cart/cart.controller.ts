@@ -27,8 +27,8 @@ export class CartController {
     return this.cartService.update(+id, updateCartDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.cartService.remove(+id);
+  @Delete('remove-from-cart/:productId/:userId')
+  remove(@Param('productId') productId: string, @Param('userId') userId: string) {
+    return this.cartService.remove(productId, userId);
   }
 }

@@ -55,8 +55,15 @@ let CartService = class CartService {
     update(id, _updateCartDto) {
         return `This action updates a #${id} cart`;
     }
-    remove(id) {
-        return `This action removes a #${id} cart`;
+    async remove(productId, userId) {
+        const user = await this.userRepo.findOneBy({ id: userId });
+        if (!user)
+            throw new common_1.NotFoundException('User not found');
+        const deletedProduct = await this.cartRepo.delete(productId);
+        if (deletedProduct.affected === 0) {
+            throw new common_1.NotFoundException("Product not found");
+        }
+        return { message: 'Product deleted successfully!' };
     }
 };
 exports.CartService = CartService;

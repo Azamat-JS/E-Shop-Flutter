@@ -13,7 +13,7 @@ export class CartService {
     @InjectRepository(CartEntity) private readonly cartRepo: Repository<CartEntity>,
     @InjectRepository(AuthEntity) private readonly userRepo: Repository<AuthEntity>,
     @InjectRepository(ProductEntity) private readonly productRepo: Repository<ProductEntity>,
-  ) {}
+  ) { }
 
   async addToCart(createCartDto: CreateCartDto) {
     const { productId, userId, quantity } = createCartDto;
@@ -49,7 +49,16 @@ export class CartService {
     return `This action updates a #${id} cart`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} cart`;
+  async remove(productId: string, userId: string) {
+    const user = await this.userRepo.findOneBy({ id: userId });
+    if (!user) throw new NotFoundException('User not found');
+
+    const deletedProduct = await this.cartRepo.delete(productId);
+
+    if (deletedProduct.affected === 0) {
+      throw new NotFoundException("Product not found")
+    }
+
+    return { message: 'Product deleted successfully!' }
   }
 }

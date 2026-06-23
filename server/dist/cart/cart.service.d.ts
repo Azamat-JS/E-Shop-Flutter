@@ -13,5 +13,7 @@ export declare class CartService {
     findAll(): string;
     findOne(id: number): string;
     update(id: number, _updateCartDto: UpdateCartDto): string;
-    remove(id: number): string;
+    remove(productId: string, userId: string): Promise<{
+        message: string;
+    }>;
 }

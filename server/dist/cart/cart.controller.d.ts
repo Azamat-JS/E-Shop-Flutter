@@ -8,5 +8,7 @@ export declare class CartController {
     findAll(): string;
     findOne(id: string): string;
     update(id: string, updateCartDto: UpdateCartDto): string;
-    remove(id: string): string;
+    remove(productId: string, userId: string): Promise<{
+        message: string;
+    }>;
 }
