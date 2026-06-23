@@ -6,13 +6,15 @@ import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { ImageKitService } from 'src/utils/imagekit.service';
+import { CartEntity } from 'src/cart/entities/cart.entity';
 
 @Injectable()
 export class AuthService {
-  constructor(@InjectRepository(AuthEntity) private authRepo: Repository<AuthEntity>,
+  constructor(
+    @InjectRepository(AuthEntity) private authRepo: Repository<AuthEntity>,
+    @InjectRepository(CartEntity) private cartRepo: Repository<CartEntity>,
     private readonly jwtService: JwtService,
     private readonly imageKitService: ImageKitService,
-
   ) { }
   async register(createAuthDto: CreateAuthDto) {
     const { email, password } = createAuthDto;
@@ -56,10 +58,12 @@ export class AuthService {
     }
 
     const accessToken = this.jwtService.sign(payload);
-    return {
-      token: accessToken,
-      ...foundUser
-    };
+    const cartItems = await this.cartRepo.find({
+      where: { user: { id: foundUser.id } },
+      relations: { product: true },
+    });
+    const cart = cartItems.map(item => ({ product: item.product, quantity: item.quantity }));
+    return { token: accessToken, ...foundUser, cart };
   }
 
   async tokenIsValid(token: string) {
@@ -83,7 +87,12 @@ export class AuthService {
     if (!user) {
       throw new UnauthorizedException("User not found");
     }
-    return user;
+    const cartItems = await this.cartRepo.find({
+      where: { user: { id: user.id } },
+      relations: { product: true },
+    });
+    const cart = cartItems.map(item => ({ product: item.product, quantity: item.quantity }));
+    return { ...user, cart };
   }
 
   async getAuthParams() {

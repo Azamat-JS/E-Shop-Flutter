@@ -53,12 +53,15 @@ const typeorm_2 = require("typeorm");
 const bcrypt = __importStar(require("bcrypt"));
 const jwt_1 = require("@nestjs/jwt");
 const imagekit_service_1 = require("../utils/imagekit.service");
+const cart_entity_1 = require("../cart/entities/cart.entity");
 let AuthService = class AuthService {
     authRepo;
+    cartRepo;
     jwtService;
     imageKitService;
-    constructor(authRepo, jwtService, imageKitService) {
+    constructor(authRepo, cartRepo, jwtService, imageKitService) {
         this.authRepo = authRepo;
+        this.cartRepo = cartRepo;
         this.jwtService = jwtService;
         this.imageKitService = imageKitService;
     }
@@ -92,10 +95,12 @@ let AuthService = class AuthService {
             type: foundUser.type
         };
         const accessToken = this.jwtService.sign(payload);
-        return {
-            token: accessToken,
-            ...foundUser
-        };
+        const cartItems = await this.cartRepo.find({
+            where: { user: { id: foundUser.id } },
+            relations: { product: true },
+        });
+        const cart = cartItems.map(item => ({ product: item.product, quantity: item.quantity }));
+        return { token: accessToken, ...foundUser, cart };
     }
     async tokenIsValid(token) {
         const payload = this.jwtService.verify(token);
@@ -117,7 +122,12 @@ let AuthService = class AuthService {
         if (!user) {
             throw new common_1.UnauthorizedException("User not found");
         }
-        return user;
+        const cartItems = await this.cartRepo.find({
+            where: { user: { id: user.id } },
+            relations: { product: true },
+        });
+        const cart = cartItems.map(item => ({ product: item.product, quantity: item.quantity }));
+        return { ...user, cart };
     }
     async getAuthParams() {
         try {
@@ -134,7 +144,9 @@ exports.AuthService = AuthService;
 exports.AuthService = AuthService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, typeorm_1.InjectRepository)(auth_entity_1.AuthEntity)),
+    __param(1, (0, typeorm_1.InjectRepository)(cart_entity_1.CartEntity)),
     __metadata("design:paramtypes", [typeorm_2.Repository,
+        typeorm_2.Repository,
         jwt_1.JwtService,
         imagekit_service_1.ImageKitService])
 ], AuthService);

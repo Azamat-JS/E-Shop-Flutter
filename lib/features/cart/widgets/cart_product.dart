@@ -1,3 +1,4 @@
+import 'package:e_shop_flutter/features/product_details/services/product_details_services.dart';
 import 'package:e_shop_flutter/models/product.dart';
 import 'package:e_shop_flutter/providers/user_provider.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +13,35 @@ class CartProduct extends StatefulWidget {
 }
 
 class _CartProductState extends State<CartProduct> {
+  final ProductDetailsServices productDetailsServices =
+      ProductDetailsServices();
+
+  Future<void> increaseQuantity(Product product) async {
+    final userProvider = context.read<UserProvider>();
+    final user = userProvider.user;
+
+    await productDetailsServices.addToCart(
+      context: context,
+      productId: product.id!,
+      userId: user.id,
+    );
+
+    final updatedCart = user.cart.map((item) {
+      final cartProduct = item['product'] as Map<String, dynamic>;
+      final cartProductId =
+          (cartProduct['_id'] ?? cartProduct['id'])?.toString();
+      if (cartProductId == product.id) {
+        return <String, dynamic>{
+          ...Map<String, dynamic>.from(item as Map),
+          'quantity': (item['quantity'] as int) + 1,
+        };
+      }
+      return item;
+    }).toList();
+
+    userProvider.setUserFromModel(user.copyWith(cart: updatedCart));
+  }
+
   @override
   Widget build(BuildContext context) {
     final productCart = context.watch<UserProvider>().user.cart[widget.index];
@@ -104,11 +134,14 @@ class _CartProductState extends State<CartProduct> {
                         child: Text(quantity.toString()),
                       ),
                     ),
-                    Container(
-                      width: 35,
-                      height: 32,
-                      alignment: Alignment.center,
-                      child: const Icon(Icons.add, size: 18),
+                    InkWell(
+                      onTap: () => increaseQuantity(product),
+                      child: Container(
+                        width: 35,
+                        height: 32,
+                        alignment: Alignment.center,
+                        child: const Icon(Icons.add, size: 18),
+                      ),
                     ),
                   ],
                 ),

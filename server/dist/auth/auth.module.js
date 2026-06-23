@@ -18,6 +18,7 @@ const passport_1 = require("@nestjs/passport");
 const imagekit_service_1 = require("../utils/imagekit.service");
 const jwt_strategy_1 = require("../utils/jwt.strategy");
 const ratings_entity_1 = require("../product/entities/ratings.entity");
+const cart_entity_1 = require("../cart/entities/cart.entity");
 let AuthModule = class AuthModule {
 };
 exports.AuthModule = AuthModule;
@@ -25,7 +26,7 @@ exports.AuthModule = AuthModule = __decorate([
     (0, common_1.Module)({
         imports: [
             passport_1.PassportModule,
-            typeorm_1.TypeOrmModule.forFeature([auth_entity_1.AuthEntity, ratings_entity_1.RatingEntity]),
+            typeorm_1.TypeOrmModule.forFeature([auth_entity_1.AuthEntity, ratings_entity_1.RatingEntity, cart_entity_1.CartEntity]),
             jwt_1.JwtModule.registerAsync({
                 imports: [config_1.ConfigModule],
                 inject: [config_1.ConfigService],
