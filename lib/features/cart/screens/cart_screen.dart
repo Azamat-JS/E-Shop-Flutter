@@ -1,5 +1,6 @@
 import 'package:e_shop_flutter/common/widgets/custom_button.dart';
 import 'package:e_shop_flutter/constants/global_variables.dart';
+import 'package:e_shop_flutter/features/cart/widgets/cart_product.dart';
 import 'package:e_shop_flutter/features/cart/widgets/cart_subtotal.dart';
 import 'package:e_shop_flutter/features/home/widgets/address_box.dart';
 import 'package:e_shop_flutter/features/search/screen/search_screen.dart';
@@ -108,8 +109,11 @@ class _CartScreenState extends State<CartScreen> {
             Container(color: Colors.black12.withAlpha(8), height: 1),
             const SizedBox(height: 5),
             ListView.builder(
+              shrinkWrap: true,
               itemCount: user.cart.length,
-              itemBuilder: (context, index) {},
+              itemBuilder: (context, index) {
+                return CartProduct(index: index);
+              },
             ),
           ],
         ),
