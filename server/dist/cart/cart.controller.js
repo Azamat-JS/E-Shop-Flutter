@@ -17,6 +17,7 @@ const common_1 = require("@nestjs/common");
 const cart_service_1 = require("./cart.service");
 const create_cart_dto_1 = require("./dto/create-cart.dto");
 const update_cart_dto_1 = require("./dto/update-cart.dto");
+const jwt_guard_1 = require("../utils/jwt.guard");
 let CartController = class CartController {
     cartService;
     constructor(cartService) {
@@ -40,6 +41,7 @@ let CartController = class CartController {
 };
 exports.CartController = CartController;
 __decorate([
+    (0, common_1.UseGuards)(jwt_guard_1.JwtAuthGuard),
     (0, common_1.Post)('add-to-cart'),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
@@ -68,6 +70,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], CartController.prototype, "update", null);
 __decorate([
+    (0, common_1.UseGuards)(jwt_guard_1.JwtAuthGuard),
     (0, common_1.Delete)('remove-from-cart/:productId/:userId'),
     __param(0, (0, common_1.Param)('productId')),
     __param(1, (0, common_1.Param)('userId')),

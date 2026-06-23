@@ -59,11 +59,23 @@ let CartService = class CartService {
         const user = await this.userRepo.findOneBy({ id: userId });
         if (!user)
             throw new common_1.NotFoundException('User not found');
-        const deletedProduct = await this.cartRepo.delete(productId);
-        if (deletedProduct.affected === 0) {
-            throw new common_1.NotFoundException("Product not found");
+        const product = await this.productRepo.findOneBy({ id: productId });
+        if (!product) {
+            throw new common_1.NotFoundException('Product not found!');
         }
-        return { message: 'Product deleted successfully!' };
+        if (product.quantity < 2) {
+            await this.cartRepo.delete({
+                product,
+                user
+            });
+        }
+        const newQuantity = product.quantity -= 1;
+        await this.cartRepo.update({
+            product,
+            user
+        }, {
+            quantity: newQuantity
+        });
     }
 };
 exports.CartService = CartService;
