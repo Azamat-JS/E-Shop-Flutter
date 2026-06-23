@@ -81,7 +81,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
       );
       if (mounted) {
         final updatedCart = List<dynamic>.from(userProvider.user.cart)
-          ..add({'productId': _product.id, 'quantity': 1});
+          ..add({'product': _product.toMap(), 'quantity': 1});
         userProvider.setUserFromModel(
           userProvider.user.copyWith(cart: updatedCart),
         );

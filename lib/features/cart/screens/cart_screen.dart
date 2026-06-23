@@ -1,7 +1,11 @@
+import 'package:e_shop_flutter/common/widgets/custom_button.dart';
 import 'package:e_shop_flutter/constants/global_variables.dart';
+import 'package:e_shop_flutter/features/cart/widgets/cart_subtotal.dart';
 import 'package:e_shop_flutter/features/home/widgets/address_box.dart';
 import 'package:e_shop_flutter/features/search/screen/search_screen.dart';
+import 'package:e_shop_flutter/providers/user_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class CartScreen extends StatefulWidget {
   const CartScreen({super.key});
@@ -17,6 +21,8 @@ class _CartScreenState extends State<CartScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final user = context.watch<UserProvider>().user;
+
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(60),
@@ -86,7 +92,20 @@ class _CartScreenState extends State<CartScreen> {
         ),
       ),
       body: SingleChildScrollView(
-        child: Column(children: [const AddressBox()]),
+        child: Column(
+          children: [
+            const AddressBox(),
+            const CartSubtotal(),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: CustomButton(
+                text: 'Proceed to Buy (${user.cart.length} items)',
+                onTap: () {},
+                color: Colors.yellow[600],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
