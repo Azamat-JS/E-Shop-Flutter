@@ -63,6 +63,9 @@ class _AddressScreenState extends State<AddressScreen> {
                         ),
                       ),
                     ),
+                    const SizedBox(height: 20),
+                    const Text('OR', style: TextStyle(fontSize: 18)),
+                    const SizedBox(height: 20),
                   ],
                 ),
               Form(
