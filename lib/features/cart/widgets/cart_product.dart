@@ -1,3 +1,4 @@
+import 'package:e_shop_flutter/features/cart/services/cart_services.dart';
 import 'package:e_shop_flutter/features/product_details/services/product_details_services.dart';
 import 'package:e_shop_flutter/models/product.dart';
 import 'package:e_shop_flutter/providers/user_provider.dart';
@@ -16,6 +17,8 @@ class _CartProductState extends State<CartProduct> {
   final ProductDetailsServices productDetailsServices =
       ProductDetailsServices();
 
+  final CartServices cartServices = CartServices();
+
   Future<void> increaseQuantity(Product product) async {
     final userProvider = context.read<UserProvider>();
     final user = userProvider.user;
@@ -28,8 +31,8 @@ class _CartProductState extends State<CartProduct> {
 
     final updatedCart = user.cart.map((item) {
       final cartProduct = item['product'] as Map<String, dynamic>;
-      final cartProductId =
-          (cartProduct['_id'] ?? cartProduct['id'])?.toString();
+      final cartProductId = (cartProduct['_id'] ?? cartProduct['id'])
+          ?.toString();
       if (cartProductId == product.id) {
         return <String, dynamic>{
           ...Map<String, dynamic>.from(item as Map),
@@ -40,6 +43,17 @@ class _CartProductState extends State<CartProduct> {
     }).toList();
 
     userProvider.setUserFromModel(user.copyWith(cart: updatedCart));
+  }
+
+  Future<void> decreaseQuantity(Product product) async {
+    final userProvider = context.read<UserProvider>();
+    final user = userProvider.user;
+
+    await cartServices.removeFromCart(
+      context: context,
+      productId: product.id!,
+      userId: user.id,
+    );
   }
 
   @override
@@ -115,11 +129,14 @@ class _CartProductState extends State<CartProduct> {
                 ),
                 child: Row(
                   children: [
-                    Container(
-                      width: 35,
-                      height: 32,
-                      alignment: Alignment.center,
-                      child: const Icon(Icons.remove, size: 18),
+                    InkWell(
+                      onTap: () => decreaseQuantity(product),
+                      child: Container(
+                        width: 35,
+                        height: 32,
+                        alignment: Alignment.center,
+                        child: const Icon(Icons.remove, size: 18),
+                      ),
                     ),
                     DecoratedBox(
                       decoration: BoxDecoration(
