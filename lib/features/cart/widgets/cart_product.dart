@@ -54,6 +54,26 @@ class _CartProductState extends State<CartProduct> {
       productId: product.id!,
       userId: user.id,
     );
+
+    final updatedCart =
+        user.cart.where((item) {
+          final cartProduct = item['product'] as Map<String, dynamic>;
+          final cartProductId =
+              (cartProduct['_id'] ?? cartProduct['id'])?.toString();
+          if (cartProductId != product.id) return true;
+          return (item['quantity'] as int) > 1;
+        }).map((item) {
+          final cartProduct = item['product'] as Map<String, dynamic>;
+          final cartProductId =
+              (cartProduct['_id'] ?? cartProduct['id'])?.toString();
+          if (cartProductId != product.id) return item;
+          return <String, dynamic>{
+            ...Map<String, dynamic>.from(item as Map),
+            'quantity': (item['quantity'] as int) - 1,
+          };
+        }).toList();
+
+    userProvider.setUserFromModel(user.copyWith(cart: updatedCart));
   }
 
   @override
