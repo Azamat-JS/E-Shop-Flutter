@@ -1,4 +1,5 @@
 import 'package:e_shop_flutter/common/widgets/bottom_bar.dart';
+import 'package:e_shop_flutter/features/address/screens/address_screen.dart';
 import 'package:e_shop_flutter/features/auth/screens/auth_screen.dart';
 import 'package:e_shop_flutter/features/admin/screens/add_product_screen.dart';
 import 'package:e_shop_flutter/features/home/screens/category_deals_screen.dart';
@@ -41,6 +42,11 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
       return MaterialPageRoute(
         settings: routeSettings,
         builder: (_) => ProductDetailsScreen(product: product),
+      );
+    case AddressScreen.routeName:
+      return MaterialPageRoute(
+        settings: routeSettings,
+        builder: (_) => const AddressScreen(),
       );
     default:
       return MaterialPageRoute(
