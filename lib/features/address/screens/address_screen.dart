@@ -29,6 +29,13 @@ class _AddressScreenState extends State<AddressScreen> {
     super.initState();
     _loadPaymentConfig();
     _loadGooglePayConfig();
+    paymentItems.add(
+      PaymentItem(
+        amount: widget.totalAmount,
+        label: 'Total Amount',
+        status: PaymentItemStatus.final_price,
+      ),
+    );
   }
 
   Future<void> _loadPaymentConfig() async {
