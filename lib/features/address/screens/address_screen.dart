@@ -1,5 +1,6 @@
 import 'package:e_shop_flutter/common/widgets/custom_textfield.dart';
 import 'package:e_shop_flutter/constants/global_variables.dart';
+import 'package:e_shop_flutter/constants/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:pay/pay.dart';
@@ -21,6 +22,7 @@ class _AddressScreenState extends State<AddressScreen> {
   final TextEditingController _cityController = TextEditingController();
 
   List<PaymentItem> paymentItems = [];
+  String addressToBeUsed = "";
   PaymentConfiguration? _applePayConfig;
   PaymentConfiguration? _googlePayConfig;
 
@@ -63,9 +65,34 @@ class _AddressScreenState extends State<AddressScreen> {
 
   void onGooglePayResult(res) {}
 
+  void payPressed(String addressFromProvider) {
+    addressToBeUsed = "";
+
+    bool isForm =
+        _flatBuildingController.text.isNotEmpty ||
+        _areaController.text.isNotEmpty ||
+        _pincodeController.text.isNotEmpty ||
+        _cityController.text.isNotEmpty;
+
+    if (isForm) {
+      if (_addressFormKey.currentState!.validate()) {
+        addressToBeUsed =
+            "${_flatBuildingController.text}, ${_areaController.text}, ${_cityController.text} - ${_pincodeController.text}";
+      } else {
+        throw Exception('Please enter all the values!');
+      }
+    } else if (addressFromProvider.isNotEmpty) {
+      addressToBeUsed = addressFromProvider;
+    } else {
+      showSnackbar(context, "ERROR");
+    }
+
+    print(addressToBeUsed);
+  }
+
   @override
   Widget build(BuildContext context) {
-    var address = 'Al-Beruniy 27 kv-1, Urgench, Khorezm. UZB';
+    var address = '';
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(60),
@@ -120,13 +147,11 @@ class _AddressScreenState extends State<AddressScreen> {
                     CustomTextfield(
                       controller: _pincodeController,
                       hintText: "Pincode",
-                      obscure: true,
                     ),
                     const SizedBox(height: 10),
                     CustomTextfield(
                       controller: _cityController,
                       hintText: "Town/City",
-                      obscure: true,
                     ),
                     const SizedBox(height: 10),
                   ],
@@ -136,6 +161,7 @@ class _AddressScreenState extends State<AddressScreen> {
                 ApplePayButton(
                   width: double.infinity,
                   height: 50,
+                  onPressed: () => payPressed(address),
                   margin: const EdgeInsets.only(top: 15),
                   style: ApplePayButtonStyle.whiteOutline,
                   type: ApplePayButtonType.buy,
@@ -146,6 +172,7 @@ class _AddressScreenState extends State<AddressScreen> {
               const SizedBox(height: 10),
               if (_googlePayConfig != null)
                 GooglePayButton(
+                  onPressed: () => payPressed(address),
                   width: double.infinity,
                   height: 50,
                   margin: const EdgeInsets.only(top: 15),
