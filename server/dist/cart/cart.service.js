@@ -60,22 +60,18 @@ let CartService = class CartService {
         if (!user)
             throw new common_1.NotFoundException('User not found');
         const product = await this.productRepo.findOneBy({ id: productId });
-        if (!product) {
+        if (!product)
             throw new common_1.NotFoundException('Product not found!');
-        }
-        if (product.quantity < 2) {
-            await this.cartRepo.delete({
-                product,
-                user
-            });
-        }
-        const newQuantity = product.quantity -= 1;
-        await this.cartRepo.update({
-            product,
-            user
-        }, {
-            quantity: newQuantity
+        const cartItem = await this.cartRepo.findOne({
+            where: { user: { id: userId }, product: { id: productId } },
         });
+        if (!cartItem)
+            throw new common_1.NotFoundException('Cart item not found!');
+        if (cartItem.quantity < 2) {
+            await this.cartRepo.delete({ product, user });
+            return;
+        }
+        await this.cartRepo.update({ product, user }, { quantity: cartItem.quantity - 1 });
     }
 };
 exports.CartService = CartService;
