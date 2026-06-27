@@ -1,5 +1,5 @@
-import { IsArray, IsNotEmpty, IsNumber, IsOptional, IsString } from "class-validator";
-import { CreateCartDto } from "src/cart/dto/create-cart.dto";
+import { IsArray, IsNotEmpty, IsNumber, IsOptional, IsString, ValidateNested } from "class-validator";
+import { Type } from "class-transformer";
 
 export class CreateProductDto {
     @IsNotEmpty()
@@ -57,10 +57,22 @@ export class UpdateProductDto {
     rating?: number;
 }
 
+export class OrderProductDto {
+    @IsNotEmpty()
+    @IsString()
+    id!: string;
+
+    @IsNotEmpty()
+    @IsNumber()
+    quantity!: number;
+}
 
 export class OrderDto {
     @IsNotEmpty()
-    cart!: CreateCartDto
+    @IsArray()
+    @ValidateNested({ each: true })
+    @Type(() => OrderProductDto)
+    products!: OrderProductDto[];
 
     @IsNotEmpty()
     @IsNumber()

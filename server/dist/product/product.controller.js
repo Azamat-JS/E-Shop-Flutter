@@ -37,8 +37,12 @@ let ProductController = class ProductController {
     create(createProductDto) {
         return this.productService.create(createProductDto);
     }
-    orderProduct(orderDto) {
-        return this.productService.orderProduct(orderDto);
+    orderProduct(orderDto, req) {
+        const userId = req.user?.id;
+        if (!userId) {
+            throw new common_1.UnauthorizedException('Please login to place an order');
+        }
+        return this.productService.orderProduct(userId, orderDto);
     }
     searchProduct(productName) {
         return this.productService.searchProduct(productName);
@@ -89,8 +93,9 @@ __decorate([
 __decorate([
     (0, common_1.Post)('order'),
     __param(0, (0, common_1.Body)()),
+    __param(1, (0, common_1.Req)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [create_product_dto_1.OrderDto]),
+    __metadata("design:paramtypes", [create_product_dto_1.OrderDto, Object]),
     __metadata("design:returntype", void 0)
 ], ProductController.prototype, "orderProduct", null);
 __decorate([

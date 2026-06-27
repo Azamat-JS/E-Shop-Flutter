@@ -19,14 +19,17 @@ const product_entity_1 = require("./entities/product.entity");
 const typeorm_2 = require("typeorm");
 const ratings_entity_1 = require("./entities/ratings.entity");
 const auth_entity_1 = require("../auth/entities/auth.entity");
+const order_entity_1 = require("./entities/order.entity");
 let ProductService = class ProductService {
     productRepo;
     rateRepo;
     userRepo;
-    constructor(productRepo, rateRepo, userRepo) {
+    orderRepo;
+    constructor(productRepo, rateRepo, userRepo, orderRepo) {
         this.productRepo = productRepo;
         this.rateRepo = rateRepo;
         this.userRepo = userRepo;
+        this.orderRepo = orderRepo;
     }
     async create(createProductDto) {
         const product = this.productRepo.create(createProductDto);
@@ -96,8 +99,33 @@ let ProductService = class ProductService {
         }
         return updatedProduct;
     }
-    async orderProduct(orderDto) {
-        const { cart, totalPrice, address } = orderDto;
+    async orderProduct(userId, orderDto) {
+        const { products, totalPrice, address } = orderDto;
+        const user = await this.userRepo.findOneBy({ id: userId });
+        if (!user) {
+            throw new common_1.NotFoundException('User not found');
+        }
+        const orderedProducts = [];
+        for (const item of products) {
+            const product = await this.productRepo.findOneBy({ id: item.id });
+            if (!product) {
+                throw new common_1.NotFoundException(`Product with id ${item.id} not found`);
+            }
+            if (product.quantity < item.quantity) {
+                throw new common_1.BadRequestException(`Insufficient stock for "${product.name}". Available: ${product.quantity}`);
+            }
+            product.quantity -= item.quantity;
+            await this.productRepo.save(product);
+            orderedProducts.push(product);
+        }
+        const order = this.orderRepo.create({
+            user,
+            products: orderedProducts,
+            totalPrice,
+            address,
+            status: 'PENDING',
+        });
+        return this.orderRepo.save(order);
     }
     update(id, updateProductDto) {
         return `This action updates a #${id} product`;
@@ -133,7 +161,9 @@ exports.ProductService = ProductService = __decorate([
     __param(0, (0, typeorm_1.InjectRepository)(product_entity_1.ProductEntity)),
     __param(1, (0, typeorm_1.InjectRepository)(ratings_entity_1.RatingEntity)),
     __param(2, (0, typeorm_1.InjectRepository)(auth_entity_1.AuthEntity)),
+    __param(3, (0, typeorm_1.InjectRepository)(order_entity_1.OrderEntity)),
     __metadata("design:paramtypes", [typeorm_2.Repository,
+        typeorm_2.Repository,
         typeorm_2.Repository,
         typeorm_2.Repository])
 ], ProductService);

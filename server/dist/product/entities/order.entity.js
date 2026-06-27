@@ -17,8 +17,7 @@ let OrderEntity = class OrderEntity {
     id;
     totalPrice;
     user;
-    product;
-    quantity;
+    products;
     address;
     status;
     orderedAt;
@@ -41,13 +40,10 @@ __decorate([
     __metadata("design:type", auth_entity_1.AuthEntity)
 ], OrderEntity.prototype, "user", void 0);
 __decorate([
-    (0, typeorm_1.ManyToOne)(() => product_entity_1.ProductEntity),
-    __metadata("design:type", product_entity_1.ProductEntity)
-], OrderEntity.prototype, "product", void 0);
-__decorate([
-    (0, typeorm_1.Column)(),
-    __metadata("design:type", Number)
-], OrderEntity.prototype, "quantity", void 0);
+    (0, typeorm_1.ManyToMany)(() => product_entity_1.ProductEntity),
+    (0, typeorm_1.JoinTable)(),
+    __metadata("design:type", Array)
+], OrderEntity.prototype, "products", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)

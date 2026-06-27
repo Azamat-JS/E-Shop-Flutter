@@ -35,8 +35,12 @@ export class ProductController {
   }
 
   @Post('order')
-  orderProduct(@Body() orderDto: OrderDto) {
-    return this.productService.orderProduct(orderDto);
+  orderProduct(@Body() orderDto: OrderDto, @Req() req: AuthenticatedRequest) {
+    const userId = req.user?.id;
+    if (!userId) {
+      throw new UnauthorizedException('Please login to place an order');
+    }
+    return this.productService.orderProduct(userId, orderDto);
   }
 
   @Get('search/:productName')

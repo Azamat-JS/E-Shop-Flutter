@@ -9,11 +9,12 @@ import { PassportModule } from '@nestjs/passport';
 import { JwtStrategy } from 'src/utils/jwt.strategy';
 import { RatingEntity } from './entities/ratings.entity';
 import { AuthEntity } from 'src/auth/entities/auth.entity';
+import { OrderEntity } from './entities/order.entity';
 
 @Module({
   imports: [
     PassportModule,
-    TypeOrmModule.forFeature([ProductEntity, RatingEntity, AuthEntity]),
+    TypeOrmModule.forFeature([ProductEntity, RatingEntity, AuthEntity, OrderEntity]),
     JwtModule.registerAsync({
       imports: [ConfigModule],
       inject: [ConfigService],

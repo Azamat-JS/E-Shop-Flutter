@@ -5,6 +5,7 @@ import { ProductEntity } from './entities/product.entity';
 import { Repository } from 'typeorm';
 import { RatingEntity } from './entities/ratings.entity';
 import { AuthEntity } from 'src/auth/entities/auth.entity';
+import { OrderEntity } from './entities/order.entity';
 
 @Injectable()
 export class ProductService {
@@ -12,6 +13,7 @@ export class ProductService {
     @InjectRepository(ProductEntity) private readonly productRepo: Repository<ProductEntity>,
     @InjectRepository(RatingEntity) private readonly rateRepo: Repository<RatingEntity>,
     @InjectRepository(AuthEntity) private readonly userRepo: Repository<AuthEntity>,
+    @InjectRepository(OrderEntity) private readonly orderRepo: Repository<OrderEntity>,
   ) { }
   async create(createProductDto: CreateProductDto) {
     const product = this.productRepo.create(createProductDto);
@@ -103,10 +105,38 @@ export class ProductService {
     return updatedProduct;
   }
 
-  async orderProduct(orderDto: OrderDto) {
-    const { cart, totalPrice, address } = orderDto;
+  async orderProduct(userId: string, orderDto: OrderDto) {
+    const { products, totalPrice, address } = orderDto;
 
+    const user = await this.userRepo.findOneBy({ id: userId });
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
 
+    const orderedProducts: ProductEntity[] = [];
+
+    for (const item of products) {
+      const product = await this.productRepo.findOneBy({ id: item.id });
+      if (!product) {
+        throw new NotFoundException(`Product with id ${item.id} not found`);
+      }
+      if (product.quantity < item.quantity) {
+        throw new BadRequestException(`Insufficient stock for "${product.name}". Available: ${product.quantity}`);
+      }
+      product.quantity -= item.quantity;
+      await this.productRepo.save(product);
+      orderedProducts.push(product);
+    }
+
+    const order = this.orderRepo.create({
+      user,
+      products: orderedProducts,
+      totalPrice,
+      address,
+      status: 'PENDING',
+    });
+
+    return this.orderRepo.save(order);
   }
 
 

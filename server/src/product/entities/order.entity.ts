@@ -3,6 +3,8 @@ import {
     PrimaryGeneratedColumn,
     Column,
     ManyToOne,
+    ManyToMany,
+    JoinTable,
     CreateDateColumn,
 } from "typeorm";
 
@@ -15,7 +17,6 @@ export class OrderEntity {
     @PrimaryGeneratedColumn("uuid")
     id!: string;
 
-
     @Column({
         type: "decimal",
         precision: 10,
@@ -23,28 +24,20 @@ export class OrderEntity {
     })
     totalPrice!: number;
 
-
     @ManyToOne(() => AuthEntity)
     user!: AuthEntity;
 
-
-    @ManyToOne(() => ProductEntity)
-    product!: ProductEntity;
-
-
-    @Column()
-    quantity!: number;
-
+    @ManyToMany(() => ProductEntity)
+    @JoinTable()
+    products!: ProductEntity[];
 
     @Column()
     address!: string;
-
 
     @Column({
         default: "PENDING"
     })
     status!: string;
-
 
     @CreateDateColumn()
     orderedAt!: Date;
