@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Query, Req, UnauthorizedException } from '@nestjs/common';
 import { ProductService } from './product.service';
-import { CreateProductDto, UpdateProductDto } from './dto/create-product.dto';
+import { CreateProductDto, OrderDto, UpdateProductDto } from './dto/create-product.dto';
 import { JwtAuthGuard } from 'src/utils/jwt.guard';
 import { Roles } from 'src/utils/roles';
 import { RolesGuard } from 'src/utils/roles.guard';
@@ -34,6 +34,11 @@ export class ProductController {
     return this.productService.create(createProductDto);
   }
 
+  @Post('order')
+  orderProduct(@Body() orderDto: OrderDto) {
+    return this.productService.orderProduct(orderDto);
+  }
+
   @Get('search/:productName')
   searchProduct(@Param('productName') productName: string) {
     return this.productService.searchProduct(productName);
@@ -52,6 +57,7 @@ export class ProductController {
     }
     return this.productService.rateProduct(productId, userId, dto)
   }
+
 
 
   // @Patch(':id')

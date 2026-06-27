@@ -1,4 +1,4 @@
-import { CreateProductDto, UpdateProductDto } from './dto/create-product.dto';
+import { CreateProductDto, OrderDto, UpdateProductDto } from './dto/create-product.dto';
 import { ProductEntity } from './entities/product.entity';
 import { Repository } from 'typeorm';
 import { RatingEntity } from './entities/ratings.entity';
@@ -14,6 +14,7 @@ export declare class ProductService {
     findByCategory(category: string): Promise<ProductEntity[]>;
     searchProduct(productName: string): Promise<ProductEntity[]>;
     rateProduct(productId: string, userId: string, dto: UpdateProductDto): Promise<ProductEntity>;
+    orderProduct(orderDto: OrderDto): Promise<void>;
     update(id: string, updateProductDto: UpdateProductDto): string;
     remove(id: string): Promise<{
         message: string;

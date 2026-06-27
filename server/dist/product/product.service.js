@@ -96,6 +96,9 @@ let ProductService = class ProductService {
         }
         return updatedProduct;
     }
+    async orderProduct(orderDto) {
+        const { cart, totalPrice, address } = orderDto;
+    }
     update(id, updateProductDto) {
         return `This action updates a #${id} product`;
     }

@@ -37,6 +37,9 @@ let ProductController = class ProductController {
     create(createProductDto) {
         return this.productService.create(createProductDto);
     }
+    orderProduct(orderDto) {
+        return this.productService.orderProduct(orderDto);
+    }
     searchProduct(productName) {
         return this.productService.searchProduct(productName);
     }
@@ -83,6 +86,13 @@ __decorate([
     __metadata("design:paramtypes", [create_product_dto_1.CreateProductDto]),
     __metadata("design:returntype", void 0)
 ], ProductController.prototype, "create", null);
+__decorate([
+    (0, common_1.Post)('order'),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [create_product_dto_1.OrderDto]),
+    __metadata("design:returntype", void 0)
+], ProductController.prototype, "orderProduct", null);
 __decorate([
     (0, common_1.Get)('search/:productName'),
     __param(0, (0, common_1.Param)('productName')),

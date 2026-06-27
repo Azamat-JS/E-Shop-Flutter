@@ -1,3 +1,4 @@
+import { CreateCartDto } from "../../cart/dto/create-cart.dto";
 export declare class CreateProductDto {
     name: string;
     description: string;
@@ -14,4 +15,9 @@ export declare class UpdateProductDto {
     quantity?: number;
     price?: number;
     rating?: number;
+}
+export declare class OrderDto {
+    cart: CreateCartDto;
+    totalPrice: number;
+    address: string;
 }

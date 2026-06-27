@@ -1,5 +1,5 @@
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
-import { CreateProductDto, UpdateProductDto } from './dto/create-product.dto';
+import { CreateProductDto, OrderDto, UpdateProductDto } from './dto/create-product.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ProductEntity } from './entities/product.entity';
 import { Repository } from 'typeorm';
@@ -102,6 +102,13 @@ export class ProductService {
 
     return updatedProduct;
   }
+
+  async orderProduct(orderDto: OrderDto) {
+    const { cart, totalPrice, address } = orderDto;
+
+
+  }
+
 
   update(id: string, updateProductDto: UpdateProductDto) {
     return `This action updates a #${id} product`;

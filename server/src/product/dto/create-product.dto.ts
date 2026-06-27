@@ -1,4 +1,5 @@
 import { IsArray, IsNotEmpty, IsNumber, IsOptional, IsString } from "class-validator";
+import { CreateCartDto } from "src/cart/dto/create-cart.dto";
 
 export class CreateProductDto {
     @IsNotEmpty()
@@ -54,4 +55,18 @@ export class UpdateProductDto {
     @IsOptional()
     @IsNumber()
     rating?: number;
+}
+
+
+export class OrderDto {
+    @IsNotEmpty()
+    cart!: CreateCartDto
+
+    @IsNotEmpty()
+    @IsNumber()
+    totalPrice!: number;
+
+    @IsNotEmpty()
+    @IsString()
+    address!: string;
 }

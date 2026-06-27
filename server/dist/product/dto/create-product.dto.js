@@ -9,8 +9,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UpdateProductDto = exports.CreateProductDto = void 0;
+exports.OrderDto = exports.UpdateProductDto = exports.CreateProductDto = void 0;
 const class_validator_1 = require("class-validator");
+const create_cart_dto_1 = require("../../cart/dto/create-cart.dto");
 class CreateProductDto {
     name;
     description;
@@ -95,4 +96,24 @@ __decorate([
     (0, class_validator_1.IsNumber)(),
     __metadata("design:type", Number)
 ], UpdateProductDto.prototype, "rating", void 0);
+class OrderDto {
+    cart;
+    totalPrice;
+    address;
+}
+exports.OrderDto = OrderDto;
+__decorate([
+    (0, class_validator_1.IsNotEmpty)(),
+    __metadata("design:type", create_cart_dto_1.CreateCartDto)
+], OrderDto.prototype, "cart", void 0);
+__decorate([
+    (0, class_validator_1.IsNotEmpty)(),
+    (0, class_validator_1.IsNumber)(),
+    __metadata("design:type", Number)
+], OrderDto.prototype, "totalPrice", void 0);
+__decorate([
+    (0, class_validator_1.IsNotEmpty)(),
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], OrderDto.prototype, "address", void 0);
 //# sourceMappingURL=create-product.dto.js.map
