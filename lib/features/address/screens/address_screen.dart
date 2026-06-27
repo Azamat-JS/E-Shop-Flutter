@@ -1,9 +1,12 @@
 import 'package:e_shop_flutter/common/widgets/custom_textfield.dart';
 import 'package:e_shop_flutter/constants/global_variables.dart';
 import 'package:e_shop_flutter/constants/utils.dart';
+import 'package:e_shop_flutter/features/address/services/address_services.dart';
+import 'package:e_shop_flutter/providers/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:pay/pay.dart';
+import 'package:provider/provider.dart';
 
 class AddressScreen extends StatefulWidget {
   static const String routeName = '/address';
@@ -23,6 +26,7 @@ class _AddressScreenState extends State<AddressScreen> {
 
   List<PaymentItem> paymentItems = [];
   String addressToBeUsed = "";
+  final AddressServices addressServices = AddressServices();
   PaymentConfiguration? _applePayConfig;
   PaymentConfiguration? _googlePayConfig;
 
@@ -61,7 +65,14 @@ class _AddressScreenState extends State<AddressScreen> {
     _cityController.dispose();
   }
 
-  void onApplePayResult(res) {}
+  void onApplePayResult(res) {
+    if (Provider.of<UserProvider>(context).user.address.isEmpty) {
+      addressServices.saveUserAddress(
+        context: context,
+        address: addressToBeUsed,
+      );
+    }
+  }
 
   void onGooglePayResult(res) {}
 
@@ -86,13 +97,11 @@ class _AddressScreenState extends State<AddressScreen> {
     } else {
       showSnackbar(context, "ERROR");
     }
-
-    print(addressToBeUsed);
   }
 
   @override
   Widget build(BuildContext context) {
-    var address = '';
+    var address = context.watch<UserProvider>().user.address;
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(60),
