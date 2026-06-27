@@ -11,7 +11,7 @@ export declare class ProductController {
     create(createProductDto: CreateProductDto): Promise<import("./entities/product.entity").ProductEntity>;
     searchProduct(productName: string): Promise<import("./entities/product.entity").ProductEntity[]>;
     findOne(id: string): Promise<import("./entities/product.entity").ProductEntity>;
-    rateProduct(productId: string, dto: RateProductDto, req: AuthenticatedRequest): Promise<import("./entities/product.entity").ProductEntity | null>;
+    rateProduct(productId: string, dto: RateProductDto, req: AuthenticatedRequest): Promise<import("./entities/product.entity").ProductEntity>;
     remove(id: string): Promise<{
         message: string;
     }>;

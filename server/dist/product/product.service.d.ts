@@ -13,7 +13,7 @@ export declare class ProductService {
     findOne(id: string): Promise<ProductEntity>;
     findByCategory(category: string): Promise<ProductEntity[]>;
     searchProduct(productName: string): Promise<ProductEntity[]>;
-    rateProduct(productId: string, userId: string, dto: UpdateProductDto): Promise<ProductEntity | null>;
+    rateProduct(productId: string, userId: string, dto: UpdateProductDto): Promise<ProductEntity>;
     update(id: string, updateProductDto: UpdateProductDto): string;
     remove(id: string): Promise<{
         message: string;

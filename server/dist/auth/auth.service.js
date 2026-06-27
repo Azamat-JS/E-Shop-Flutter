@@ -113,6 +113,25 @@ let AuthService = class AuthService {
         }
         return true;
     }
+    async saveUserAddress(addressDto, token) {
+        const payload = this.jwtService.verify(token);
+        if (!payload) {
+            throw new common_1.UnauthorizedException("Token is not valid");
+        }
+        const user = await this.authRepo.findOneBy({ id: payload.userId });
+        if (!user) {
+            throw new common_1.UnauthorizedException("User not found");
+        }
+        const savedAddress = await this.authRepo.update(user.id, { address: addressDto.address });
+        if (savedAddress.affected === 0) {
+            throw new common_1.NotFoundException("Failed to save the user's address");
+        }
+        const updatedUser = await this.authRepo.findOneBy({ id: payload.userId });
+        if (!updatedUser) {
+            throw new common_1.NotFoundException("User not found after updating the address");
+        }
+        return updatedUser;
+    }
     async getUserData(token) {
         const payload = this.jwtService.verify(token);
         if (!payload) {

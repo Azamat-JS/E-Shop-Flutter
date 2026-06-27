@@ -54,3 +54,9 @@ export class UpdateAuthDto {
     @IsString()
     address?: string;
 }
+
+export class AddressDto {
+    @IsNotEmpty()
+    @IsString()
+    address!: string;
+}

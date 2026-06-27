@@ -1,5 +1,5 @@
 import { AuthService } from './auth.service';
-import { CreateAuthDto, LoginDto } from './dto/create-auth.dto';
+import { AddressDto, CreateAuthDto, LoginDto } from './dto/create-auth.dto';
 import type { AuthenticatedRequest } from "../utils/types/types";
 export declare class AuthController {
     private readonly authService;
@@ -21,6 +21,7 @@ export declare class AuthController {
         token: string;
     }>;
     tokenIsValid(req: AuthenticatedRequest): false | Promise<boolean>;
+    saveUserAddress(addressDto: AddressDto, req: AuthenticatedRequest): false | Promise<import("./entities/auth.entity").AuthEntity>;
     getUserData(req: AuthenticatedRequest): Promise<{
         cart: {
             product: import("../product/entities/product.entity").ProductEntity;

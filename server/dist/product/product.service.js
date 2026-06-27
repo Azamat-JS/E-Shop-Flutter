@@ -91,6 +91,9 @@ let ProductService = class ProductService {
                 },
             },
         });
+        if (!updatedProduct) {
+            throw new common_1.NotFoundException("Product not found after updating");
+        }
         return updatedProduct;
     }
     update(id, updateProductDto) {

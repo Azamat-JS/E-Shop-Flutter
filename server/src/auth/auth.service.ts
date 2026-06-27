@@ -1,5 +1,5 @@
-import { BadRequestException, Injectable, InternalServerErrorException, UnauthorizedException } from '@nestjs/common';
-import { CreateAuthDto, LoginDto } from './dto/create-auth.dto';
+import { BadRequestException, Injectable, InternalServerErrorException, NotFoundException, UnauthorizedException } from '@nestjs/common';
+import { AddressDto, CreateAuthDto, LoginDto } from './dto/create-auth.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { AuthEntity } from './entities/auth.entity';
 import { Repository } from 'typeorm';
@@ -76,6 +76,30 @@ export class AuthService {
       return false;
     }
     return true;
+  }
+
+  async saveUserAddress(addressDto: AddressDto, token: string) {
+    const payload = this.jwtService.verify(token);
+    if (!payload) {
+      throw new UnauthorizedException("Token is not valid");
+    }
+    const user = await this.authRepo.findOneBy({ id: payload.userId });
+    if (!user) {
+      throw new UnauthorizedException("User not found");
+    }
+    const savedAddress = await this.authRepo.update(user.id, { address: addressDto.address })
+
+    if (savedAddress.affected === 0) {
+      throw new NotFoundException("Failed to save the user's address")
+    }
+
+    const updatedUser = await this.authRepo.findOneBy({ id: payload.userId })
+
+    if (!updatedUser) {
+      throw new NotFoundException("User not found after updating the address")
+    }
+
+    return updatedUser;
   }
 
   async getUserData(token: string) {

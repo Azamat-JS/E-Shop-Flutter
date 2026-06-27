@@ -1,4 +1,4 @@
-import { CreateAuthDto, LoginDto } from './dto/create-auth.dto';
+import { AddressDto, CreateAuthDto, LoginDto } from './dto/create-auth.dto';
 import { AuthEntity } from './entities/auth.entity';
 import { Repository } from 'typeorm';
 import { JwtService } from '@nestjs/jwt';
@@ -27,6 +27,7 @@ export declare class AuthService {
         token: string;
     }>;
     tokenIsValid(token: string): Promise<boolean>;
+    saveUserAddress(addressDto: AddressDto, token: string): Promise<AuthEntity>;
     getUserData(token: string): Promise<{
         cart: {
             product: import("../product/entities/product.entity").ProductEntity;

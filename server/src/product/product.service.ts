@@ -96,6 +96,10 @@ export class ProductService {
       },
     });
 
+    if (!updatedProduct) {
+      throw new NotFoundException("Product not found after updating")
+    }
+
     return updatedProduct;
   }
 

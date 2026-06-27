@@ -16,3 +16,6 @@ export declare class UpdateAuthDto {
     type?: string;
     address?: string;
 }
+export declare class AddressDto {
+    address: string;
+}

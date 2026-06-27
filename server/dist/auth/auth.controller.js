@@ -34,6 +34,12 @@ let AuthController = class AuthController {
             return false;
         return this.authService.tokenIsValid(token);
     }
+    saveUserAddress(addressDto, req) {
+        const token = req.header('x-auth-token');
+        if (!token)
+            return false;
+        return this.authService.saveUserAddress(addressDto, token);
+    }
     getUserData(req) {
         const token = req.header('x-auth-token');
         if (!token) {
@@ -67,6 +73,14 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
 ], AuthController.prototype, "tokenIsValid", null);
+__decorate([
+    (0, common_1.Post)('user-address'),
+    __param(0, (0, common_1.Body)()),
+    __param(1, (0, common_1.Req)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [create_auth_dto_1.AddressDto, Object]),
+    __metadata("design:returntype", void 0)
+], AuthController.prototype, "saveUserAddress", null);
 __decorate([
     (0, common_1.Get)('me'),
     __param(0, (0, common_1.Req)()),

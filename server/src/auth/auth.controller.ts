@@ -1,6 +1,6 @@
 import { Controller, Post, Body, Req, Get, UseGuards, UnauthorizedException } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { CreateAuthDto, LoginDto } from './dto/create-auth.dto';
+import { AddressDto, CreateAuthDto, LoginDto } from './dto/create-auth.dto';
 import type { AuthenticatedRequest } from 'src/utils/types/types';
 import { JwtAuthGuard } from 'src/utils/jwt.guard';
 
@@ -24,6 +24,15 @@ export class AuthController {
     const token = req.header('x-auth-token');
     if (!token) return false;
     return this.authService.tokenIsValid(token);
+  }
+
+
+
+  @Post('user-address')
+  saveUserAddress(@Body() addressDto: AddressDto, @Req() req: AuthenticatedRequest) {
+    const token = req.header('x-auth-token');
+    if (!token) return false;
+    return this.authService.saveUserAddress(addressDto, token);
   }
 
   @Get('me')
