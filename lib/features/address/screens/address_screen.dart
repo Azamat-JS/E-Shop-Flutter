@@ -66,15 +66,36 @@ class _AddressScreenState extends State<AddressScreen> {
   }
 
   void onApplePayResult(res) {
-    if (Provider.of<UserProvider>(context).user.address.isEmpty) {
+    final user = Provider.of<UserProvider>(context, listen: false).user;
+    if (user.address.isEmpty) {
       addressServices.saveUserAddress(
         context: context,
         address: addressToBeUsed,
       );
     }
+    addressServices.placeOrder(
+      context: context,
+      address: addressToBeUsed,
+      totalSum: double.parse(widget.totalAmount),
+      cart: user.cart,
+    );
   }
 
-  void onGooglePayResult(res) {}
+  void onGooglePayResult(res) {
+    final user = Provider.of<UserProvider>(context, listen: false).user;
+    if (user.address.isEmpty) {
+      addressServices.saveUserAddress(
+        context: context,
+        address: addressToBeUsed,
+      );
+    }
+    addressServices.placeOrder(
+      context: context,
+      address: addressToBeUsed,
+      totalSum: double.parse(widget.totalAmount),
+      cart: user.cart,
+    );
+  }
 
   void payPressed(String addressFromProvider) {
     addressToBeUsed = "";

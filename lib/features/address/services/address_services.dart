@@ -31,23 +31,41 @@ class AddressServices {
     }
   }
 
-  Future<List<Product>> fetchAllProducts(BuildContext context) async {
+  Future<void> placeOrder({
+    required BuildContext context,
+    required String address,
+    required double totalSum,
+    required List<dynamic> cart,
+  }) async {
     final dio = DioClient.dio;
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('x-auth-token') ?? '';
 
     try {
-      final res = await dio.get(
-        '${ApiConfig.baseUrl}/product/get-all',
+      final products = cart.map((item) {
+        final cartProduct = item['product'] as Map<String, dynamic>;
+        final id = (cartProduct['_id'] ?? cartProduct['id']).toString();
+        return {'id': id, 'quantity': item['quantity']};
+      }).toList();
+
+      await dio.post(
+        '${ApiConfig.baseUrl}/product/order',
+        data: {
+          'products': products,
+          'totalPrice': totalSum,
+          'address': address,
+        },
         options: Options(headers: {'x-auth-token': token}),
       );
-
-      final data = res.data as List;
-
-      return data.map((e) => Product.fromMap(e)).toList();
+    } on DioException catch (e) {
+      if (context.mounted) {
+        showSnackbar(
+          context,
+          e.response?.data.toString() ?? e.message.toString(),
+        );
+      }
     } catch (e) {
-      showSnackbar(context, e.toString());
-      return [];
+      if (context.mounted) showSnackbar(context, e.toString());
     }
   }
 
