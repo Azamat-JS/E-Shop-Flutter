@@ -57,6 +57,7 @@ class AddressServices {
         },
         options: Options(headers: {'x-auth-token': token}),
       );
+      showSnackbar(context, 'Order is placed successfully!');
     } on DioException catch (e) {
       if (context.mounted) {
         showSnackbar(

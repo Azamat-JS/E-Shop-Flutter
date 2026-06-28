@@ -79,6 +79,7 @@ class _AddressScreenState extends State<AddressScreen> {
       totalSum: double.parse(widget.totalAmount),
       cart: user.cart,
     );
+    print(addressToBeUsed);
   }
 
   void onGooglePayResult(res) {
