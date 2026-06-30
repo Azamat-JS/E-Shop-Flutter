@@ -9,7 +9,7 @@ import { PassportModule } from '@nestjs/passport';
 import { JwtStrategy } from 'src/utils/jwt.strategy';
 import { RatingEntity } from './entities/ratings.entity';
 import { AuthEntity } from 'src/auth/entities/auth.entity';
-import { OrderEntity } from './entities/order.entity';
+import { OrderEntity } from 'src/orders/entities/order.entity';
 
 @Module({
   imports: [

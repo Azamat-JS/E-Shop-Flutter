@@ -5,7 +5,7 @@ import { ProductEntity } from './entities/product.entity';
 import { Repository } from 'typeorm';
 import { RatingEntity } from './entities/ratings.entity';
 import { AuthEntity } from 'src/auth/entities/auth.entity';
-import { OrderEntity } from './entities/order.entity';
+import { OrderEntity } from 'src/orders/entities/order.entity';
 
 @Injectable()
 export class ProductService {
