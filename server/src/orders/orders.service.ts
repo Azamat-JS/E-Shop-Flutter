@@ -1,20 +1,29 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
 import { OrderEntity } from './entities/order.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { AuthEntity } from 'src/auth/entities/auth.entity';
 
 @Injectable()
 export class OrdersService {
-  constructor(@InjectRepository(OrderEntity) private readonly orderRepo: Repository<OrderEntity>,) { }
+  constructor(
+    @InjectRepository(OrderEntity) private readonly orderRepo: Repository<OrderEntity>,
+    @InjectRepository(AuthEntity) private readonly authRepo: Repository<AuthEntity>,
+
+  ) { }
   create(createOrderDto: CreateOrderDto) {
 
     return 'This action adds a new order';
   }
 
-  fetchMyOrders() {
-    return `This action returns all orders`;
+  async fetchMyOrders(userId: string) {
+    const foundUser = await this.authRepo.findOneBy({ id: userId });
+    if (!foundUser) {
+      throw new NotFoundException("User not found")
+    }
+    return await this.orderRepo.find({ where: { user: foundUser } })
   }
 
   findOne(id: number) {
