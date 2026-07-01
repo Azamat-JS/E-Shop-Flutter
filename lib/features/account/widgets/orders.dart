@@ -68,8 +68,17 @@ class _OrdersState extends State<Orders> {
                   itemCount: orders!.length,
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (context, index) {
-                    return SingleProduct(
-                      image: orders![index].products[0].images[0],
+                    return GestureDetector(
+                      onTap: () {
+                        Navigator.pushNamed(
+                          context,
+                          '/order-details',
+                          arguments: orders![index],
+                        );
+                      },
+                      child: SingleProduct(
+                        image: orders![index].products[0].images[0],
+                      ),
                     );
                   },
                 ),
