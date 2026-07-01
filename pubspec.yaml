@@ -48,6 +48,7 @@ dependencies:
   mime: ^2.0.0
   flutter_rating_bar: ^4.0.1
   pay: ^3.3.0
+  intl: ^0.20.2
 
 dev_dependencies:
   flutter_test:

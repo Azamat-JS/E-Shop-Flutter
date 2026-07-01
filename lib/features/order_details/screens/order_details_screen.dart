@@ -2,6 +2,7 @@ import 'package:e_shop_flutter/constants/global_variables.dart';
 import 'package:e_shop_flutter/features/search/screen/search_screen.dart';
 import 'package:e_shop_flutter/models/order.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class OrderDetailsScreen extends StatefulWidget {
   static const String routeName = '/order-details';
@@ -83,6 +84,32 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                 margin: const EdgeInsets.symmetric(horizontal: 10),
                 child: const Icon(Icons.mic, color: Colors.black, size: 25),
               ),
+            ],
+          ),
+        ),
+      ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            children: [
+              const Text(
+                'View order details',
+                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+              ),
+              Container(
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.black12),
+                ),
+                child: Column(
+                  children: [
+                    Text(
+                      'Order Date: ${DateFormat().format(DateTime.parse(widget.order.orderedAt))}',
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 10),
             ],
           ),
         ),
