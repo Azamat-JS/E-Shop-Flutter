@@ -38,11 +38,11 @@ class Order {
     return Order(
       id: map['id'] as String,
       products: List<Product>.from(
-        (map['products'] as List<int>).map<Product>(
+        (map['products'] as List? ?? []).map<Product>(
           (x) => Product.fromMap(x as Map<String, dynamic>),
         ),
       ),
-      quantity: List<int>.from((map['quantity'] as List<int>)),
+      quantity: List<int>.from(map['quantity'] as List? ?? []),
       address: map['address'] as String,
       userId: map['userId'] as String,
       orderedAt: map['orderedAt'] as String,

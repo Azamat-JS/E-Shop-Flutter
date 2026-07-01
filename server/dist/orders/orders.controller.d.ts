@@ -6,7 +6,16 @@ export declare class OrdersController {
     private readonly ordersService;
     constructor(ordersService: OrdersService);
     create(createOrderDto: CreateOrderDto): string;
-    fetchMyOrders(req: AuthenticatedRequest): Promise<import("./entities/order.entity").OrderEntity[]>;
+    fetchMyOrders(req: AuthenticatedRequest): Promise<{
+        userId: string;
+        id: string;
+        totalPrice: number;
+        user: import("../auth/entities/auth.entity").AuthEntity;
+        products: import("../product/entities/product.entity").ProductEntity[];
+        address: string;
+        status: string;
+        orderedAt: Date;
+    }[]>;
     findOne(id: string): string;
     update(id: string, updateOrderDto: UpdateOrderDto): string;
     remove(id: string): string;

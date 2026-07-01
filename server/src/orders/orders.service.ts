@@ -23,7 +23,11 @@ export class OrdersService {
     if (!foundUser) {
       throw new NotFoundException("User not found")
     }
-    return await this.orderRepo.find({ where: { user: { id: foundUser.id } } })
+    const orders = await this.orderRepo.find({
+      where: { user: { id: foundUser.id } },
+      relations: { products: true },
+    });
+    return orders.map((order) => ({ ...order, userId: foundUser.id }));
   }
 
   findOne(id: number) {

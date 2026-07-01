@@ -8,7 +8,16 @@ export declare class OrdersService {
     private readonly authRepo;
     constructor(orderRepo: Repository<OrderEntity>, authRepo: Repository<AuthEntity>);
     create(createOrderDto: CreateOrderDto): string;
-    fetchMyOrders(userId: string): Promise<OrderEntity[]>;
+    fetchMyOrders(userId: string): Promise<{
+        userId: string;
+        id: string;
+        totalPrice: number;
+        user: AuthEntity;
+        products: import("../product/entities/product.entity").ProductEntity[];
+        address: string;
+        status: string;
+        orderedAt: Date;
+    }[]>;
     findOne(id: number): string;
     update(id: number, updateOrderDto: UpdateOrderDto): string;
     remove(id: number): string;
