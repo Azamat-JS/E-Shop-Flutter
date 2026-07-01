@@ -92,20 +92,27 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Text(
                 'View order details',
                 style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
               ),
               Container(
+                width: double.infinity,
+                padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
                   border: Border.all(color: Colors.black12),
                 ),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+
                   children: [
                     Text(
                       'Order Date: ${DateFormat().format(DateTime.parse(widget.order.orderedAt))}',
                     ),
+                    Text("Order ID: ${widget.order.id}"),
+                    Text("Total Amount: \$${widget.order.totalPrice}"),
                   ],
                 ),
               ),
