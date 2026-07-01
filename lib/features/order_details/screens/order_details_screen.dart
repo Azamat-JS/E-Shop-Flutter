@@ -14,6 +14,8 @@ class OrderDetailsScreen extends StatefulWidget {
 }
 
 class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
+  int currentStep = 0;
+
   void navigateToSearchScreen(String query) {
     Navigator.pushNamed(context, SearchScreen.routeName, arguments: query);
   }
@@ -111,8 +113,12 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                     Text(
                       'Order Date:    ${DateFormat().format(DateTime.parse(widget.order.orderedAt))}',
                     ),
-                    Text("Order ID: ${widget.order.id}"),
-                    Text("Total Amount:   \$${widget.order.totalPrice}"),
+                    Text(
+                      "Order ID:        ${widget.order.id}",
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    Text("Order Total:    \$${widget.order.totalPrice}"),
                   ],
                 ),
               ),
@@ -148,6 +154,8 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                                     fontSize: 17,
                                     fontWeight: FontWeight.bold,
                                   ),
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
                                 ),
                                 Text(
                                   "Quantity: ${i < widget.order.quantity.length ? widget.order.quantity[i] : '-'}",
@@ -157,6 +165,45 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                           ),
                         ],
                       ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 10),
+              const Text(
+                'Tracking',
+                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+              ),
+              Container(
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.black12),
+                ),
+                child: Stepper(
+                  controlsBuilder: (context, details) {
+                    return const SizedBox();
+                  },
+                  steps: [
+                    Step(
+                      title: const Text('Pending'),
+                      content: Text('Your order is yet to be processed.'),
+                    ),
+                    Step(
+                      title: const Text('Completed'),
+                      content: Text(
+                        'Your order has been delivered, you are yet to sign',
+                      ),
+                    ),
+                    Step(
+                      title: const Text('Received'),
+                      content: Text(
+                        'Your order has been delivered and signed by you!',
+                      ),
+                    ),
+                    Step(
+                      title: const Text('Delivered'),
+                      content: Text(
+                        'Your order has been delivered and signed by you!',
+                      ),
+                    ),
                   ],
                 ),
               ),
