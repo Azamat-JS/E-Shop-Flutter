@@ -38,9 +38,18 @@ class _OrdersScreenState extends State<OrdersScreen> {
             ),
             itemBuilder: (context, index) {
               final orderData = orders![index];
-              return SizedBox(
-                height: 140,
-                child: SingleProduct(image: orderData.products[0].images[0]),
+              return GestureDetector(
+                onTap: () {
+                  Navigator.pushNamed(
+                    context,
+                    '/order-details',
+                    arguments: orderData,
+                  );
+                },
+                child: SizedBox(
+                  height: 140,
+                  child: SingleProduct(image: orderData.products[0].images[0]),
+                ),
               );
             },
           );
