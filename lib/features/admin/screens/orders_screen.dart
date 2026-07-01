@@ -1,3 +1,7 @@
+import 'package:e_shop_flutter/common/widgets/loader.dart';
+import 'package:e_shop_flutter/features/account/widgets/single_product.dart';
+import 'package:e_shop_flutter/features/admin/services/admin_services.dart';
+import 'package:e_shop_flutter/models/order.dart';
 import 'package:flutter/material.dart';
 
 class OrdersScreen extends StatefulWidget {
@@ -8,12 +12,37 @@ class OrdersScreen extends StatefulWidget {
 }
 
 class _OrdersScreenState extends State<OrdersScreen> {
+  List<Order>? orders = [];
+  final AdminServices adminServices = AdminServices();
+  @override
+  void initState() {
+    super.initState();
+    fetchOrders();
+  }
+
+  void fetchOrders() async {
+    List<Order> fetchedOrders = await adminServices.fetchAllOrders(context);
+    setState(() {
+      orders = fetchedOrders;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return GridView.builder(
-      itemCount: 10,
-      gridDelegate: gridDelegate, 
-      itemBuilder: itemBuilder,
-      )
+    return orders == null
+        ? const Loader()
+        : GridView.builder(
+            itemCount: orders!.length,
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+            ),
+            itemBuilder: (context, index) {
+              final orderData = orders![index];
+              return SizedBox(
+                height: 140,
+                child: SingleProduct(image: orderData.products[0].images[0]),
+              );
+            },
+          );
   }
 }

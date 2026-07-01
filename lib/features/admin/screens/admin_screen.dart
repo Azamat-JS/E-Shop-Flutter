@@ -1,4 +1,5 @@
 import 'package:e_shop_flutter/constants/global_variables.dart';
+import 'package:e_shop_flutter/features/admin/screens/orders_screen.dart';
 import 'package:e_shop_flutter/features/admin/screens/posts_screen.dart';
 import 'package:e_shop_flutter/features/auth/services/auth_service.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +20,7 @@ class _AdminScreenState extends State<AdminScreen> {
   List<Widget> pages = [
     const PostsScreen(),
     const Center(child: Text("Analytics Page")),
-    const Center(child: Text("Cart Page")),
+    const OrdersScreen(),
   ];
 
   void updatePage(int page) {

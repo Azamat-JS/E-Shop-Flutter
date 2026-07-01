@@ -31,7 +31,13 @@ export class OrdersService {
   }
 
   async findAll() {
-    return await this.orderRepo.find();
+    const orders = await this.orderRepo.find({
+      relations: { user: true, products: true },
+    });
+    return orders.map((order) => {
+      const { user, ...rest } = order;
+      return { ...rest, userId: user?.id };
+    });
   }
 
   update(id: number, updateOrderDto: UpdateOrderDto) {

@@ -17,7 +17,16 @@ export declare class OrdersController {
         status: string;
         orderedAt: Date;
     }[]>;
-    findAll(): Promise<import("./entities/order.entity").OrderEntity[]>;
+    findAll(): Promise<{
+        userId: string;
+        id: string;
+        totalPrice: number;
+        products: import("../product/entities/product.entity").ProductEntity[];
+        quantity: number[];
+        address: string;
+        status: string;
+        orderedAt: Date;
+    }[]>;
     update(id: string, updateOrderDto: UpdateOrderDto): string;
     remove(id: string): string;
 }

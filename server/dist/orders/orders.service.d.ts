@@ -19,7 +19,16 @@ export declare class OrdersService {
         status: string;
         orderedAt: Date;
     }[]>;
-    findAll(): Promise<OrderEntity[]>;
+    findAll(): Promise<{
+        userId: string;
+        id: string;
+        totalPrice: number;
+        products: import("../product/entities/product.entity").ProductEntity[];
+        quantity: number[];
+        address: string;
+        status: string;
+        orderedAt: Date;
+    }[]>;
     update(id: number, updateOrderDto: UpdateOrderDto): string;
     remove(id: number): string;
 }

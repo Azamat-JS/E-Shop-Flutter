@@ -39,18 +39,18 @@ class Order {
 
   factory Order.fromMap(Map<String, dynamic> map) {
     return Order(
-      id: map['id'] as String,
+      id: map['id']?.toString() ?? "",
       products: List<Product>.from(
         (map['products'] as List? ?? []).map<Product>(
           (x) => Product.fromMap(x as Map<String, dynamic>),
         ),
       ),
       quantity: List<int>.from(map['quantity'] as List? ?? []),
-      address: map['address'] as String,
-      userId: map['userId'] as String,
-      orderedAt: map['orderedAt'] as String,
-      status: map['status'] as String,
-      totalPrice: double.parse(map['totalPrice'].toString()),
+      address: map['address']?.toString() ?? "",
+      userId: map['userId']?.toString() ?? "",
+      orderedAt: map['orderedAt']?.toString() ?? "",
+      status: map['status']?.toString() ?? "",
+      totalPrice: double.parse((map['totalPrice'] ?? 0).toString()),
     );
   }
 
