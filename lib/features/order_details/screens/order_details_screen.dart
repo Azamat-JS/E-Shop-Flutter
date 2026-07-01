@@ -21,6 +21,28 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    // Set the current step based on the order status
+    switch (widget.order.status) {
+      case 'Pending':
+        currentStep = 0;
+        break;
+      case 'Completed':
+        currentStep = 1;
+        break;
+      case 'Received':
+        currentStep = 2;
+        break;
+      case 'Delivered':
+        currentStep = 3;
+        break;
+      default:
+        currentStep = 0;
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
@@ -178,6 +200,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                   border: Border.all(color: Colors.black12),
                 ),
                 child: Stepper(
+                  currentStep: currentStep,
                   controlsBuilder: (context, details) {
                     return const SizedBox();
                   },
@@ -185,24 +208,40 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                     Step(
                       title: const Text('Pending'),
                       content: Text('Your order is yet to be processed.'),
+                      isActive: currentStep > 0,
+                      state: currentStep > 0
+                          ? StepState.complete
+                          : StepState.indexed,
                     ),
                     Step(
                       title: const Text('Completed'),
                       content: Text(
                         'Your order has been delivered, you are yet to sign',
                       ),
+                      isActive: currentStep > 1,
+                      state: currentStep > 1
+                          ? StepState.complete
+                          : StepState.indexed,
                     ),
                     Step(
                       title: const Text('Received'),
                       content: Text(
                         'Your order has been delivered and signed by you!',
                       ),
+                      isActive: currentStep > 2,
+                      state: currentStep > 2
+                          ? StepState.complete
+                          : StepState.indexed,
                     ),
                     Step(
                       title: const Text('Delivered'),
                       content: Text(
                         'Your order has been delivered and signed by you!',
                       ),
+                      isActive: currentStep >= 3,
+                      state: currentStep >= 3
+                          ? StepState.complete
+                          : StepState.indexed,
                     ),
                   ],
                 ),
