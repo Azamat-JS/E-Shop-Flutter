@@ -17,7 +17,7 @@ export declare class OrdersController {
         status: string;
         orderedAt: Date;
     }[]>;
-    findOne(id: string): string;
+    findAll(): Promise<import("./entities/order.entity").OrderEntity[]>;
     update(id: string, updateOrderDto: UpdateOrderDto): string;
     remove(id: string): string;
 }

@@ -18,6 +18,7 @@ const orders_service_1 = require("./orders.service");
 const create_order_dto_1 = require("./dto/create-order.dto");
 const update_order_dto_1 = require("./dto/update-order.dto");
 const jwt_guard_1 = require("../utils/jwt.guard");
+const roles_1 = require("../utils/roles");
 let OrdersController = class OrdersController {
     ordersService;
     constructor(ordersService) {
@@ -33,8 +34,8 @@ let OrdersController = class OrdersController {
         }
         return this.ordersService.fetchMyOrders(userId);
     }
-    findOne(id) {
-        return this.ordersService.findOne(+id);
+    findAll() {
+        return this.ordersService.findAll();
     }
     update(id, updateOrderDto) {
         return this.ordersService.update(+id, updateOrderDto);
@@ -59,12 +60,13 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], OrdersController.prototype, "fetchMyOrders", null);
 __decorate([
-    (0, common_1.Get)(':id'),
-    __param(0, (0, common_1.Param)('id')),
+    (0, common_1.UseGuards)(jwt_guard_1.JwtAuthGuard),
+    (0, roles_1.Roles)('admin'),
+    (0, common_1.Get)('get-all'),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
+    __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
-], OrdersController.prototype, "findOne", null);
+], OrdersController.prototype, "findAll", null);
 __decorate([
     (0, common_1.Patch)(':id'),
     __param(0, (0, common_1.Param)('id')),

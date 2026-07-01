@@ -30,8 +30,8 @@ export class OrdersService {
     return orders.map((order) => ({ ...order, userId: foundUser.id }));
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} order`;
+  async findAll() {
+    return await this.orderRepo.find();
   }
 
   update(id: number, updateOrderDto: UpdateOrderDto) {

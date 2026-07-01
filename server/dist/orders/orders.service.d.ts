@@ -19,7 +19,7 @@ export declare class OrdersService {
         status: string;
         orderedAt: Date;
     }[]>;
-    findOne(id: number): string;
+    findAll(): Promise<OrderEntity[]>;
     update(id: number, updateOrderDto: UpdateOrderDto): string;
     remove(id: number): string;
 }

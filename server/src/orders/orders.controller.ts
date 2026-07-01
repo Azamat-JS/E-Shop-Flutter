@@ -4,6 +4,7 @@ import { CreateOrderDto } from './dto/create-order.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
 import { JwtAuthGuard } from 'src/utils/jwt.guard';
 import type { AuthenticatedRequest } from 'src/utils/types/types';
+import { Roles } from 'src/utils/roles';
 
 @UseGuards(JwtAuthGuard)
 @Controller('orders')
@@ -25,9 +26,11 @@ export class OrdersController {
     return this.ordersService.fetchMyOrders(userId);
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.ordersService.findOne(+id);
+  @UseGuards(JwtAuthGuard)
+  @Roles('admin')
+  @Get('get-all')
+  findAll() {
+    return this.ordersService.findAll();
   }
 
   @Patch(':id')

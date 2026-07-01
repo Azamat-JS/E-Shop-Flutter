@@ -39,8 +39,8 @@ let OrdersService = class OrdersService {
         });
         return orders.map((order) => ({ ...order, userId: foundUser.id }));
     }
-    findOne(id) {
-        return `This action returns a #${id} order`;
+    async findAll() {
+        return await this.orderRepo.find();
     }
     update(id, updateOrderDto) {
         return `This action updates a #${id} order`;
