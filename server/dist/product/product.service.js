@@ -19,7 +19,7 @@ const product_entity_1 = require("./entities/product.entity");
 const typeorm_2 = require("typeorm");
 const ratings_entity_1 = require("./entities/ratings.entity");
 const auth_entity_1 = require("../auth/entities/auth.entity");
-const order_entity_1 = require("./entities/order.entity");
+const order_entity_1 = require("../orders/entities/order.entity");
 let ProductService = class ProductService {
     productRepo;
     rateRepo;

@@ -6,27 +6,25 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ProductModule = void 0;
+exports.OrdersModule = void 0;
 const common_1 = require("@nestjs/common");
-const product_service_1 = require("./product.service");
-const product_controller_1 = require("./product.controller");
+const orders_service_1 = require("./orders.service");
+const orders_controller_1 = require("./orders.controller");
+const passport_1 = require("@nestjs/passport");
 const typeorm_1 = require("@nestjs/typeorm");
-const product_entity_1 = require("./entities/product.entity");
 const jwt_1 = require("@nestjs/jwt");
 const config_1 = require("@nestjs/config");
-const passport_1 = require("@nestjs/passport");
-const jwt_strategy_1 = require("../utils/jwt.strategy");
-const ratings_entity_1 = require("./entities/ratings.entity");
+const product_entity_1 = require("../product/entities/product.entity");
 const auth_entity_1 = require("../auth/entities/auth.entity");
-const order_entity_1 = require("../orders/entities/order.entity");
-let ProductModule = class ProductModule {
+const order_entity_1 = require("./entities/order.entity");
+let OrdersModule = class OrdersModule {
 };
-exports.ProductModule = ProductModule;
-exports.ProductModule = ProductModule = __decorate([
+exports.OrdersModule = OrdersModule;
+exports.OrdersModule = OrdersModule = __decorate([
     (0, common_1.Module)({
         imports: [
             passport_1.PassportModule,
-            typeorm_1.TypeOrmModule.forFeature([product_entity_1.ProductEntity, ratings_entity_1.RatingEntity, auth_entity_1.AuthEntity, order_entity_1.OrderEntity]),
+            typeorm_1.TypeOrmModule.forFeature([product_entity_1.ProductEntity, auth_entity_1.AuthEntity, order_entity_1.OrderEntity]),
             jwt_1.JwtModule.registerAsync({
                 imports: [config_1.ConfigModule],
                 inject: [config_1.ConfigService],
@@ -38,8 +36,8 @@ exports.ProductModule = ProductModule = __decorate([
                 }),
             }),
         ],
-        controllers: [product_controller_1.ProductController],
-        providers: [product_service_1.ProductService, jwt_strategy_1.JwtStrategy],
+        controllers: [orders_controller_1.OrdersController],
+        providers: [orders_service_1.OrdersService],
     })
-], ProductModule);
-//# sourceMappingURL=product.module.js.map
+], OrdersModule);
+//# sourceMappingURL=orders.module.js.map

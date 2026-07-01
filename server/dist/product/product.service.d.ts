@@ -3,7 +3,7 @@ import { ProductEntity } from './entities/product.entity';
 import { Repository } from 'typeorm';
 import { RatingEntity } from './entities/ratings.entity';
 import { AuthEntity } from "../auth/entities/auth.entity";
-import { OrderEntity } from './entities/order.entity';
+import { OrderEntity } from "../orders/entities/order.entity";
 export declare class ProductService {
     private readonly productRepo;
     private readonly rateRepo;

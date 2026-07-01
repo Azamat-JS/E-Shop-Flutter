@@ -14,6 +14,7 @@ const auth_module_1 = require("./auth/auth.module");
 const auth_entity_1 = require("./auth/entities/auth.entity");
 const product_module_1 = require("./product/product.module");
 const cart_module_1 = require("./cart/cart.module");
+const orders_module_1 = require("./orders/orders.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -36,6 +37,7 @@ exports.AppModule = AppModule = __decorate([
             auth_module_1.AuthModule,
             product_module_1.ProductModule,
             cart_module_1.CartModule,
+            orders_module_1.OrdersModule,
         ],
         controllers: [],
         providers: [],

@@ -7,10 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AccountServices {
-  Future<List<Order>> fetchMyOrders({
-    required BuildContext context,
-    required String category,
-  }) async {
+  Future<List<Order>> fetchMyOrders({required BuildContext context}) async {
     final dio = DioClient.dio;
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('x-auth-token') ?? '';
