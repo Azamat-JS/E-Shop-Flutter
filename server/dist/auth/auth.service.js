@@ -103,7 +103,13 @@ let AuthService = class AuthService {
         return { token: accessToken, ...foundUser, cart };
     }
     async tokenIsValid(token) {
-        const payload = this.jwtService.verify(token);
+        let payload;
+        try {
+            payload = this.jwtService.verify(token);
+        }
+        catch {
+            return false;
+        }
         if (!payload) {
             return false;
         }

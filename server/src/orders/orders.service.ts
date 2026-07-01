@@ -23,7 +23,7 @@ export class OrdersService {
     if (!foundUser) {
       throw new NotFoundException("User not found")
     }
-    return await this.orderRepo.find({ where: { user: foundUser } })
+    return await this.orderRepo.find({ where: { user: { id: foundUser.id } } })
   }
 
   findOne(id: number) {

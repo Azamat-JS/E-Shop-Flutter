@@ -67,7 +67,12 @@ export class AuthService {
   }
 
   async tokenIsValid(token: string) {
-    const payload = this.jwtService.verify(token);
+    let payload;
+    try {
+      payload = this.jwtService.verify(token);
+    } catch {
+      return false;
+    }
     if (!payload) {
       return false;
     }
