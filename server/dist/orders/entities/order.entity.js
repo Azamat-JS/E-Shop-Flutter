@@ -18,6 +18,7 @@ let OrderEntity = class OrderEntity {
     totalPrice;
     user;
     products;
+    quantity;
     address;
     status;
     orderedAt;
@@ -44,6 +45,10 @@ __decorate([
     (0, typeorm_1.JoinTable)(),
     __metadata("design:type", Array)
 ], OrderEntity.prototype, "products", void 0);
+__decorate([
+    (0, typeorm_1.Column)("int", { array: true, default: [] }),
+    __metadata("design:type", Array)
+], OrderEntity.prototype, "quantity", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)

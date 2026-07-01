@@ -12,6 +12,7 @@ export declare class OrdersController {
         totalPrice: number;
         user: import("../auth/entities/auth.entity").AuthEntity;
         products: import("../product/entities/product.entity").ProductEntity[];
+        quantity: number[];
         address: string;
         status: string;
         orderedAt: Date;

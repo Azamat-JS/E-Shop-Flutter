@@ -106,6 +106,7 @@ let ProductService = class ProductService {
             throw new common_1.NotFoundException('User not found');
         }
         const orderedProducts = [];
+        const orderedQuantities = [];
         for (const item of products) {
             const product = await this.productRepo.findOneBy({ id: item.id });
             if (!product) {
@@ -117,10 +118,12 @@ let ProductService = class ProductService {
             product.quantity -= item.quantity;
             await this.productRepo.save(product);
             orderedProducts.push(product);
+            orderedQuantities.push(item.quantity);
         }
         const order = this.orderRepo.create({
             user,
             products: orderedProducts,
+            quantity: orderedQuantities,
             totalPrice,
             address,
             status: 'PENDING',

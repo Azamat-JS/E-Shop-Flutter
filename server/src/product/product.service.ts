@@ -114,6 +114,7 @@ export class ProductService {
     }
 
     const orderedProducts: ProductEntity[] = [];
+    const orderedQuantities: number[] = [];
 
     for (const item of products) {
       const product = await this.productRepo.findOneBy({ id: item.id });
@@ -126,11 +127,13 @@ export class ProductService {
       product.quantity -= item.quantity;
       await this.productRepo.save(product);
       orderedProducts.push(product);
+      orderedQuantities.push(item.quantity);
     }
 
     const order = this.orderRepo.create({
       user,
       products: orderedProducts,
+      quantity: orderedQuantities,
       totalPrice,
       address,
       status: 'PENDING',

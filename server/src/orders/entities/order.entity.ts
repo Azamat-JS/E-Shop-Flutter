@@ -31,6 +31,9 @@ export class OrderEntity {
     @JoinTable()
     products!: ProductEntity[];
 
+    @Column("int", { array: true, default: [] })
+    quantity!: number[];
+
     @Column()
     address!: string;
 

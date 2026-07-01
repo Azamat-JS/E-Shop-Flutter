@@ -109,14 +109,57 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
 
                   children: [
                     Text(
-                      'Order Date: ${DateFormat().format(DateTime.parse(widget.order.orderedAt))}',
+                      'Order Date:    ${DateFormat().format(DateTime.parse(widget.order.orderedAt))}',
                     ),
                     Text("Order ID: ${widget.order.id}"),
-                    Text("Total Amount: \$${widget.order.totalPrice}"),
+                    Text("Total Amount:   \$${widget.order.totalPrice}"),
                   ],
                 ),
               ),
               const SizedBox(height: 10),
+              const Text(
+                'Purchase details',
+                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+              ),
+              Container(
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.black12),
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+
+                  children: [
+                    for (int i = 0; i < widget.order.products.length; i++)
+                      Row(
+                        children: [
+                          Image.network(
+                            widget.order.products[i].images[0],
+                            width: 120,
+                            height: 120,
+                          ),
+                          const SizedBox(width: 5),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  widget.order.products[i].name,
+                                  style: TextStyle(
+                                    fontSize: 17,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                Text(
+                                  "Quantity: ${i < widget.order.quantity.length ? widget.order.quantity[i] : '-'}",
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                  ],
+                ),
+              ),
             ],
           ),
         ),

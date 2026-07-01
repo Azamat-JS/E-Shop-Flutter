@@ -14,6 +14,7 @@ export declare class OrdersService {
         totalPrice: number;
         user: AuthEntity;
         products: import("../product/entities/product.entity").ProductEntity[];
+        quantity: number[];
         address: string;
         status: string;
         orderedAt: Date;

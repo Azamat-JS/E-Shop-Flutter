@@ -5,6 +5,7 @@ export declare class OrderEntity {
     totalPrice: number;
     user: AuthEntity;
     products: ProductEntity[];
+    quantity: number[];
     address: string;
     status: string;
     orderedAt: Date;
