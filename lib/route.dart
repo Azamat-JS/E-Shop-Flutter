@@ -3,8 +3,10 @@ import 'package:e_shop_flutter/features/address/screens/address_screen.dart';
 import 'package:e_shop_flutter/features/auth/screens/auth_screen.dart';
 import 'package:e_shop_flutter/features/admin/screens/add_product_screen.dart';
 import 'package:e_shop_flutter/features/home/screens/category_deals_screen.dart';
+import 'package:e_shop_flutter/features/order_details/screens/order_details_screen.dart';
 import 'package:e_shop_flutter/features/product_details/screens/product_details_screen.dart';
 import 'package:e_shop_flutter/features/search/screen/search_screen.dart';
+import 'package:e_shop_flutter/models/order.dart';
 import 'package:e_shop_flutter/models/product.dart';
 import 'package:flutter/material.dart';
 
@@ -48,6 +50,12 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
       return MaterialPageRoute(
         settings: routeSettings,
         builder: (_) => AddressScreen(totalAmount: totalAmount),
+      );
+    case OrderDetailsScreen.routeName:
+      var order = routeSettings.arguments as Order;
+      return MaterialPageRoute(
+        settings: routeSettings,
+        builder: (_) => OrderDetailsScreen(order: order),
       );
     default:
       return MaterialPageRoute(
