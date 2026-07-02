@@ -154,4 +154,31 @@ class AdminServices {
       return [];
     }
   }
+
+  void changeOrderStatus({
+    required BuildContext context,
+    required String status,
+    required Order order,
+    required VoidCallback onSuccess,
+  }) async {
+    try {
+      final dio = DioClient.dio;
+
+      final prefs = await SharedPreferences.getInstance();
+
+      final token = prefs.getString('x-auth-token') ?? '';
+
+      final res = await dio.put(
+        '${ApiConfig.baseUrl}/orders/update-status/${order.id}',
+        data: {'status': status},
+        options: Options(headers: {'x-auth-token': token}),
+      );
+
+      showSnackbar(context, res.data['message']);
+
+      onSuccess();
+    } catch (e) {
+      showSnackbar(context, e.toString());
+    }
+  }
 }
