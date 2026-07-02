@@ -4,6 +4,7 @@ import { CreateOrderDto, UpdateOrderDto } from './dto/create-order.dto';
 import { JwtAuthGuard } from 'src/utils/jwt.guard';
 import type { AuthenticatedRequest } from 'src/utils/types/types';
 import { Roles } from 'src/utils/roles';
+import { RolesGuard } from 'src/utils/roles.guard';
 
 @UseGuards(JwtAuthGuard)
 @Controller('orders')
@@ -25,13 +26,15 @@ export class OrdersController {
     return this.ordersService.fetchMyOrders(userId);
   }
 
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(RolesGuard)
   @Roles('admin')
   @Get('get-all')
   findAll() {
     return this.ordersService.findAll();
   }
 
+  @UseGuards(RolesGuard)
+  @Roles('admin')
   @Put('update-status/:id')
   updateStatus(@Param('id') id: string, @Body() updateOrderDto: UpdateOrderDto) {
     return this.ordersService.updateStatus(id, updateOrderDto);

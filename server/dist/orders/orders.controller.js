@@ -18,6 +18,7 @@ const orders_service_1 = require("./orders.service");
 const create_order_dto_1 = require("./dto/create-order.dto");
 const jwt_guard_1 = require("../utils/jwt.guard");
 const roles_1 = require("../utils/roles");
+const roles_guard_1 = require("../utils/roles.guard");
 let OrdersController = class OrdersController {
     ordersService;
     constructor(ordersService) {
@@ -59,7 +60,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], OrdersController.prototype, "fetchMyOrders", null);
 __decorate([
-    (0, common_1.UseGuards)(jwt_guard_1.JwtAuthGuard),
+    (0, common_1.UseGuards)(roles_guard_1.RolesGuard),
     (0, roles_1.Roles)('admin'),
     (0, common_1.Get)('get-all'),
     __metadata("design:type", Function),
@@ -67,6 +68,8 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], OrdersController.prototype, "findAll", null);
 __decorate([
+    (0, common_1.UseGuards)(roles_guard_1.RolesGuard),
+    (0, roles_1.Roles)('admin'),
     (0, common_1.Put)('update-status/:id'),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Body)()),
