@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsString, } from "class-validator";
+import { IsIn, IsNotEmpty, IsString, } from "class-validator";
 
 export class CreateOrderDto {
     // @IsNotEmpty()
@@ -19,6 +19,7 @@ export class CreateOrderDto {
 export class UpdateOrderDto {
     @IsNotEmpty()
     @IsString()
+    @IsIn(['Pending', 'Completed', 'Received', 'Delivered'])
     status!: string;
 }
 

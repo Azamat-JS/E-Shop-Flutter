@@ -38,7 +38,7 @@ export class OrderEntity {
     address!: string;
 
     @Column({
-        default: "PENDING"
+        default: "Pending"
     })
     status!: string;
 
