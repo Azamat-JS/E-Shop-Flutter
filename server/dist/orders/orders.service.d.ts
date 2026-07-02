@@ -1,5 +1,4 @@
-import { CreateOrderDto } from './dto/create-order.dto';
-import { UpdateOrderDto } from './dto/update-order.dto';
+import { CreateOrderDto, UpdateOrderDto } from './dto/create-order.dto';
 import { OrderEntity } from './entities/order.entity';
 import { Repository } from 'typeorm';
 import { AuthEntity } from "../auth/entities/auth.entity";

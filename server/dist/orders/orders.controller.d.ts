@@ -1,6 +1,5 @@
 import { OrdersService } from './orders.service';
-import { CreateOrderDto } from './dto/create-order.dto';
-import { UpdateOrderDto } from './dto/update-order.dto';
+import { CreateOrderDto, UpdateOrderDto } from './dto/create-order.dto';
 import type { AuthenticatedRequest } from "../utils/types/types";
 export declare class OrdersController {
     private readonly ordersService;
@@ -27,6 +26,6 @@ export declare class OrdersController {
         status: string;
         orderedAt: Date;
     }[]>;
-    update(id: string, updateOrderDto: UpdateOrderDto): string;
+    updateStatus(id: string, updateOrderDto: UpdateOrderDto): string;
     remove(id: string): string;
 }

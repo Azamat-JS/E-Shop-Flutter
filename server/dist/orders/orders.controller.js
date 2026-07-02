@@ -16,7 +16,6 @@ exports.OrdersController = void 0;
 const common_1 = require("@nestjs/common");
 const orders_service_1 = require("./orders.service");
 const create_order_dto_1 = require("./dto/create-order.dto");
-const update_order_dto_1 = require("./dto/update-order.dto");
 const jwt_guard_1 = require("../utils/jwt.guard");
 const roles_1 = require("../utils/roles");
 let OrdersController = class OrdersController {
@@ -37,7 +36,7 @@ let OrdersController = class OrdersController {
     findAll() {
         return this.ordersService.findAll();
     }
-    update(id, updateOrderDto) {
+    updateStatus(id, updateOrderDto) {
         return this.ordersService.update(+id, updateOrderDto);
     }
     remove(id) {
@@ -68,13 +67,13 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], OrdersController.prototype, "findAll", null);
 __decorate([
-    (0, common_1.Patch)(':id'),
+    (0, common_1.Put)('update-status/:id'),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, update_order_dto_1.UpdateOrderDto]),
+    __metadata("design:paramtypes", [String, create_order_dto_1.UpdateOrderDto]),
     __metadata("design:returntype", void 0)
-], OrdersController.prototype, "update", null);
+], OrdersController.prototype, "updateStatus", null);
 __decorate([
     (0, common_1.Delete)(':id'),
     __param(0, (0, common_1.Param)('id')),
