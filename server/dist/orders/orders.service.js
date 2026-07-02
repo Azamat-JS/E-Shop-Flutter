@@ -48,8 +48,13 @@ let OrdersService = class OrdersService {
             return { ...rest, userId: user?.id };
         });
     }
-    update(id, updateOrderDto) {
-        return `This action updates a #${id} order`;
+    async updateStatus(id, updateOrderDto) {
+        const order = await this.orderRepo.findOneBy({ id });
+        if (!order) {
+            throw new common_1.NotFoundException(`Order with ID ${id} not found`);
+        }
+        order.status = updateOrderDto.status;
+        return this.orderRepo.save(order);
     }
     remove(id) {
         return `This action removes a #${id} order`;

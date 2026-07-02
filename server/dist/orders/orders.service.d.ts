@@ -28,6 +28,6 @@ export declare class OrdersService {
         status: string;
         orderedAt: Date;
     }[]>;
-    update(id: number, updateOrderDto: UpdateOrderDto): string;
-    remove(id: number): string;
+    updateStatus(id: string, updateOrderDto: UpdateOrderDto): Promise<OrderEntity>;
+    remove(id: string): string;
 }

@@ -26,6 +26,6 @@ export declare class OrdersController {
         status: string;
         orderedAt: Date;
     }[]>;
-    updateStatus(id: string, updateOrderDto: UpdateOrderDto): string;
+    updateStatus(id: string, updateOrderDto: UpdateOrderDto): Promise<import("./entities/order.entity").OrderEntity>;
     remove(id: string): string;
 }

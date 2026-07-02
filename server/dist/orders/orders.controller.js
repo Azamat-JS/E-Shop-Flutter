@@ -37,10 +37,10 @@ let OrdersController = class OrdersController {
         return this.ordersService.findAll();
     }
     updateStatus(id, updateOrderDto) {
-        return this.ordersService.update(+id, updateOrderDto);
+        return this.ordersService.updateStatus(id, updateOrderDto);
     }
     remove(id) {
-        return this.ordersService.remove(+id);
+        return this.ordersService.remove(id);
     }
 };
 exports.OrdersController = OrdersController;

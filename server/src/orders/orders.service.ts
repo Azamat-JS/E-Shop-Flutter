@@ -39,11 +39,16 @@ export class OrdersService {
     });
   }
 
-  update(id: number, updateOrderDto: UpdateOrderDto) {
-    return `This action updates a #${id} order`;
+  async updateStatus(id: string, updateOrderDto: UpdateOrderDto) {
+    const order = await this.orderRepo.findOneBy({ id });
+    if (!order) {
+      throw new NotFoundException(`Order with ID ${id} not found`);
+    }
+    order.status = updateOrderDto.status;
+    return this.orderRepo.save(order);
   }
 
-  remove(id: number) {
+  remove(id: string) {
     return `This action removes a #${id} order`;
   }
 }
