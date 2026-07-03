@@ -56,7 +56,7 @@ let OrdersService = class OrdersService {
             totalRevenue: parseFloat(totalRevenue.totalRevenue) || 0,
         };
     }
-    async fetchCategoryAnalytics() {
+    async fetchCategoryAnalytics(category) {
         const categoryAnalytics = await this.orderRepo
             .createQueryBuilder('order')
             .leftJoinAndSelect('order.products', 'product')

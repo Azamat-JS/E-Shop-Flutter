@@ -42,6 +42,13 @@ export class OrdersController {
 
   @UseGuards(RolesGuard)
   @Roles('admin')
+  @Get('get-category-analytics')
+  fetchCategoryAnalytics(@Body('category') category: string) {
+    return this.ordersService.fetchCategoryAnalytics(category);
+  }
+
+  @UseGuards(RolesGuard)
+  @Roles('admin')
   @Put('update-status/:id')
   updateStatus(@Param('id') id: string, @Body() updateOrderDto: UpdateOrderDto) {
     return this.ordersService.updateStatus(id, updateOrderDto);

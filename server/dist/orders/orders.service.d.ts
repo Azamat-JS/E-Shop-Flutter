@@ -31,7 +31,7 @@ export declare class OrdersService {
         totalOrders: number;
         totalRevenue: number;
     }>;
-    fetchCategoryAnalytics(): Promise<{
+    fetchCategoryAnalytics(category: string): Promise<{
         category: any;
         totalRevenue: number;
     }[]>;

@@ -48,7 +48,7 @@ export class OrdersService {
     };
   }
 
-  async fetchCategoryAnalytics() {
+  async fetchCategoryAnalytics(category: string) {
     const categoryAnalytics = await this.orderRepo
       .createQueryBuilder('order')
       .leftJoinAndSelect('order.products', 'product')

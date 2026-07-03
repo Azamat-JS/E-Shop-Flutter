@@ -30,6 +30,10 @@ export declare class OrdersController {
         totalOrders: number;
         totalRevenue: number;
     }>;
+    fetchCategoryAnalytics(category: string): Promise<{
+        category: any;
+        totalRevenue: number;
+    }[]>;
     updateStatus(id: string, updateOrderDto: UpdateOrderDto): Promise<import("./entities/order.entity").OrderEntity>;
     remove(id: string): string;
 }
