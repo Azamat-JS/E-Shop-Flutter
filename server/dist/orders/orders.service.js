@@ -57,17 +57,18 @@ let OrdersService = class OrdersService {
         };
     }
     async fetchCategoryAnalytics(category) {
-        const categoryAnalytics = await this.orderRepo
+        const orders = await this.orderRepo
             .createQueryBuilder('order')
             .leftJoinAndSelect('order.products', 'product')
-            .select('product.category', 'category')
-            .addSelect('SUM(order.totalPrice)', 'totalRevenue')
-            .groupBy('product.category')
-            .getRawMany();
-        return categoryAnalytics.map((item) => ({
-            category: item.category,
-            totalRevenue: parseFloat(item.totalRevenue) || 0,
-        }));
+            .where('product.category = :category', { category })
+            .getMany();
+        const totalOrders = orders.length;
+        const totalRevenue = orders.reduce((sum, order) => sum + parseFloat(order.totalPrice.toString()), 0);
+        return {
+            category,
+            totalOrders,
+            totalRevenue,
+        };
     }
     async create(createOrderDto) {
         const order = this.orderRepo.create(createOrderDto);

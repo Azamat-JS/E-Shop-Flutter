@@ -49,18 +49,20 @@ export class OrdersService {
   }
 
   async fetchCategoryAnalytics(category: string) {
-    const categoryAnalytics = await this.orderRepo
+    const orders = await this.orderRepo
       .createQueryBuilder('order')
       .leftJoinAndSelect('order.products', 'product')
-      .select('product.category', 'category')
-      .addSelect('SUM(order.totalPrice)', 'totalRevenue')
-      .groupBy('product.category')
-      .getRawMany();
+      .where('product.category = :category', { category })
+      .getMany();
 
-    return categoryAnalytics.map((item) => ({
-      category: item.category,
-      totalRevenue: parseFloat(item.totalRevenue) || 0,
-    }));
+    const totalOrders = orders.length;
+    const totalRevenue = orders.reduce((sum, order) => sum + parseFloat(order.totalPrice.toString()), 0);
+
+    return {
+      category,
+      totalOrders,
+      totalRevenue,
+    };
   }
 
   async create(createOrderDto: CreateOrderDto) {

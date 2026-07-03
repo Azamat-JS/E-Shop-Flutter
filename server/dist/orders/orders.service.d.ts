@@ -32,9 +32,10 @@ export declare class OrdersService {
         totalRevenue: number;
     }>;
     fetchCategoryAnalytics(category: string): Promise<{
-        category: any;
+        category: string;
+        totalOrders: number;
         totalRevenue: number;
-    }[]>;
+    }>;
     create(createOrderDto: CreateOrderDto): Promise<OrderEntity>;
     updateStatus(id: string, updateOrderDto: UpdateOrderDto): Promise<OrderEntity>;
     remove(id: string): string;
