@@ -168,13 +168,13 @@ class AdminServices {
 
       final token = prefs.getString('x-auth-token') ?? '';
 
-      final res = await dio.put(
+      await dio.put(
         '${ApiConfig.baseUrl}/orders/update-status/${order.id}',
         data: {'status': status},
         options: Options(headers: {'x-auth-token': token}),
       );
 
-      showSnackbar(context, res.data['message']);
+      showSnackbar(context, "Order status updated successfully");
 
       onSuccess();
     } catch (e) {

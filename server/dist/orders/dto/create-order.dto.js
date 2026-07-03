@@ -21,6 +21,7 @@ exports.UpdateOrderDto = UpdateOrderDto;
 __decorate([
     (0, class_validator_1.IsNotEmpty)(),
     (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsIn)(['Pending', 'Completed', 'Received', 'Delivered']),
     __metadata("design:type", String)
 ], UpdateOrderDto.prototype, "status", void 0);
 //# sourceMappingURL=create-order.dto.js.map

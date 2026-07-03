@@ -55,7 +55,7 @@ __decorate([
 ], OrderEntity.prototype, "address", void 0);
 __decorate([
     (0, typeorm_1.Column)({
-        default: "PENDING"
+        default: "Pending"
     }),
     __metadata("design:type", String)
 ], OrderEntity.prototype, "status", void 0);

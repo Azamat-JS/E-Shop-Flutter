@@ -126,7 +126,7 @@ let ProductService = class ProductService {
             quantity: orderedQuantities,
             totalPrice,
             address,
-            status: 'PENDING',
+            status: 'Pending',
         });
         return this.orderRepo.save(order);
     }
