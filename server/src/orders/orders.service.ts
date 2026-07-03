@@ -12,10 +12,6 @@ export class OrdersService {
     @InjectRepository(AuthEntity) private readonly authRepo: Repository<AuthEntity>,
 
   ) { }
-  create(createOrderDto: CreateOrderDto) {
-
-    return 'This action adds a new order';
-  }
 
   async fetchMyOrders(userId: string) {
     const foundUser = await this.authRepo.findOneBy({ id: userId });
@@ -37,6 +33,39 @@ export class OrdersService {
       const { user, ...rest } = order;
       return { ...rest, userId: user?.id };
     });
+  }
+
+  async getAnalytics() {
+    const totalOrders = await this.orderRepo.count();
+    const totalRevenue = await this.orderRepo
+      .createQueryBuilder('order')
+      .select('SUM(order.totalPrice)', 'totalRevenue')
+      .getRawOne();
+
+    return {
+      totalOrders,
+      totalRevenue: parseFloat(totalRevenue.totalRevenue) || 0,
+    };
+  }
+
+  async fetchCategoryAnalytics() {
+    const categoryAnalytics = await this.orderRepo
+      .createQueryBuilder('order')
+      .leftJoinAndSelect('order.products', 'product')
+      .select('product.category', 'category')
+      .addSelect('SUM(order.totalPrice)', 'totalRevenue')
+      .groupBy('product.category')
+      .getRawMany();
+
+    return categoryAnalytics.map((item) => ({
+      category: item.category,
+      totalRevenue: parseFloat(item.totalRevenue) || 0,
+    }));
+  }
+
+  async create(createOrderDto: CreateOrderDto) {
+    const order = this.orderRepo.create(createOrderDto);
+    return this.orderRepo.save(order);
   }
 
   async updateStatus(id: string, updateOrderDto: UpdateOrderDto) {

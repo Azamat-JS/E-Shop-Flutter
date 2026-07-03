@@ -6,7 +6,6 @@ export declare class OrdersService {
     private readonly orderRepo;
     private readonly authRepo;
     constructor(orderRepo: Repository<OrderEntity>, authRepo: Repository<AuthEntity>);
-    create(createOrderDto: CreateOrderDto): string;
     fetchMyOrders(userId: string): Promise<{
         userId: string;
         id: string;
@@ -28,6 +27,15 @@ export declare class OrdersService {
         status: string;
         orderedAt: Date;
     }[]>;
+    getAnalytics(): Promise<{
+        totalOrders: number;
+        totalRevenue: number;
+    }>;
+    fetchCategoryAnalytics(): Promise<{
+        category: any;
+        totalRevenue: number;
+    }[]>;
+    create(createOrderDto: CreateOrderDto): Promise<OrderEntity>;
     updateStatus(id: string, updateOrderDto: UpdateOrderDto): Promise<OrderEntity>;
     remove(id: string): string;
 }

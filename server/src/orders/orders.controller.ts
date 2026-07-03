@@ -35,6 +35,13 @@ export class OrdersController {
 
   @UseGuards(RolesGuard)
   @Roles('admin')
+  @Get('get-analytics')
+  getAnalytics() {
+    return this.ordersService.getAnalytics();
+  }
+
+  @UseGuards(RolesGuard)
+  @Roles('admin')
   @Put('update-status/:id')
   updateStatus(@Param('id') id: string, @Body() updateOrderDto: UpdateOrderDto) {
     return this.ordersService.updateStatus(id, updateOrderDto);

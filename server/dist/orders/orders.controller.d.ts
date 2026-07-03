@@ -4,7 +4,7 @@ import type { AuthenticatedRequest } from "../utils/types/types";
 export declare class OrdersController {
     private readonly ordersService;
     constructor(ordersService: OrdersService);
-    create(createOrderDto: CreateOrderDto): string;
+    create(createOrderDto: CreateOrderDto): Promise<import("./entities/order.entity").OrderEntity>;
     fetchMyOrders(req: AuthenticatedRequest): Promise<{
         userId: string;
         id: string;
@@ -26,6 +26,10 @@ export declare class OrdersController {
         status: string;
         orderedAt: Date;
     }[]>;
+    getAnalytics(): Promise<{
+        totalOrders: number;
+        totalRevenue: number;
+    }>;
     updateStatus(id: string, updateOrderDto: UpdateOrderDto): Promise<import("./entities/order.entity").OrderEntity>;
     remove(id: string): string;
 }
