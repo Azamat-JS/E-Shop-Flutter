@@ -195,7 +195,7 @@ class AdminServices {
         options: Options(headers: {'x-auth-token': token}),
       );
 
-      final data = res.data as Map<String, dynamic>;
+      final data = res.data as List;
 
       totalEarning = data[0]['totalEarnings'] ?? 0;
       sales = [
