@@ -195,15 +195,37 @@ class AdminServices {
         options: Options(headers: {'x-auth-token': token}),
       );
 
-      final data = res.data as List;
+      final data = res.data as Map<String, dynamic>;
 
-      totalEarning = data[0]['totalEarnings'] ?? 0;
+      totalEarning = ((data['totalRevenue'] as num?) ?? 0).toInt();
       sales = [
-        Sales(label: 'Mobiles', earning: data[0]['mobileEarnings'] ?? 0),
-        Sales(label: 'Essentials', earning: data[0]['essentialsEarnings'] ?? 0),
-        Sales(label: 'Appliances', earning: data[0]['appliancesEarnings'] ?? 0),
-        Sales(label: 'Books', earning: data[0]['booksEarnings'] ?? 0),
-        Sales(label: 'Fashion', earning: data[0]['fashionEarnings'] ?? 0),
+        Sales(
+          label: 'Mobiles',
+          earning: ((data['mobileEarnings']?['totalRevenue'] as num?) ?? 0)
+              .toInt(),
+        ),
+        Sales(
+          label: 'Essentials',
+          earning:
+              ((data['essentialsEarnings']?['totalRevenue'] as num?) ?? 0)
+                  .toInt(),
+        ),
+        Sales(
+          label: 'Appliances',
+          earning:
+              ((data['appliancesEarnings']?['totalRevenue'] as num?) ?? 0)
+                  .toInt(),
+        ),
+        Sales(
+          label: 'Books',
+          earning: ((data['booksEarnings']?['totalRevenue'] as num?) ?? 0)
+              .toInt(),
+        ),
+        Sales(
+          label: 'Fashion',
+          earning: ((data['fashionEarnings']?['totalRevenue'] as num?) ?? 0)
+              .toInt(),
+        ),
       ];
     } catch (e) {
       showSnackbar(context, e.toString());
