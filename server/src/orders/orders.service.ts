@@ -43,9 +43,20 @@ export class OrdersService {
       .select('SUM(order.totalPrice)', 'totalRevenue')
       .getRawOne();
 
+    let mobileEarnings = await this.fetchCategoryAnalytics(Categories.MOBILES);
+    let essentialsEarnings = await this.fetchCategoryAnalytics(Categories.ESSENTIALS);
+    let appliancesEarnings = await this.fetchCategoryAnalytics(Categories.APPLIANCES);
+    let booksEarnings = await this.fetchCategoryAnalytics(Categories.BOOKS);
+    let fashionEarnings = await this.fetchCategoryAnalytics(Categories.FASHION);
+
     return {
       totalOrders,
       totalRevenue: parseFloat(totalRevenue.totalRevenue) || 0,
+      mobileEarnings,
+      essentialsEarnings,
+      appliancesEarnings,
+      booksEarnings,
+      fashionEarnings,
     };
   }
 
