@@ -4,6 +4,7 @@ import { OrderEntity } from './entities/order.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { AuthEntity } from 'src/auth/entities/auth.entity';
+import { Categories } from 'src/utils/types/types';
 
 @Injectable()
 export class OrdersService {
@@ -48,7 +49,7 @@ export class OrdersService {
     };
   }
 
-  async fetchCategoryAnalytics(category: string) {
+  async fetchCategoryAnalytics(category: Categories) {
     const orders = await this.orderRepo
       .createQueryBuilder('order')
       .leftJoinAndSelect('order.products', 'product')

@@ -2,7 +2,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Req, Unau
 import { OrdersService } from './orders.service';
 import { CreateOrderDto, UpdateOrderDto } from './dto/create-order.dto';
 import { JwtAuthGuard } from 'src/utils/jwt.guard';
-import type { AuthenticatedRequest } from 'src/utils/types/types';
+import type { AuthenticatedRequest, Categories } from 'src/utils/types/types';
 import { Roles } from 'src/utils/roles';
 import { RolesGuard } from 'src/utils/roles.guard';
 
@@ -43,7 +43,7 @@ export class OrdersController {
   @UseGuards(RolesGuard)
   @Roles('admin')
   @Get('get-category-analytics')
-  fetchCategoryAnalytics(@Body('category') category: string) {
+  fetchCategoryAnalytics(@Body('category') category: Categories) {
     return this.ordersService.fetchCategoryAnalytics(category);
   }
 
