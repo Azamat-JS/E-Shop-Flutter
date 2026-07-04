@@ -18,6 +18,7 @@ const order_entity_1 = require("./entities/order.entity");
 const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
 const auth_entity_1 = require("../auth/entities/auth.entity");
+const types_1 = require("../utils/types/types");
 let OrdersService = class OrdersService {
     orderRepo;
     authRepo;
@@ -51,9 +52,19 @@ let OrdersService = class OrdersService {
             .createQueryBuilder('order')
             .select('SUM(order.totalPrice)', 'totalRevenue')
             .getRawOne();
+        let mobileEarnings = await this.fetchCategoryAnalytics(types_1.Categories.MOBILES);
+        let essentialsEarnings = await this.fetchCategoryAnalytics(types_1.Categories.ESSENTIALS);
+        let appliancesEarnings = await this.fetchCategoryAnalytics(types_1.Categories.APPLIANCES);
+        let booksEarnings = await this.fetchCategoryAnalytics(types_1.Categories.BOOKS);
+        let fashionEarnings = await this.fetchCategoryAnalytics(types_1.Categories.FASHION);
         return {
             totalOrders,
             totalRevenue: parseFloat(totalRevenue.totalRevenue) || 0,
+            mobileEarnings,
+            essentialsEarnings,
+            appliancesEarnings,
+            booksEarnings,
+            fashionEarnings,
         };
     }
     async fetchCategoryAnalytics(category) {

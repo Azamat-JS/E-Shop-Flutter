@@ -6,3 +6,10 @@ export interface AuthenticatedRequest extends Request {
         token?: string;
     };
 }
+export declare enum Categories {
+    MOBILES = "Mobiles",
+    ESSENTIALS = "Essentials",
+    APPLIANCES = "Appliances",
+    BOOKS = "Books",
+    FASHION = "Fashion"
+}

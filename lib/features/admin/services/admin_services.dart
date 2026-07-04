@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:e_shop_flutter/common/network/dio_client.dart';
 import 'package:e_shop_flutter/constants/global_variables.dart';
 import 'package:e_shop_flutter/constants/utils.dart';
+import 'package:e_shop_flutter/features/admin/models/sales.dart';
 import 'package:e_shop_flutter/models/order.dart';
 import 'package:e_shop_flutter/models/product.dart';
 import 'package:flutter/material.dart';
@@ -180,5 +181,33 @@ class AdminServices {
     } catch (e) {
       showSnackbar(context, e.toString());
     }
+  }
+
+  Future<Map<String, dynamic>> getEarnings(BuildContext context) async {
+    final dio = DioClient.dio;
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('x-auth-token') ?? '';
+    List<Sales> sales = [];
+    int totalEarning = 0;
+    try {
+      final res = await dio.get(
+        '${ApiConfig.baseUrl}/orders/get-analytics',
+        options: Options(headers: {'x-auth-token': token}),
+      );
+
+      final data = res.data as Map<String, dynamic>;
+
+      totalEarning = data[0]['totalEarnings'] ?? 0;
+      sales = [
+        Sales(label: 'Mobiles', earning: data[0]['mobileEarnings'] ?? 0),
+        Sales(label: 'Essentials', earning: data[0]['essentialsEarnings'] ?? 0),
+        Sales(label: 'Appliances', earning: data[0]['appliancesEarnings'] ?? 0),
+        Sales(label: 'Books', earning: data[0]['booksEarnings'] ?? 0),
+        Sales(label: 'Fashion', earning: data[0]['fashionEarnings'] ?? 0),
+      ];
+    } catch (e) {
+      showSnackbar(context, e.toString());
+    }
+    return {'totalEarnings': totalEarning, 'sales': sales};
   }
 }
